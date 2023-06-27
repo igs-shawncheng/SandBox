@@ -254,6 +254,15 @@ android.applicationVariants.all { variant ->
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include:['*.jar'])
+    implementation fileTree(dir: 'libs', include:['*.aar'])
+    //implementation 'com.igs.HelloAAR:1.0.0'
+    //implementation files('D:/SandBox/frameworks/runtime-src/proj.android/app/libs/app.aar')
+    //implementation files('D:/SandBox/frameworks/runtime-src/proj.android/app/libs/native.aar')
+    //implementation files('D:/SandBox/frameworks/runtime-src/proj.android/app/libs/app-debug.aar')
     implementation project(':libcocos2dx')
 }
+
+
+
+
