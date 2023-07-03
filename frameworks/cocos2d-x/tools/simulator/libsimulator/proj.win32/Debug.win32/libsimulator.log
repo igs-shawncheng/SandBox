@@ -1,0 +1,153 @@
+﻿  CCHTTPRequest.cpp
+  DeviceEx-win32.cpp
+  PlayerEditBoxServiceWin.cpp
+  PlayerFileDialogServiceWin.cpp
+  PlayerMenuServiceWin.cpp
+  PlayerMessageBoxServiceWin.cpp
+  PlayerTaskServiceWin.cpp
+  PlayerWin.cpp
+  ProjectConfig.cpp
+  SimulatorConfig.cpp
+  AppEvent.cpp
+  AppLang.cpp
+  PlayerMenuServiceProtocol.cpp
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerEditBoxServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerEditBoxServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerMessageBoxServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerMessageBoxServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerTaskServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerTaskServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\network\CCHTTPRequest.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\network\CCHTTPRequest.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerFileDialogServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerFileDialogServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\AppEvent.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerMenuServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\AppEvent.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerMenuServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\AppLang.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\AppLang.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\ProjectConfig\ProjectConfig.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\ProjectConfig\ProjectConfig.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\ProjectConfig\SimulatorConfig.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\ProjectConfig\SimulatorConfig.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerEditBoxServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerMessageBoxServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerTaskServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerEditBoxServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\network\CCHTTPRequest.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerTaskServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerMessageBoxServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\AppLang.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerMenuServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerFileDialogServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\AppEvent.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\ProjectConfig\ProjectConfig.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\network\CCHTTPRequest.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\AppLang.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerMenuServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\ProjectConfig\SimulatorConfig.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerFileDialogServiceWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\AppEvent.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\platform\win32\PlayerWin.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\ProjectConfig\ProjectConfig.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\PlayerMenuServiceProtocol.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\PlayerMenuServiceProtocol.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\ProjectConfig\SimulatorConfig.cpp)
+D:\SandBox\frameworks\cocos2d-x\tools\simulator\libsimulator\lib\ProjectConfig\ProjectConfig.cpp(685,27): warning C4018: '>=': signed/unsigned 不相符
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\PlayerMenuServiceProtocol.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\PlayerMenuServiceProtocol.cpp)
+  PlayerProtocol.cpp
+  PlayerServiceProtocol.cpp
+  PlayerSettings.cpp
+  PlayerTaskServiceProtocol.cpp
+  PlayerUtils.cpp
+  extension_set.cc
+  generated_message_util.cc
+  coded_stream.cc
+  zero_copy_stream.cc
+  zero_copy_stream_impl_lite.cc
+  message_lite.cc
+  repeated_field.cc
+  atomicops_internals_x86_gcc.cc
+  atomicops_internals_x86_msvc.cc
+D:\SandBox\frameworks\cocos2d-x\tools\simulator\libsimulator\lib\protobuf-lite\google\protobuf\io\zero_copy_stream_impl_lite.cc(158,16): warning C4018: '<': signed/unsigned 不相符
+D:\SandBox\frameworks\cocos2d-x\tools\simulator\libsimulator\lib\protobuf-lite\google\protobuf\io\zero_copy_stream_impl_lite.cc(178,3): warning C4018: '<=': signed/unsigned 不相符
+  common.cc
+  once.cc
+  stringprintf.cc
+  wire_format_lite.cc
+  ConfigParser.cpp
+  ConnectWaitLayer.cpp
+  ConsoleCommand.cpp
+  FileServer.cpp
+D:\SandBox\frameworks\cocos2d-x\tools\simulator\libsimulator\lib\protobuf-lite\google\protobuf\stubs\stringprintf.cc(152,21): warning C4018: '<': signed/unsigned 不相符
+  Landscape_png.cpp
+D:\SandBox\frameworks\cocos2d-x\tools\simulator\libsimulator\lib\protobuf-lite\google\protobuf\stubs\common.cc(377,21): warning C4018: '<': signed/unsigned 不相符
+  PlayDisable_png.cpp
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\PlayerProtocol.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\PlayerProtocol.cpp)
+  PlayEnable_png.cpp
+  Portrait_png.cpp
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\PlayerTaskServiceProtocol.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\PlayerTaskServiceProtocol.cpp)
+  Protos.pb.cc
+  Runtime.cpp
+  RuntimeCCSImpl.cpp
+  RuntimeProtocol.cpp
+  Shine_png.cpp
+  VisibleRect.cpp
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\PlayerProtocol.cpp)
+  Runtime_win32.cpp
+  stdafx.cpp
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\PlayerProtocol.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\ConfigParser.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\ConfigParser.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\PlayerTaskServiceProtocol.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\ConnectWaitLayer.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\ConnectWaitLayer.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\PlayerTaskServiceProtocol.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\FileServer.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\FileServer.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\ConsoleCommand.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\ConsoleCommand.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\Runtime.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\Runtime.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\ConfigParser.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\RuntimeCCSImpl.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\RuntimeCCSImpl.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\ConnectWaitLayer.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\RuntimeProtocol.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\RuntimeProtocol.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\ConfigParser.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\VisibleRect.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\VisibleRect.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\ConsoleCommand.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\FileServer.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\ConnectWaitLayer.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsBody.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 Runtime_win32.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\physics\CCPhysicsShape.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 Runtime_win32.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\ConsoleCommand.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\FileServer.cpp)
+D:\SandBox\frameworks\cocos2d-x\tools\simulator\libsimulator\lib\runtime\ConfigParser.cpp(132,31): warning C4018: '<': signed/unsigned 不相符
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\Runtime.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\RuntimeCCSImpl.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\Runtime.cpp)
+D:\SandBox\frameworks\cocos2d-x\tools\simulator\libsimulator\lib\runtime\FileServer.cpp(146,24): warning C4477: 'fprintf' : 格式字串 '%s' 需要 'char *' 類型的引數，但 variadic 引數 2 的類型為 'WCHAR *'
+D:\SandBox\frameworks\cocos2d-x\tools\simulator\libsimulator\lib\runtime\FileServer.cpp(146,24): message : 請考慮在格式字串中使用 '%ls'
+D:\SandBox\frameworks\cocos2d-x\tools\simulator\libsimulator\lib\runtime\FileServer.cpp(146,24): message : 請考慮在格式字串中使用 '%lls'
+D:\SandBox\frameworks\cocos2d-x\tools\simulator\libsimulator\lib\runtime\FileServer.cpp(146,24): message : 請考慮在格式字串中使用 '%Ls'
+D:\SandBox\frameworks\cocos2d-x\tools\simulator\libsimulator\lib\runtime\FileServer.cpp(146,24): message : 請考慮在格式字串中使用 '%ws'
+D:\SandBox\frameworks\cocos2d-x\tools\simulator\libsimulator\lib\runtime\ConsoleCommand.cpp(58,44): warning C4099: 'cocos2d::Console::Command': 類型名稱之前使用 'class'，現在發現使用 'struct'
+D:\SandBox\frameworks\cocos2d-x\cocos\base\CCConsole.h(114,18): message : 請參閱 'cocos2d::Console::Command' 的宣告
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\VisibleRect.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\RuntimeCCSImpl.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\RuntimeProtocol.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\RuntimeProtocol.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 ..\lib\runtime\VisibleRect.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\2d\CCParticleSystemQuad.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 Runtime_win32.cpp)
+D:\SandBox\frameworks\cocos2d-x\cocos\platform\CCSAXParser.h(1,1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失 (正在編譯原始程式檔 Runtime_win32.cpp)
+  libsimulator.vcxproj -> D:\SandBox\frameworks\runtime-src\proj.win32\Debug.win32\libsimulator.lib

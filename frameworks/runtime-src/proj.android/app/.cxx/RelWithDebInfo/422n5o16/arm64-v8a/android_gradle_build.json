@@ -190,7 +190,9 @@
       "abi": "arm64-v8a",
       "artifactName": "cocos2dlua",
       "output": "D:\\SandBox\\frameworks\\runtime-src\\proj.android\\app\\build\\intermediates\\cxx\\RelWithDebInfo\\422n5o16\\obj\\arm64-v8a\\libcocos2dlua.so",
-      "runtimeFiles": []
+      "runtimeFiles": [
+        "D:\\SandBox\\frameworks\\runtime-src\\proj.android\\app\\jni\\prebuild\\arm64-v8a\\libnative.so"
+      ]
     },
     "ext_pvmp3dec-RelWithDebInfo-arm64-v8a": {
       "buildCommandComponents": [

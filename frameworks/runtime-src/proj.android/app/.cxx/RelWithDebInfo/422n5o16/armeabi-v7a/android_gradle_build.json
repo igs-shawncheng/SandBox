@@ -71,18 +71,6 @@
     "{LIST_OF_TARGETS_TO_BUILD}"
   ],
   "libraries": {
-    "ext_convertUTF-RelWithDebInfo-armeabi-v7a": {
-      "buildCommandComponents": [
-        "C:\\Users\\shawncheng\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe",
-        "-C",
-        "D:\\SandBox\\frameworks\\runtime-src\\proj.android\\app\\.cxx\\RelWithDebInfo\\422n5o16\\armeabi-v7a",
-        "ext_convertUTF"
-      ],
-      "buildType": "release",
-      "abi": "armeabi-v7a",
-      "artifactName": "ext_convertUTF",
-      "output": "D:\\SandBox\\frameworks\\runtime-src\\proj.android\\app\\.cxx\\RelWithDebInfo\\422n5o16\\armeabi-v7a\\lib\\libext_convertUTF.a"
-    },
     "ext_xxtea-RelWithDebInfo-armeabi-v7a": {
       "buildCommandComponents": [
         "C:\\Users\\shawncheng\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe",
@@ -94,6 +82,18 @@
       "abi": "armeabi-v7a",
       "artifactName": "ext_xxtea",
       "output": "D:\\SandBox\\frameworks\\runtime-src\\proj.android\\app\\.cxx\\RelWithDebInfo\\422n5o16\\armeabi-v7a\\lib\\libext_xxtea.a"
+    },
+    "ext_convertUTF-RelWithDebInfo-armeabi-v7a": {
+      "buildCommandComponents": [
+        "C:\\Users\\shawncheng\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe",
+        "-C",
+        "D:\\SandBox\\frameworks\\runtime-src\\proj.android\\app\\.cxx\\RelWithDebInfo\\422n5o16\\armeabi-v7a",
+        "ext_convertUTF"
+      ],
+      "buildType": "release",
+      "abi": "armeabi-v7a",
+      "artifactName": "ext_convertUTF",
+      "output": "D:\\SandBox\\frameworks\\runtime-src\\proj.android\\app\\.cxx\\RelWithDebInfo\\422n5o16\\armeabi-v7a\\lib\\libext_convertUTF.a"
     },
     "cpp_android_spec-RelWithDebInfo-armeabi-v7a": {
       "buildCommandComponents": [
@@ -130,7 +130,9 @@
       "abi": "armeabi-v7a",
       "artifactName": "cocos2dlua",
       "output": "D:\\SandBox\\frameworks\\runtime-src\\proj.android\\app\\build\\intermediates\\cxx\\RelWithDebInfo\\422n5o16\\obj\\armeabi-v7a\\libcocos2dlua.so",
-      "runtimeFiles": []
+      "runtimeFiles": [
+        "D:\\SandBox\\frameworks\\runtime-src\\proj.android\\app\\jni\\prebuild\\armeabi-v7a\\libnative.so"
+      ]
     },
     "cocos2d-RelWithDebInfo-armeabi-v7a": {
       "buildCommandComponents": [
