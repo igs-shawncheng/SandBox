@@ -26,6 +26,7 @@
 #include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "cocos2d.h"
 #include "scripting/lua-bindings/manual/lua_module_register.h"
+#include <jni.h>
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -44,6 +45,8 @@ using namespace CocosDenshion;
 
 USING_NS_CC;
 using namespace std;
+
+
 
 AppDelegate::AppDelegate()
 {
@@ -100,16 +103,22 @@ bool AppDelegate::applicationDidFinishLaunching()
     //register custom function
     //LuaStack* stack = engine->getLuaStack();
     //register_custom_function(stack->getLuaState());
+
     
 #if CC_64BITS
     FileUtils::getInstance()->addSearchPath("src/64bit");
 #endif
     FileUtils::getInstance()->addSearchPath("src");
     FileUtils::getInstance()->addSearchPath("res");
+
     if (engine->executeScriptFile("main.lua"))
     {
         return false;
     }
+
+#if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    NativeCallJava();
+#endif
 
     return true;
 }
@@ -139,3 +148,21 @@ void AppDelegate::applicationWillEnterForeground()
     SimpleAudioEngine::getInstance()->resumeAllEffects();
 #endif
 }
+
+#if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+string AppDelegate::NativeCallJava()
+{
+    string str = "";
+    JniMethodInfo minfo;
+    if(JniHelper::getStaticMethodInfo(minfo, "org/cocos2dx/lua/AppActivity", "NativeCallJava", "()Ljava/lang/String;"))
+    {
+        jstring js = (jstring)minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
+        const char* str = minfo.env->GetStringUTFChars(js, 0);
+        cocos2d::log("JNITest:%s", str);
+        minfo.env->ReleaseStringUTFChars(js , str);
+        minfo.env->DeleteLocalRef(minfo.classID);
+    }
+    return str;
+}
+#endif
+

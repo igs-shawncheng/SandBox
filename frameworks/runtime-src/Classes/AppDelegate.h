@@ -58,6 +58,8 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
+
+    std::string NativeCallJava();
 };
 
 #endif  // __APP_DELEGATE_H__

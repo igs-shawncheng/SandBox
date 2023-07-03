@@ -26,8 +26,12 @@
 
 #include <android/log.h>
 #include <jni.h>
-
+#include "cocos2d.h"
 #include "AppDelegate.h"
+#include <dlfcn.h>
+
+using namespace std;
+
 
 #define  LOG_TAG    "main"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
@@ -36,7 +40,31 @@ namespace {
 std::unique_ptr<AppDelegate> appDelegate;
 }
 
+extern "C"{
+int isGameStatus();
+}
+
 void cocos_android_app_init(JNIEnv* env) {
     LOGD("cocos_android_app_init");
     appDelegate.reset(new AppDelegate());
+
+    cocos2d::log("GetGameStatus:%i", isGameStatus());
+}
+
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_org_cocos2dx_lua_AppActivity_JavaCallCNative(JNIEnv *env, jclass clazz, jstring text) {
+    const char *data = env->GetStringUTFChars(text, 0);
+    cocos2d::log("1JNITest:%s", data);
+    env->ReleaseStringUTFChars(text, data);
+
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_org_cocos2dx_lua_AppActivity_isGameStatus(JNIEnv *env, jclass clazz, jstring text) {
+    const char *data = env->GetStringUTFChars(text, 0);
+    cocos2d::log("2JNITest:%s", data);
+    env->ReleaseStringUTFChars(text, data);
 }

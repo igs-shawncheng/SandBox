@@ -26,7 +26,10 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.lua;
 
+import android.content.pm.PackageInfo;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.AndroidException;
 import android.util.Log;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
@@ -36,9 +39,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import jp.co.progress.BuildConfig;
-
 public class AppActivity extends Cocos2dxActivity{
+
+    public static native void JavaCallCNative(String text);
+    private static AppActivity appActivety = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.setEnableVirtualButton(false);
@@ -53,21 +58,28 @@ public class AppActivity extends Cocos2dxActivity{
 
             return;
         }
-        Log.d("JP", "Start");
-        // DO OTHER INITIALIZATION BELOW
-        //Class c = Class.forName("BuildConfig");
-        BuildConfig test = new BuildConfig();
 
-        Class c = test.getClass();
+        appActivety = this;
+        CallNative(true, 1, 2, 3, "HelloFromJava");
+    }
 
-        ClassLoader loader = c.getClassLoader();
-        Class<?> target = null;
-        try {
-            target = loader.loadClass("nativeClass");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        if(target != null)
-            Log.d("JP Method", target.getPackage().toString());
+    //native  public static  ClassLoader isGameStatus();
+
+    public static void CallNative(boolean b,int i,float f,double d, String s)
+    {
+        final String str = "bool:"+ b + " int:" + i + " float:" + f + " double:" + d + " String:" + s;
+        appActivety.runOnGLThread(new Runnable() {
+            @Override
+            public void run() {
+                JavaCallCNative(str);
+            }
+        });
+    }
+
+    public static String NativeCallJava() throws AndroidException
+    {
+        PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
+        String returnStr = "JavaValue";
+        return returnStr;
     }
 }
