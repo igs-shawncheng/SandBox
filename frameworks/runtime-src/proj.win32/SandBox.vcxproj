@@ -74,7 +74,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\Classes\runtime;$(ProjectDir)..\Classes\protobuf-lite;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\curl\include\win32;$(EngineRoot)extensions;$(EngineRoot)tools\simulator\libsimulator\lib;$(EngineRoot)tools\simulator\libsimulator\lib\protobuf-lite;$(EngineRoot);%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\Classes\runtime;$(ProjectDir)..\Classes\protobuf-lite;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\curl\include\win32;$(EngineRoot)extensions;$(EngineRoot)tools\simulator\libsimulator\lib;$(EngineRoot)tools\simulator\libsimulator\lib\protobuf-lite;$(EngineRoot);%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END);$(ProjectDir)..\Classes\LuaBridge;$(ProjectDir)..\Classes\LuaBridge\detail;$(ProjectDir)..\Classes\JoyTube</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -196,6 +196,24 @@ xcopy "$(ProjectDir)..\..\..\src" "$(LocalDebuggerWorkingDirectory)\Resources\sr
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\JoyTube\JoyTube.h" />
+    <ClInclude Include="..\Classes\LuaBridge\detail\CFunctions.h" />
+    <ClInclude Include="..\Classes\LuaBridge\detail\ClassInfo.h" />
+    <ClInclude Include="..\Classes\LuaBridge\detail\Constructor.h" />
+    <ClInclude Include="..\Classes\LuaBridge\detail\dump.h" />
+    <ClInclude Include="..\Classes\LuaBridge\detail\FuncTraits.h" />
+    <ClInclude Include="..\Classes\LuaBridge\detail\Iterator.h" />
+    <ClInclude Include="..\Classes\LuaBridge\detail\LuaException.h" />
+    <ClInclude Include="..\Classes\LuaBridge\detail\LuaHelpers.h" />
+    <ClInclude Include="..\Classes\LuaBridge\detail\LuaRef.h" />
+    <ClInclude Include="..\Classes\LuaBridge\detail\Namespace.h" />
+    <ClInclude Include="..\Classes\LuaBridge\detail\Stack.h" />
+    <ClInclude Include="..\Classes\LuaBridge\detail\TypeList.h" />
+    <ClInclude Include="..\Classes\LuaBridge\detail\TypeTraits.h" />
+    <ClInclude Include="..\Classes\LuaBridge\detail\Userdata.h" />
+    <ClInclude Include="..\Classes\LuaBridge\LuaBridge.h" />
+    <ClInclude Include="..\Classes\LuaBridge\RefCountedObject.h" />
+    <ClInclude Include="..\Classes\LuaBridge\RefCountedPtr.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SimulatorWin.h" />
@@ -204,6 +222,7 @@ xcopy "$(ProjectDir)..\..\..\src" "$(LocalDebuggerWorkingDirectory)\Resources\sr
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\JoyTube\JoyTube.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SimulatorWin.cpp" />
     <ClCompile Include="stdafx.cpp" />

@@ -26,6 +26,8 @@
 #include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "cocos2d.h"
 #include "scripting/lua-bindings/manual/lua_module_register.h"
+#include "LuaBridge.h"
+#include "JoyTube.h"
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -103,6 +105,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     //LuaStack* stack = engine->getLuaStack();
     //register_custom_function(stack->getLuaState());
 
+	auto joyTube = JoyTube::getInstance();
+	joyTube->RegisterLua();
     
 #if CC_64BITS
     FileUtils::getInstance()->addSearchPath("src/64bit");
