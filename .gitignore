@@ -183,3 +183,4 @@ temp/
 *.zip
 **/simulator/
 /frameworks/cocos2d-x/cocos/platform/android/libcocos2dx/build/intermediates
+/frameworks/runtime-src/proj.android/app/.cxx
