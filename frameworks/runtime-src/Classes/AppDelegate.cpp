@@ -26,7 +26,6 @@
 #include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "cocos2d.h"
 #include "scripting/lua-bindings/manual/lua_module_register.h"
-#include "LuaBridge.h"
 #include "JoyTube.h"
 
 // #define USE_AUDIO_ENGINE 1
@@ -87,8 +86,14 @@ static int register_all_packages()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
+
+
     // set default FPS
     Director::getInstance()->setAnimationInterval(1.0 / 60.0f);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    SetOrientation(2);
+#endif
+    //Director::getInstance()->getOpenGLView()->setDesignResolutionSize(640, 960, ResolutionPolicy::SHOW_ALL);
 
     // register lua module
     auto engine = LuaEngine::getInstance();
@@ -118,11 +123,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     {
         return false;
     }
-
-#if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    NativeCallJava();
-#endif
-
     return true;
 }
 
@@ -153,19 +153,17 @@ void AppDelegate::applicationWillEnterForeground()
 }
 
 #if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-string AppDelegate::NativeCallJava()
+void AppDelegate::SetOrientation(int orientation)
 {
-    string str = "";
     JniMethodInfo minfo;
-    if(JniHelper::getStaticMethodInfo(minfo, "org/cocos2dx/lua/AppActivity", "NativeCallJava", "()Ljava/lang/String;"))
+    if(JniHelper::getStaticMethodInfo(minfo, "org/cocos2dx/lua/AppActivity", "SetOrientation", "(I)Z"))
     {
-        jstring js = (jstring)minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
-        const char* str = minfo.env->GetStringUTFChars(js, 0);
-        cocos2d::log("JNITest:%s", str);
-        minfo.env->ReleaseStringUTFChars(js , str);
+        //jint orientation = orientation;
+        jboolean jisSuccess = minfo.env->CallStaticBooleanMethod(minfo.classID, minfo.methodID, orientation);
         minfo.env->DeleteLocalRef(minfo.classID);
+        bool isSuccess = jisSuccess;
+        cocos2d::log("SetOrientation Result:%d", isSuccess);
     }
-    return str;
 }
 #endif
 

@@ -58,8 +58,9 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
-
-    std::string NativeCallJava();
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    void SetOrientation(int orientation);
+#endif
 };
 
 #endif  // __APP_DELEGATE_H__
