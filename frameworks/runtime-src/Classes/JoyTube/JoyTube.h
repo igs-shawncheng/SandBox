@@ -22,7 +22,7 @@ public:
 protected:
 	static JoyTube *_instance;
 
-	HMODULE m_hDll;
+	//HMODULE m_hDll;
 
 	unsigned char *m_textureData;
 	cocos2d::Texture2D *m_texture2D;

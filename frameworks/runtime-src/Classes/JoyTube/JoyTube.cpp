@@ -69,33 +69,33 @@ void JoyTube::InitTube()
 void JoyTube::InitLibrary()
 {
 	std::string path = "Win32Project.dll";
-	m_hDll = LoadLibraryA(path.c_str());
-	CCLOG("JoyTube::InitLibrary m_hDll %X", m_hDll);
-	if (m_hDll == NULL)
-	{
-		CCLOG("JoyTube::InitLibrary LoadLibraryA GetLastError %d", GetLastError());
-	}
-	else
-	{
-		libInitFun pInitFun = (libInitFun)GetProcAddress(m_hDll, "Init");
-		if (pInitFun)
-		{
-			m_textureData = pInitFun(m_width, m_height);
-			CCLOG("JoyTube::InitLibrary done");
-		}
-	}
+	//m_hDll = LoadLibraryA(path.c_str());
+	//CCLOG("JoyTube::InitLibrary m_hDll %X", m_hDll);
+	//if (m_hDll == NULL)
+	//{
+	//	CCLOG("JoyTube::InitLibrary LoadLibraryA GetLastError %d", GetLastError());
+	//}
+	//else
+	//{
+	//	libInitFun pInitFun = (libInitFun)GetProcAddress(m_hDll, "Init");
+	//	if (pInitFun)
+	//	{
+	//		m_textureData = pInitFun(m_width, m_height);
+	//		CCLOG("JoyTube::InitLibrary done");
+	//	}
+	//}
 }
 
 void JoyTube::UnLoadLibrary()
 {
-	if (!FreeLibrary(m_hDll))
-	{
-		CCLOG("JoyTube Failed to unload DLL.");
-	}
-	else
-	{
+	//if (!FreeLibrary(m_hDll))
+	//{
+	//	CCLOG("JoyTube Failed to unload DLL.");
+	//}
+	//else
+	//{
 		CCLOG("JoyTube unload DLL.");
-	}
+	//}
 }
 
 void JoyTube::RegisterLua()
@@ -130,6 +130,9 @@ void JoyTube::AddSprite()
 	{
 		m_sprite->setAnchorPoint(Vec2(0, 0));
 		scene->addChild(m_sprite);
+		Size winSize = scene->getContentSize();
+		Size contentSize = m_sprite->getContentSize();
+        m_sprite->setPosition(Vec2(winSize.width / 2 - contentSize.width / 2, winSize.height / 2 - contentSize.height / 2));
 	}
 }
 
@@ -152,9 +155,9 @@ void JoyTube::UpdateTextureData()
 
 void JoyTube::TestLibInputXY(int x, int y)
 {
-	libInputXYFun pInputXYFun = (libInputXYFun)GetProcAddress(m_hDll, "InputXY");
-	if (pInputXYFun)
-	{
-		pInputXYFun(x, y);
-	}
+	//libInputXYFun pInputXYFun = (libInputXYFun)GetProcAddress(m_hDll, "InputXY");
+	//if (pInputXYFun)
+	//{
+	//	pInputXYFun(x, y);
+	//}
 }

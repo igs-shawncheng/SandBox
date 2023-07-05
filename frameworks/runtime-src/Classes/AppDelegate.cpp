@@ -86,14 +86,9 @@ static int register_all_packages()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-
-
     // set default FPS
     Director::getInstance()->setAnimationInterval(1.0 / 60.0f);
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    SetOrientation(2);
-#endif
-    //Director::getInstance()->getOpenGLView()->setDesignResolutionSize(640, 960, ResolutionPolicy::SHOW_ALL);
+
 
     // register lua module
     auto engine = LuaEngine::getInstance();
