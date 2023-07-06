@@ -89,6 +89,12 @@
     <ClInclude Include="..\Classes\LuaBridge\detail\Userdata.h">
       <Filter>Classes\LuaBridge\detail</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\JoyTube\JoyTubeWin32.h">
+      <Filter>Classes\JoyTube</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\JoyTube\IJoyTubeNative.h">
+      <Filter>Classes\JoyTube</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
@@ -102,6 +108,9 @@
       <Filter>win32</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\JoyTube\JoyTube.cpp">
+      <Filter>Classes\JoyTube</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\JoyTube\JoyTubeWin32.cpp">
       <Filter>Classes\JoyTube</Filter>
     </ClCompile>
   </ItemGroup>

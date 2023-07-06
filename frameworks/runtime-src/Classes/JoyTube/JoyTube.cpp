@@ -5,9 +5,6 @@
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 
-typedef unsigned char*(*libInitFun)(int width, int height);
-typedef void(*libInputXYFun)(int x, int y);
-
 JoyTube *JoyTube::_instance = nullptr;
 
 JoyTube *JoyTube::getInstance()
@@ -22,7 +19,16 @@ JoyTube *JoyTube::getInstance()
 JoyTube::JoyTube()
 {
 	InitTube();
-	InitLibrary();
+
+#if ( CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 )
+	m_joyTubeNative = IJoyTubeNativePtr(new JoyTubeWin32(m_width, m_height));
+#elif ( CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID )
+
+#elif ( CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
+
+#endif
+
+	m_textureData = m_joyTubeNative->GetTextureData();
 
 	float fps = cocos2d::Director::getInstance()->getFrameRate();
 	cocos2d::Director::getInstance()->getScheduler()->schedule(
@@ -37,7 +43,6 @@ JoyTube::~JoyTube()
 {
 	CCLOG("~JoyTube");
 	m_sprite->release();
-	UnLoadLibrary();
 }
 
 void JoyTube::InitTube()
@@ -64,38 +69,6 @@ void JoyTube::InitTube()
 	m_sprite = cocos2d::Sprite::createWithTexture(m_texture2D);
 	m_sprite->setName(m_spriteName);
 	m_sprite->retain();
-}
-
-void JoyTube::InitLibrary()
-{
-	std::string path = "Win32Project.dll";
-	//m_hDll = LoadLibraryA(path.c_str());
-	//CCLOG("JoyTube::InitLibrary m_hDll %X", m_hDll);
-	//if (m_hDll == NULL)
-	//{
-	//	CCLOG("JoyTube::InitLibrary LoadLibraryA GetLastError %d", GetLastError());
-	//}
-	//else
-	//{
-	//	libInitFun pInitFun = (libInitFun)GetProcAddress(m_hDll, "Init");
-	//	if (pInitFun)
-	//	{
-	//		m_textureData = pInitFun(m_width, m_height);
-	//		CCLOG("JoyTube::InitLibrary done");
-	//	}
-	//}
-}
-
-void JoyTube::UnLoadLibrary()
-{
-	//if (!FreeLibrary(m_hDll))
-	//{
-	//	CCLOG("JoyTube Failed to unload DLL.");
-	//}
-	//else
-	//{
-		CCLOG("JoyTube unload DLL.");
-	//}
 }
 
 void JoyTube::RegisterLua()
@@ -139,7 +112,7 @@ void JoyTube::AddSprite()
 void JoyTube::OnTouch(int x, int y)
 {
 	CCLOG("joyTube OnTouch x:%d y:%d", x, y);
-	TestLibInputXY(x, y);
+	m_joyTubeNative->OnTouch(x, y);
 }
 
 void JoyTube::Process(float tick)
@@ -151,13 +124,4 @@ void JoyTube::Process(float tick)
 void JoyTube::UpdateTextureData()
 {
 	m_texture2D->updateWithData(m_textureData, 0, 0, m_width, m_height);
-}
-
-void JoyTube::TestLibInputXY(int x, int y)
-{
-	//libInputXYFun pInputXYFun = (libInputXYFun)GetProcAddress(m_hDll, "InputXY");
-	//if (pInputXYFun)
-	//{
-	//	pInputXYFun(x, y);
-	//}
 }

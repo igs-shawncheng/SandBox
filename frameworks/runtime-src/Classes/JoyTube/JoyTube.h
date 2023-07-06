@@ -4,6 +4,7 @@
 #include "renderer/CCTexture2D.h"
 #include "2d/CCSprite.h"
 #include "base/CCRef.h"
+#include "JoyTubeWin32.h"
 
 class JoyTube : public cocos2d::Ref
 {
@@ -22,7 +23,7 @@ public:
 protected:
 	static JoyTube *_instance;
 
-	//HMODULE m_hDll;
+	IJoyTubeNativePtr m_joyTubeNative;
 
 	unsigned char *m_textureData;
 	cocos2d::Texture2D *m_texture2D;
@@ -33,12 +34,8 @@ protected:
 	std::string m_spriteName = "JoyTubeSprite";
 
 	void InitTube();
-	void InitLibrary();
-	void UnLoadLibrary();
 
 	void Process(float tick);
 	void UpdateTextureData();
-	
-	void TestLibInputXY(int x, int y);
 };
 
