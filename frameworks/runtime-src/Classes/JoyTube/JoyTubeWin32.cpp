@@ -76,53 +76,54 @@ void JoyTubeWin32::TestLibInputXY(int x, int y)
 	}
 }
 
-int JoyTubeWin32::n_native(int left, int top, int width, int height, bool local){}
+void JoyTubeWin32::n_set_debug_log_func(DebugLogFunc func) {}
+int JoyTubeWin32::n_native(int left, int top, int width, int height, bool local) { return 0; }
 void JoyTubeWin32::n_startTimer(bool atfirst){}
 void JoyTubeWin32::n_checkTimer(){}
-bool JoyTubeWin32::n_passStartGame(){}
-int JoyTubeWin32::n_sendMessage(std::string system, std::string cmd, std::string jsonstring){}
-int JoyTubeWin32::n_useItem(std::string jsonstring) {}
-int JoyTubeWin32::n_isUsedItem(){}
+bool JoyTubeWin32::n_passStartGame() { return false; }
+int JoyTubeWin32::n_sendMessage(std::string system, std::string cmd, std::string jsonstring) { return 0; }
+int JoyTubeWin32::n_useItem(std::string jsonstring) { return 0; }
+int JoyTubeWin32::n_isUsedItem(){ return 0; }
 void JoyTubeWin32::n_setCredit(double credit){}
-double JoyTubeWin32::n_isCredit(){}
-bool JoyTubeWin32::n_isCreditEvent(){}
-int JoyTubeWin32::n_isGameStatus(){}
-int JoyTubeWin32::n_isPlayState(){}
-int JoyTubeWin32::n_isErrorDefine(){}
+double JoyTubeWin32::n_isCredit(){ return 0; }
+bool JoyTubeWin32::n_isCreditEvent(){ return true; }
+int JoyTubeWin32::n_isGameStatus(){ return 0; }
+int JoyTubeWin32::n_isPlayState(){ return 0; }
+int JoyTubeWin32::n_isErrorDefine(){ return 0; }
 void JoyTubeWin32::n_clearErrorDefine(){}
-int JoyTubeWin32::n_isPostMessage(){}
-int* JoyTubeWin32::n_getPostMessageString(){}
+int JoyTubeWin32::n_isPostMessage(){ return 0; }
+int* JoyTubeWin32::n_getPostMessageString(){ return nullptr; }
 void JoyTubeWin32::n_openGameInfo(bool isActive){}
-int* JoyTubeWin32::n_getJsonString(){}
+int* JoyTubeWin32::n_getJsonString(){ return nullptr; }
 void JoyTubeWin32::n_stringFromUnity(std::string str){}
-int JoyTubeWin32::n_logout(){}
-int* JoyTubeWin32::n_CreateTextureFunc(){}
-int JoyTubeWin32::n_isTextureId(){}
-int JoyTubeWin32::n_isTextureWidth(){}
-int JoyTubeWin32::n_isTextureHeight(){}
-int JoyTubeWin32::n_isTextureWidthGl(){}
-int JoyTubeWin32::n_isTextureHeightGl(){}
-int* JoyTubeWin32::n_NativeStepFunc(){}
-int JoyTubeWin32::n_isRenderTextureId(int side){}
-int JoyTubeWin32::n_isRenderTextureWidth(int side){}
-int JoyTubeWin32::n_isRenderTextureHeight(int side){}
-int JoyTubeWin32::n_isRenderTextureWidthGl(int side){}
-int JoyTubeWin32::n_isRenderTextureHeightGl(int side){}
-int JoyTubeWin32::n_isRenderTextureSide(){}
-bool JoyTubeWin32::n_isDrawRenderTexture(){}
-int JoyTubeWin32::n_isFinishInitialize(){}
-bool JoyTubeWin32::n_isArrivedUpdateTex(){}
-int JoyTubeWin32::n_isArrivedTextureId(){}
-int JoyTubeWin32::n_isArrivedTextureWidth(){}
-int JoyTubeWin32::n_isArrivedTextureHeight(){}
-int JoyTubeWin32::n_isArrivedTextureWidthGl(){}
-int JoyTubeWin32::n_isArrivedTextureHeightGl(){}
-int JoyTubeWin32::n_isArrivedTextureFormat(){}
+int JoyTubeWin32::n_logout(){ return 0; }
+int* JoyTubeWin32::n_CreateTextureFunc(){ return nullptr; }
+int JoyTubeWin32::n_isTextureId(){ return 0; }
+int JoyTubeWin32::n_isTextureWidth(){ return 0; }
+int JoyTubeWin32::n_isTextureHeight(){ return 0; }
+int JoyTubeWin32::n_isTextureWidthGl(){ return 0; }
+int JoyTubeWin32::n_isTextureHeightGl(){ return 0; }
+int* JoyTubeWin32::n_NativeStepFunc(){ return nullptr; }
+int JoyTubeWin32::n_isRenderTextureId(int side){ return 0; }
+int JoyTubeWin32::n_isRenderTextureWidth(int side){ return 0; }
+int JoyTubeWin32::n_isRenderTextureHeight(int side){ return 0; }
+int JoyTubeWin32::n_isRenderTextureWidthGl(int side){ return 0; }
+int JoyTubeWin32::n_isRenderTextureHeightGl(int side){ return 0; }
+int JoyTubeWin32::n_isRenderTextureSide(){ return 0; }
+bool JoyTubeWin32::n_isDrawRenderTexture(){ return true; }
+int JoyTubeWin32::n_isFinishInitialize(){ return 0; }
+bool JoyTubeWin32::n_isArrivedUpdateTex(){ return true; }
+int JoyTubeWin32::n_isArrivedTextureId(){ return 0; }
+int JoyTubeWin32::n_isArrivedTextureWidth(){ return 0; }
+int JoyTubeWin32::n_isArrivedTextureHeight(){ return 0; }
+int JoyTubeWin32::n_isArrivedTextureWidthGl(){ return 0; }
+int JoyTubeWin32::n_isArrivedTextureHeightGl(){ return 0; }
+int JoyTubeWin32::n_isArrivedTextureFormat(){ return 0; }
 void JoyTubeWin32::n_PushButtons(int type){}
 void JoyTubeWin32::n_PullButtons(int type){}
 void JoyTubeWin32::n_toPause(bool pause){}
 void JoyTubeWin32::n_GameDestroy(){}
 void JoyTubeWin32::n_setSoundMute(bool isMute){}
-bool JoyTubeWin32::n_enteringSetting(){}
+bool JoyTubeWin32::n_enteringSetting(){ return true; }
 void JoyTubeWin32::n_SetInputActive(bool bActive){}
 void JoyTubeWin32::n_setAbort(){}

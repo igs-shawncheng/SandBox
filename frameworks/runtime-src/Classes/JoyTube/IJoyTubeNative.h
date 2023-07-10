@@ -9,8 +9,8 @@ struct IJoyTubeNative
 	virtual void OnTouch(int x, int y) = 0;
 
 
-    //typedef void (*DebugLogFunc) (const char* str);
-    //virtual void n_set_debug_log_func(DebugLogFunc func);
+    typedef void (*DebugLogFunc) (char* str);
+    virtual void n_set_debug_log_func(DebugLogFunc func) = 0;
     virtual int n_native(int left, int top, int width, int height, bool local) = 0;
     virtual void n_startTimer(bool atfirst) = 0;
      virtual void n_checkTimer() = 0;
