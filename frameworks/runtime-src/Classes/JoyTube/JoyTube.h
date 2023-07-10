@@ -4,7 +4,11 @@
 #include "renderer/CCTexture2D.h"
 #include "2d/CCSprite.h"
 #include "base/CCRef.h"
+#if ( CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 )
 #include "JoyTubeWin32.h"
+#elif ( CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID )
+#include "JoyTubeAndroid.h"
+#endif
 
 class JoyTube : public cocos2d::Ref
 {

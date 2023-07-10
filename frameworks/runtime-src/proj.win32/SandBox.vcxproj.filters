@@ -95,6 +95,9 @@
     <ClInclude Include="..\Classes\JoyTube\IJoyTubeNative.h">
       <Filter>Classes\JoyTube</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\JoyTube\JoyTubeAndroid.h">
+      <Filter>Classes\JoyTube</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
@@ -111,6 +114,9 @@
       <Filter>Classes\JoyTube</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\JoyTube\JoyTubeWin32.cpp">
+      <Filter>Classes\JoyTube</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\JoyTube\JoyTubeAndroid.cpp">
       <Filter>Classes\JoyTube</Filter>
     </ClCompile>
   </ItemGroup>

@@ -40,15 +40,13 @@ namespace {
 std::unique_ptr<AppDelegate> appDelegate;
 }
 
-extern "C"{
-int isGameStatus();
-}
-
 void cocos_android_app_init(JNIEnv* env) {
     LOGD("cocos_android_app_init");
     appDelegate.reset(new AppDelegate());
 
-    cocos2d::log("GetGameStatus:%i", isGameStatus());
+#if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+//    NativeCallJava();
+#endif
 }
 
 

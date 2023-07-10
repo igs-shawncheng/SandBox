@@ -23,11 +23,13 @@ JoyTube::JoyTube()
 #if ( CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 )
 	m_joyTubeNative = IJoyTubeNativePtr(new JoyTubeWin32(m_width, m_height));
 #elif ( CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID )
-
+	m_joyTubeNative = IJoyTubeNativePtr(new JoyTubeAndroid(m_width, m_height));
 #elif ( CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
 
 #endif
 
+	if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+		return;
 	m_textureData = m_joyTubeNative->GetTextureData();
 
 	float fps = cocos2d::Director::getInstance()->getFrameRate();

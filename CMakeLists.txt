@@ -53,6 +53,7 @@ set(GAME_HEADER ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.h)
 set(GAME_SOURCE 
 	${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp
 	${RUNTIME_SRC_ROOT}/Classes/JoyTube/JoyTube.cpp)
+	
 # sources need to compile info, include dirs and source files
 include_directories(
         ${RUNTIME_SRC_ROOT}/Classes
@@ -68,6 +69,7 @@ if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
     set(APP_NAME cocos2dlua)
     list(APPEND GAME_SOURCE ${RUNTIME_SRC_ROOT}/proj.android/app/jni/hellolua/main.cpp)
+	list(APPEND GAME_SOURCE ${RUNTIME_SRC_ROOT}/Classes/JoyTube/JoyTubeAndroid.cpp)
 elseif(LINUX)
     list(APPEND GAME_SOURCE ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
 elseif(WINDOWS)
