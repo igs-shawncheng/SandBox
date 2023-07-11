@@ -1,7 +1,4 @@
 #include "JoyTube.h"
-#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
-#include "scripting/lua-bindings/manual/CCLuaBridge.h"
-#include "LuaBridge.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 
@@ -87,12 +84,13 @@ void JoyTube::RegisterLua()
 		.endNamespace();
 }
 
-void JoyTube::Init()
+void JoyTube::Init(luabridge::LuaRef node)
 {
-	AddSprite();
+	cocos2d::Node* parentNode = static_cast<cocos2d::Node*>(tolua_tousertype(node.state(), 0, 0));
+	AddSprite(parentNode);
 }
 
-void JoyTube::AddSprite()
+void JoyTube::AddSprite(cocos2d::Node* parentNode)
 {
 	auto scene = Director::getInstance()->getRunningScene();
 	if (!scene)
@@ -101,13 +99,13 @@ void JoyTube::AddSprite()
 		return;
 	}
 
-	if (!scene->getChildByName(m_spriteName))
+	if (!parentNode->getChildByName(m_spriteName))
 	{
 		m_sprite->setAnchorPoint(Vec2(0, 0));
-		scene->addChild(m_sprite);
+		parentNode->addChild(m_sprite);
 		Size winSize = scene->getContentSize();
 		Size contentSize = m_sprite->getContentSize();
-        m_sprite->setPosition(Vec2(winSize.width / 2 - contentSize.width / 2, winSize.height / 2 - contentSize.height / 2));
+		m_sprite->setPosition(Vec2(winSize.width / 2 - contentSize.width / 2, winSize.height / 2 - contentSize.height / 2));
 	}
 }
 

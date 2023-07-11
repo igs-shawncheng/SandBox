@@ -4,6 +4,9 @@
 #include "renderer/CCTexture2D.h"
 #include "2d/CCSprite.h"
 #include "base/CCRef.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/CCLuaBridge.h"
+#include "LuaBridge.h"
 #if ( CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 )
 #include "JoyTubeWin32.h"
 #elif ( CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID )
@@ -19,8 +22,8 @@ public:
 
 	void RegisterLua();
 	
-	void Init();
-	void AddSprite();
+	void Init(luabridge::LuaRef node);
+	void AddSprite(cocos2d::Node* node);
 	void OnTouch(int x, int y);
 	
 	int m_testInt = 640;
