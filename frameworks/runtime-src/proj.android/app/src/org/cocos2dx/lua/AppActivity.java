@@ -26,6 +26,7 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.lua;
 
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.logging.Logger;
 
 public class AppActivity extends Cocos2dxActivity{
 
@@ -46,6 +48,7 @@ public class AppActivity extends Cocos2dxActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.setEnableVirtualButton(false);
         super.onCreate(savedInstanceState);
 
@@ -58,9 +61,11 @@ public class AppActivity extends Cocos2dxActivity{
 
             return;
         }
-
         appActivety = this;
+        //SetOrientation(2);
+
         CallNative(true, 1, 2, 3, "HelloFromJava");
+
     }
 
     //native  public static  ClassLoader isGameStatus();
@@ -82,4 +87,20 @@ public class AppActivity extends Cocos2dxActivity{
         String returnStr = "JavaValue";
         return returnStr;
     }
+
+//    public static boolean SetOrientation(int orientation)
+//    {
+//        Log.i("Debug", "SetOrientation：" +orientation);
+//        if(orientation == 1 ) {
+//            appActivety.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//            appActivety.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+//        }else if (orientation == 2 ){
+//            appActivety.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//            //appActivety.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+//        }else if (orientation == 3 ) {
+//            appActivety.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+//            appActivety.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+//        }
+//        return true;
+//    }
 }
