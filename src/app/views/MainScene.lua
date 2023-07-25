@@ -2,46 +2,18 @@
 local MainScene = class("MainScene", cc.load("mvc").ViewBase)
 
 MainScene.RESOURCE_FILENAME = "MainScene.csb"
-MainScene.RESOURCE_BINDING = {
-    ["btn_Init"] = {
-        ["varname"] = "m_btn_init",
-        ["events"] = {
-            {
-                event = "touch",
-                method ="onClickedInitBtn"
-            }
-        }
-    },
-    ["n_JoyTube_Output"] = {
-        ["varname"] = "m_joyTubeOutput",
-    },
-    ["n_JoyTube_Input"] = {
-        ["varname"] = "m_joyTubeInput",
-    }
+
+local MIN_ZORDER = 0
+local curZorder = MIN_ZORDER
+local function GetZorder()
+    curZorder = curZorder + 1
+    return curZorder
+end
+
+local ZOrder = {
+    GAME = MIN_ZORDER,
+    NAVIGATION = GetZorder(),
 }
-
-function MainScene:onClickedInitBtn( event )
-    -- dump( event, "MainScene:onClickedInitBtn event", 10 )
-    if event.name == "ended" then
-        self:Init()
-    end
-end
-
-function MainScene:Init()
-    -- input
-    local layer = cc.LayerColor:create( cc.c4b( 0, 0, 0, 0 ), display.width, display.height )
-    layer:move(display.left_bottom)
-    layer:addTo(self.m_joyTubeInput)
-
-    layer:onTouch( function( event )
-        print("layer onTouch x:" .. event.x .. " y:" .. event.y)
-
-        Inanna.GetJoyTube():OnTouch( event.x, event.y )
-    end )
-
-    -- output
-    Inanna.GetJoyTube():Init( self.m_joyTubeOutput )
-end
 
 function MainScene:onCreate()
     print("MainScene:onCreate")
@@ -50,8 +22,15 @@ function MainScene:onCreate()
     --     :move(display.center)
     --     :addTo(self)
 
-    local testInt = Inanna.GetJoyTube().m_testInt
-    print("Inanna.GetJoyTube().m_testInt", testInt)
+    local sceneY = (display.height - CC_DESIGN_RESOLUTION.height) / 2
+    self:setPosition( cc.p( 0, sceneY ) )
+
+    local view = self:getApp():createView( "NavigationView" )
+    view:setPosition( cc.p( 0, 496 ) )
+    self:addChild( view, ZOrder.NAVIGATION )
+
+    local view = self:getApp():createView( "GameView" )
+    self:addChild( view, ZOrder.GAME )
 end
 
 return MainScene

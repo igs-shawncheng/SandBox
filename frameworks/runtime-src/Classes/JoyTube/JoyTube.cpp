@@ -103,9 +103,6 @@ void JoyTube::AddSprite(cocos2d::Node* parentNode)
 	{
 		m_sprite->setAnchorPoint(Vec2(0, 0));
 		parentNode->addChild(m_sprite);
-		Size winSize = scene->getContentSize();
-		Size contentSize = m_sprite->getContentSize();
-		m_sprite->setPosition(Vec2(winSize.width / 2 - contentSize.width / 2, winSize.height / 2 - contentSize.height / 2));
 	}
 }
 
