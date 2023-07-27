@@ -13,6 +13,7 @@ end
 local ZOrder = {
     GAME = MIN_ZORDER,
     NAVIGATION = GetZorder(),
+    LOGIN = GetZorder(),
 }
 
 function MainScene:onCreate()
@@ -31,6 +32,9 @@ function MainScene:onCreate()
 
     local view = self:getApp():createView( "GameView" )
     self:addChild( view, ZOrder.GAME )
+
+    local view = self:getApp():createView( "LoginView" )
+    self:addChild( view, ZOrder.LOGIN )
 end
 
 return MainScene

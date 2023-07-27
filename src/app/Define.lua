@@ -1,6 +1,7 @@
 local EVENTS = {
     CHIP_UPDATE = "chip_update",
     SET_ARCADE_NO = "set_arcade_no",
+    LOGIN = "login",
     LOGOUT = "logout",
 }
 

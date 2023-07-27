@@ -3,21 +3,6 @@ local GameView = class("GameView", cc.load("mvc").ViewBase)
 
 GameView.RESOURCE_FILENAME = "Game/GameView.csb"
 GameView.RESOURCE_BINDING = {
-    ["s_Default"] = {
-        ["varname"] = "m_s_default",
-    },
-    ["img_Input"] = {
-        ["varname"] = "m_img_input",
-    },
-    ["btn_Login"] = {
-        ["varname"] = "m_btn_login",
-        ["events"] = {
-            {
-                event = "touch",
-                method ="OnClickedLoginBtn"
-            }
-        }
-    },
     ["n_JoyTube_Output"] = {
         ["varname"] = "m_joyTubeOutput",
     },
@@ -27,6 +12,7 @@ GameView.RESOURCE_BINDING = {
 }
 
 local REGISTER_EVENTS = {
+    cc.exports.define.EVENTS.LOGIN,
     cc.exports.define.EVENTS.LOGOUT,
 }
 
@@ -62,8 +48,10 @@ function GameView:RegisterEvent()
     print("GameView:RegisterEvent")
 
     local function eventHander( event )
-        if event:getEventName() == tostring( cc.exports.define.EVENTS.LOGOUT ) then
-            self:ReqLogout()
+        if event:getEventName() == tostring( cc.exports.define.EVENTS.LOGIN ) then
+            self:OnLogin()
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LOGOUT ) then
+            self:OnLogout()
         end
     end
 
@@ -74,24 +62,18 @@ function GameView:RegisterEvent()
     end
 end
 
+function GameView:OnLogin()
+    self.m_state:Transit( GAMEVIEW_STATE.INIT )
+end
+
+function GameView:OnLogout()
+    self.m_state:Transit( GAMEVIEW_STATE.WAIT_LOGIN )
+end
+
 function GameView:OnEnter()
     print("GameView:OnEnter()")
 
     self:InitJoyTube()
-
-    self.m_eb_input = ccui.EditBox:create( self.m_img_input:getContentSize(), cc.exports.define.BLANK_PNG, ccui.TextureResType.localType )
-    self.m_eb_input:setPosition( cc.p( self.m_img_input:getPosition() ) )
-    self.m_eb_input:setInputMode( 6 )
-    self.m_eb_input:setMaxLength( 4 )
-    self.m_eb_input:setFontName( cc.exports.define.DEFAULT_FONT )
-    self.m_eb_input:setFontColor( cc.c4b( 0, 0, 0, 255 ) )
-    self.m_eb_input:setFontSize( 25 )
-    self.m_eb_input:setReturnType( 1 )  -- DONE
-    self.m_eb_input:setPlaceholderFont( cc.exports.define.DEFAULT_FONT, 25 )
-    self.m_eb_input:setPlaceholderFontColor( cc.c4b( 206, 154, 223, 255 ) )
-    self.m_eb_input:setPlaceHolder( "請輸入機台號碼" )
-    
-    self:addChild( self.m_eb_input )
 end
 
 function GameView:InitJoyTube()
@@ -119,24 +101,15 @@ function GameView:OnUpdate( dt )
         if self.m_state:IsEntering() then
             print("GAMEVIEW_STATE.WAIT_LOGIN")
 
-            self.m_s_default:setVisible( true )
-            self.m_btn_login:setVisible( true )
-            self.m_eb_input:setVisible( true )
-
+            self:setVisible( false )
             self.m_touch_layer:setTouchEnabled( false )
             self.m_joyTubeOutput:setVisible( false )
-
-            cc.exports.dispatchEvent( cc.exports.define.EVENTS.SET_ARCADE_NO, 0 )
-            cc.exports.dispatchEvent( cc.exports.define.EVENTS.CHIP_UPDATE, 0 )
         end
     elseif currentState == GAMEVIEW_STATE.INIT then
         if self.m_state:IsEntering() then
             print("GAMEVIEW_STATE.INIT")
 
-            self.m_s_default:setVisible( false )
-            self.m_btn_login:setVisible( false )
-            self.m_eb_input:setVisible( false )
-
+            self:setVisible( true )
             self.m_touch_layer:setTouchEnabled( true )
             self.m_joyTubeOutput:setVisible( true )
 
@@ -180,41 +153,6 @@ function GameView:OnUpdate( dt )
             print("GAMEVIEW_STATE.ERROR")
         end
     end
-end
-
-function GameView:OnClickedLoginBtn( event )
-    -- dump( event, "GameView:OnClickedLoginBtn event", 10 )
-    if event.name == "ended" then
-        if self.m_state:Current() == GAMEVIEW_STATE.WAIT_LOGIN then
-            self:ReqLogin()
-        end
-    end
-end
-
-function GameView:ReqLogin()
-    -- 登入Server
-    print("機台號碼:", tonumber(self.m_eb_input:getText()))
-
-    -- 待串登入協定
-    self:OnLoginAck()
-end
-
-function GameView:OnLoginAck()
-    cc.exports.dispatchEvent( cc.exports.define.EVENTS.SET_ARCADE_NO, tonumber(self.m_eb_input:getText()) )
-    cc.exports.dispatchEvent( cc.exports.define.EVENTS.CHIP_UPDATE, 5678 )
-
-    self.m_state:Transit( GAMEVIEW_STATE.INIT )
-end
-
-function GameView:ReqLogout()
-    -- 登出Server
-
-    -- 待串登出協定
-    self:OnLogoutAck()
-end
-
-function GameView:OnLogoutAck()
-    self.m_state:Transit( GAMEVIEW_STATE.WAIT_LOGIN )
 end
 
 return GameView

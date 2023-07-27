@@ -36,6 +36,8 @@ NavigationView.RESOURCE_BINDING = {
 }
 
 local REGISTER_EVENTS = {
+    cc.exports.define.EVENTS.LOGIN,
+    cc.exports.define.EVENTS.LOGOUT,
     cc.exports.define.EVENTS.CHIP_UPDATE,
     cc.exports.define.EVENTS.SET_ARCADE_NO,
 }
@@ -61,13 +63,19 @@ function NavigationView:Init()
     self.m_ac_prosperous_money = cc.CSLoader:createTimeline( GOLD_INGOT_CSB_FILE1 )
     self.m_n_prosperous_money:runAction( self.m_ac_prosperous_money )
     -- self.m_ac_prosperous_money:play( "Main", true )
+
+    self:setVisible( false )
 end
 
 function NavigationView:RegisterEvent()
     print("NavigationView:RegisterEvent")
 
     local function eventHander( event )
-        if event:getEventName() == tostring( cc.exports.define.EVENTS.CHIP_UPDATE ) then
+        if event:getEventName() == tostring( cc.exports.define.EVENTS.LOGIN ) then
+            self:OnLogin()
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LOGOUT ) then
+            self:OnLogout()
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CHIP_UPDATE ) then
             print("eventHander " .. cc.exports.define.EVENTS.CHIP_UPDATE .. " ", event._usedata)
             self:SetChip( event._usedata )
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.SET_ARCADE_NO ) then
@@ -80,6 +88,16 @@ function NavigationView:RegisterEvent()
         local dispatcher = cc.Director:getInstance():getEventDispatcher()
         dispatcher:addEventListenerWithFixedPriority( listener, 10 )
     end
+end
+
+function NavigationView:OnLogin()
+    self:setVisible( true )
+end
+
+function NavigationView:OnLogout()
+    self:setVisible( false )
+    self:SetChip( 0 )
+    self:SetArcadeNumber( 0 )
 end
 
 function NavigationView:OnClickedInfoBtn( event )
