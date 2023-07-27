@@ -54,7 +54,9 @@ function AppBase:createView(name)
         end)
         local t = type(view)
         if status and (t == "table" or t == "userdata") then
-            return view:create(self, name)
+            local v = view:create(self, name)
+            self:registerHandler( v )
+            return v
         end
     end
     error(string.format("AppBase:createView() - not found view \"%s\" in search paths \"%s\"",
@@ -62,6 +64,36 @@ function AppBase:createView(name)
 end
 
 function AppBase:onCreate()
+end
+
+function AppBase:registerHandler( target )
+    if type( target.OnEnter ) == "function" 
+        or type( target.OnExit ) == "function" 
+        or type( target.OnUpdate ) == "function"  then
+
+        local function OnScriptEvent( event )
+            if event == "enter" then
+                if type( target.OnEnter ) == "function" then
+                    target:OnEnter()
+                end
+                if type( target.OnUpdate ) == "function"  then
+                    local function OnUpdate( dt )
+                       target:OnUpdate( dt )
+                    end
+
+                    target:scheduleUpdateWithPriorityLua( OnUpdate, 0 )
+                end
+            elseif event == "exit" then
+                if type( target.OnExit ) == "function" then
+                    target:OnExit()
+                end
+                if type( target.OnUpdate ) == "function"  then
+                    target:unscheduleUpdate()
+                end
+            end
+        end
+        target:registerScriptHandler( OnScriptEvent )
+    end
 end
 
 return AppBase
