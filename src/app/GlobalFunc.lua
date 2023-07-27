@@ -5,4 +5,9 @@ local function dispatchEvent( eventString, data )
 	dispatcher:dispatchEvent( event )
 end
 
+local function getTickSecond()
+	return os.time(os.date("!*t"))
+end
+
+cc.exports.getTickSecond = getTickSecond
 cc.exports.dispatchEvent = dispatchEvent

@@ -19,10 +19,19 @@ NavigationView.RESOURCE_BINDING = {
         }
     },
     ["sp_Info"] = {
-        ["varname"] = "m_sp_Info"
+        ["varname"] = "m_sp_info"
     },
     ["n_prosperous_money"] = {
         ["varname"] = "m_n_prosperous_money"
+    },
+    ["btn_back"] = {
+        ["varname"] = "m_btn_back",
+        ["events"] = {
+            {
+                event = "touch",
+                method ="OnClickedBackBtn"
+            }
+        }
     }
 }
 
@@ -51,7 +60,7 @@ function NavigationView:Init()
 
     self.m_ac_prosperous_money = cc.CSLoader:createTimeline( GOLD_INGOT_CSB_FILE1 )
     self.m_n_prosperous_money:runAction( self.m_ac_prosperous_money )
-    self.m_ac_prosperous_money:play( "Main", true )
+    -- self.m_ac_prosperous_money:play( "Main", true )
 end
 
 function NavigationView:RegisterEvent()
@@ -75,7 +84,13 @@ end
 
 function NavigationView:OnClickedInfoBtn( event )
     if event.name == "ended" then
-        self.m_sp_Info:setVisible( not self.m_sp_Info:isVisible() )
+        self.m_sp_info:setVisible( not self.m_sp_info:isVisible() )
+    end
+end
+
+function NavigationView:OnClickedBackBtn( event )
+    if event.name == "ended" then
+        cc.exports.dispatchEvent( cc.exports.define.EVENTS.LOGOUT )
     end
 end
 
