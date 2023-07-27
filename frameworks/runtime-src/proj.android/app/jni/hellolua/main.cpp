@@ -52,6 +52,10 @@ void cocos_android_app_init(JNIEnv* env) {
 
 extern "C"
 JNIEXPORT void JNICALL
+//Java
+//root:org_cocos2dx_lua
+//class:AppActivity
+//function:JavaCallCNative
 Java_org_cocos2dx_lua_AppActivity_JavaCallCNative(JNIEnv *env, jclass clazz, jstring text) {
     const char *data = env->GetStringUTFChars(text, 0);
     cocos2d::log("1JNITest:%s", data);
@@ -66,3 +70,4 @@ Java_org_cocos2dx_lua_AppActivity_isGameStatus(JNIEnv *env, jclass clazz, jstrin
     cocos2d::log("2JNITest:%s", data);
     env->ReleaseStringUTFChars(text, data);
 }
+

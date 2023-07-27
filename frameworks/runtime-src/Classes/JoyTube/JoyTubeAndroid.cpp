@@ -5,7 +5,14 @@
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 
+
 #if ( CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID )
+extern std::string helloWorldFun();
+extern unsigned char* Init(int width, int height);
+extern void InputXY(int x, int y);
+
+
+//#if (Target_NativeLib == NativeLib_Jap)
 extern "C" {
     void set_debug_log_func(void (*debugLogFunc)(char* str));
     int native(int left, int top, int width, int height, bool local);
@@ -59,49 +66,6 @@ extern "C" {
     void SetInputActive(bool bActive);
     void setAbort();
 }
-
-JoyTubeAndroid::JoyTubeAndroid(int width, int height)
-{
-	m_width = width;
-	m_height = height;
-	InitLibrary();
-    DebugLogFunc logFun = [](char* str) {
-    };
-    n_set_debug_log_func(logFun);
-}
-
-JoyTubeAndroid::~JoyTubeAndroid()
-{
-	CCLOG("~JoyTubeAndroid");
-	UnLoadLibrary();
-}
-
-void JoyTubeAndroid::InitLibrary()
-{
-	//cocos2d::log("GetGameStatus:%i", isGameStatus());
-}
-
-void JoyTubeAndroid::UnLoadLibrary()
-{
-	
-}
-
-unsigned char* JoyTubeAndroid::GetTextureData()
-{
-	return m_textureData;
-}
-
-void JoyTubeAndroid::OnTouch(int x, int y)
-{
-	CCLOG("joyTube OnTouch x:%d y:%d", x, y);
-	TestLibInputXY(x, y);
-}
-
-void JoyTubeAndroid::TestLibInputXY(int x, int y)
-{
-	
-}
-
 void JoyTubeAndroid::n_set_debug_log_func(DebugLogFunc func) {return set_debug_log_func(func); }
 int JoyTubeAndroid::n_native(int left, int top, int width, int height, bool local) { return native( left, top, width, height, local); }
 void JoyTubeAndroid::n_startTimer(bool atfirst) { return startTimer(atfirst); }
@@ -153,4 +117,51 @@ void JoyTubeAndroid::n_setSoundMute(bool isMute) { return setSoundMute(isMute);}
 bool JoyTubeAndroid::n_enteringSetting() { return enteringSetting();}
 void JoyTubeAndroid::n_SetInputActive(bool bActive) { return SetInputActive(bActive);}
 void JoyTubeAndroid::n_setAbort() { return setAbort();}
+
+
+
+JoyTubeAndroid::JoyTubeAndroid(int width, int height)
+{
+    CCLOG("JoyTube::%s", helloWorldFun().c_str());
+	m_width = width;
+	m_height = height;
+	InitLibrary();
+    DebugLogFunc logFun = [](char* str) {
+    };
+    n_set_debug_log_func(logFun);
+}
+
+JoyTubeAndroid::~JoyTubeAndroid()
+{
+	CCLOG("~JoyTubeAndroid");
+	UnLoadLibrary();
+}
+
+void JoyTubeAndroid::InitLibrary()
+{
+	//cocos2d::log("GetGameStatus:%i", isGameStatus());
+	m_textureData = Init(m_width, m_height);
+    CCLOG("JoyTube::InitLibrary done");
+}
+
+void JoyTubeAndroid::UnLoadLibrary()
+{
+	
+}
+
+unsigned char* JoyTubeAndroid::GetTextureData()
+{
+	return m_textureData;
+}
+
+void JoyTubeAndroid::OnTouch(int x, int y)
+{
+	CCLOG("joyTube OnTouch x:%d y:%d", x, y);
+	TestLibInputXY(x, y);
+}
+
+void JoyTubeAndroid::TestLibInputXY(int x, int y)
+{
+    InputXY(x, y);
+}
 #endif

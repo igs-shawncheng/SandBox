@@ -2,6 +2,7 @@
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 
+
 JoyTube *JoyTube::_instance = nullptr;
 
 JoyTube *JoyTube::getInstance()
@@ -25,8 +26,6 @@ JoyTube::JoyTube()
 
 #endif
 
-	if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-		return;
 	m_textureData = m_joyTubeNative->GetTextureData();
 
 	float fps = cocos2d::Director::getInstance()->getFrameRate();

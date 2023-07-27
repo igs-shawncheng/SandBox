@@ -43,7 +43,6 @@ import java.util.logging.Logger;
 
 public class AppActivity extends Cocos2dxActivity{
 
-    public static native void JavaCallCNative(String text);
     private static AppActivity appActivety = null;
 
     @Override
@@ -69,7 +68,8 @@ public class AppActivity extends Cocos2dxActivity{
     }
 
     //native  public static  ClassLoader isGameStatus();
-
+    //Java
+    public static native void JavaCallCNative(String text);
     public static void CallNative(boolean b,int i,float f,double d, String s)
     {
         final String str = "bool:"+ b + " int:" + i + " float:" + f + " double:" + d + " String:" + s;
@@ -83,7 +83,6 @@ public class AppActivity extends Cocos2dxActivity{
 
     public static String NativeCallJava() throws AndroidException
     {
-        PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
         String returnStr = "JavaValue";
         return returnStr;
     }
