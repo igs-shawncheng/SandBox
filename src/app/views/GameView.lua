@@ -8,6 +8,12 @@ GameView.RESOURCE_BINDING = {
     },
     ["n_JoyTube_Input"] = {
         ["varname"] = "m_joyTubeInput",
+    },
+    ["txt_GameStatus"] = {
+        ["varname"] = "m_txtGameStatus",
+    },
+    ["txt_PlayState"] = {
+        ["varname"] = "m_txtPlayState",
     }
 }
 
@@ -176,8 +182,8 @@ function GameView:OnUpdate( dt )
         end
     end
 
-    self.m_pluginProgram:GetGameStatus()
-    self.m_pluginProgram:GetPlayState()
+    self.m_txtGameStatus:setString( "GameStatus: " .. self.m_pluginProgram:GetGameStatus() )
+    self.m_txtPlayState:setString( "PlayState: " .. self.m_pluginProgram:GetPlayState() )
 end
 
 return GameView
