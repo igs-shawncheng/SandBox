@@ -14,6 +14,7 @@ local ZOrder = {
     GAME = MIN_ZORDER,
     NAVIGATION = GetZorder(),
     LOGIN = GetZorder(),
+    MESSAGE_BOX = GetZorder(),
 }
 
 function MainScene:onCreate()
@@ -35,6 +36,9 @@ function MainScene:onCreate()
 
     local view = self:getApp():createView( "LoginView" )
     self:addChild( view, ZOrder.LOGIN )
+
+    local view = self:getApp():createView( "MessageBoxView" )
+    self:addChild( view, ZOrder.MESSAGE_BOX )
 end
 
 return MainScene

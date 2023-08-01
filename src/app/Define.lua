@@ -8,6 +8,8 @@ local EVENTS = {
     SET_ARCADE_NO = "set_arcade_no",
 
     PLUGIN_ERROR_STATUS = "plugin_error_status",
+
+    SHOW_MSG = "show_msg",
 }
 
 local DEFAULT_FONT = "Microsoft JhengHei"  -- 微軟正黑體

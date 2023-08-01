@@ -84,8 +84,12 @@ function LoginView:ReqLogin()
     -- 登入Server
     print("機台號碼:", tonumber(self.m_eb_input:getText()))
 
-    -- 待串登入協定
-    self:OnLoginAck()
+    if self.m_eb_input:getText() == "" then
+        self:OnLoginFail( "尚未輸入機台號碼" )
+    else
+        -- 待串登入協定
+        self:OnLoginAck()
+    end
 end
 
 function LoginView:OnLoginAck()
@@ -93,6 +97,21 @@ function LoginView:OnLoginAck()
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.CHIP_UPDATE, 5678 )
 
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.LOGIN )
+end
+
+function LoginView:OnLoginFail( reason )
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.SHOW_MSG,
+    {
+        title = "登入失敗",
+        content = "原因: " .. reason,
+        confirmCB = function ()
+            print("click confirmCB")
+        end,
+        cancelCB = function ()
+            print("click cancelCB")
+        end,
+        btnPosType = 1,
+    } )
 end
 
 return LoginView

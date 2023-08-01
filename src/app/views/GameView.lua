@@ -10,10 +10,10 @@ GameView.RESOURCE_BINDING = {
         ["varname"] = "m_joyTubeInput",
     },
     ["txt_GameStatus"] = {
-        ["varname"] = "m_txtGameStatus",
+        ["varname"] = "m_txt_gameStatus",
     },
     ["txt_PlayState"] = {
-        ["varname"] = "m_txtPlayState",
+        ["varname"] = "m_txt_playState",
     }
 }
 
@@ -82,13 +82,40 @@ function GameView:OnLogout()
 end
 
 function GameView:OnClickedBackBtn()
-    if self.m_state:Current() ~= GAMEVIEW_STATE.WAIT_LOGIN then
-        cc.exports.dispatchEvent( cc.exports.define.EVENTS.LOGOUT )
+    if self.m_state:Current() == GAMEVIEW_STATE.WAIT_LOGIN then
+        return
     end
+
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.SHOW_MSG,
+    {
+        title = "提示訊息",
+        content = "是否登出？",
+        confirmCB = function ()
+            print("click confirmCB")
+            if self.m_state:Current() ~= GAMEVIEW_STATE.WAIT_LOGIN then
+                cc.exports.dispatchEvent( cc.exports.define.EVENTS.LOGOUT )
+            end
+        end,
+        cancelCB = function ()
+            print("click cancelCB")
+        end,
+    } )
 end
 
 function GameView:OnPluginErrorStatus( errorStatus )
     -- 處理 errorStatus
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.SHOW_MSG,
+    {
+        title = "PluginErrorStatus",
+        content = "errorStatus: " .. errorStatus,
+        confirmCB = function ()
+            print("click confirmCB")
+        end,
+        cancelCB = function ()
+            print("click cancelCB")
+        end,
+        btnPosType = 1,
+    } )
 
     self.m_state:Transit( GAMEVIEW_STATE.ERROR )
 end
@@ -182,8 +209,8 @@ function GameView:OnUpdate( dt )
         end
     end
 
-    self.m_txtGameStatus:setString( "GameStatus: " .. self.m_pluginProgram:GetGameStatus() )
-    self.m_txtPlayState:setString( "PlayState: " .. self.m_pluginProgram:GetPlayState() )
+    self.m_txt_gameStatus:setString( "GameStatus: " .. self.m_pluginProgram:GetGameStatus() )
+    self.m_txt_playState:setString( "PlayState: " .. self.m_pluginProgram:GetPlayState() )
 end
 
 return GameView
