@@ -1,6 +1,7 @@
 #include "JoyTube.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
+#include "base/CCEventDispatcher.h"
 
 
 JoyTube *JoyTube::_instance = nullptr;
@@ -15,6 +16,8 @@ JoyTube *JoyTube::getInstance()
 }
 
 JoyTube::JoyTube()
+	: m_creditEventCallback( nullptr )
+	, m_errorStatusCallback( nullptr )
 {
 	InitTube();
 
@@ -35,12 +38,17 @@ JoyTube::JoyTube()
 		fps,
 		false
 		);
+
+	m_callEndOfFramesListener = cocos2d::Director::getInstance()->getEventDispatcher()->addCustomEventListener(cocos2d::Director::EVENT_AFTER_DRAW, [this](EventCustom* eventCustom) {
+		this->CallEndOfFrames();
+	});
 }
 
 JoyTube::~JoyTube()
 {
 	CCLOG("~JoyTube");
 	m_sprite->release();
+	cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(m_callEndOfFramesListener);
 }
 
 void JoyTube::InitTube()
@@ -76,20 +84,25 @@ void JoyTube::RegisterLua()
 		.addFunction("GetJoyTube", &JoyTube::getInstance)
 		.beginClass<JoyTube>("JoyTube")
 		.addConstructor<void(*) ()>()
-		.addFunction("Init", &JoyTube::Init)
+		.addFunction("AddSprite", &JoyTube::AddSprite)
 		.addFunction("OnTouch", &JoyTube::OnTouch)
 		.addData("m_testInt", &JoyTube::m_testInt)
+		.addFunction("SetSourcePath", &JoyTube::SetSourcePath)
+		.addFunction("InitPlugin", &JoyTube::InitPlugin)
+		.addFunction("OnLeaveGame", &JoyTube::OnLeaveGame)
+		.addFunction("SetMusicMute", &JoyTube::SetMusicMute)
+		.addFunction("Abort", &JoyTube::Abort)
+		.addFunction("RegisterCreditEventCB", &JoyTube::RegisterCreditEventCB)
+		.addFunction("RegisterErrorStatusCB", &JoyTube::RegisterErrorStatusCB)
+		.addFunction("ResetErrorStatus", &JoyTube::ResetErrorStatus)
+		.addFunction("GetGameStatus", &JoyTube::GetGameStatus)
+		.addFunction("GetPlayState", &JoyTube::GetPlayState)
+		.addFunction("IsEnteringSetting", &JoyTube::IsEnteringSetting)
 		.endClass()
 		.endNamespace();
 }
 
-void JoyTube::Init(luabridge::LuaRef node)
-{
-	cocos2d::Node* parentNode = static_cast<cocos2d::Node*>(tolua_tousertype(node.state(), 0, 0));
-	AddSprite(parentNode);
-}
-
-void JoyTube::AddSprite(cocos2d::Node* parentNode)
+void JoyTube::AddSprite(luabridge::LuaRef node)
 {
 	auto scene = Director::getInstance()->getRunningScene();
 	if (!scene)
@@ -98,6 +111,7 @@ void JoyTube::AddSprite(cocos2d::Node* parentNode)
 		return;
 	}
 
+	cocos2d::Node* parentNode = static_cast<cocos2d::Node*>(tolua_tousertype(node.state(), 0, 0));
 	if (!parentNode->getChildByName(m_spriteName))
 	{
 		m_sprite->setAnchorPoint(Vec2(0, 0));
@@ -114,10 +128,97 @@ void JoyTube::OnTouch(int x, int y)
 void JoyTube::Process(float tick)
 {
 	//CCLOG("JoyTube::Process tick %f", tick);
+
+	if (m_joyTubeNative->n_isCreditEvent())
+	{
+		const int chip = m_joyTubeNative->n_isCredit();
+		if (m_creditEventCallback)
+		{
+			m_creditEventCallback(chip);
+		}
+	}
+
+	const int errorStatus = m_joyTubeNative->n_isErrorDefine();
+	if (errorStatus != 0)
+	{
+		if (m_errorStatusCallback)
+		{
+			m_errorStatusCallback(errorStatus);
+		}
+	}
+}
+
+void JoyTube::CallEndOfFrames()
+{
+	//CCLOG("JoyTube::CallEndOfFrames tick %f", cocos2d::Director::getInstance()->getDeltaTime());
+
 	UpdateTextureData();
 }
 
 void JoyTube::UpdateTextureData()
 {
 	m_texture2D->updateWithData(m_textureData, 0, 0, m_width, m_height);
+}
+
+void JoyTube::SetSourcePath(std::string sourcePath)
+{
+	m_joyTubeNative->n_stringFromUnity(sourcePath);
+}
+
+void JoyTube::InitPlugin(int left, int top, int width, int height, bool local)
+{
+	m_joyTubeNative->n_native(left, top, width, height, local);
+}
+
+void JoyTube::OnLeaveGame()
+{
+	m_creditEventCallback = nullptr;
+	m_errorStatusCallback = nullptr;
+	m_joyTubeNative->n_GameDestroy();
+}
+
+void JoyTube::SetMusicMute(bool isMute)
+{
+	m_joyTubeNative->n_setSoundMute(isMute);
+}
+
+void JoyTube::Abort()
+{
+	m_joyTubeNative->n_setAbort();
+}
+
+void JoyTube::RegisterCreditEventCB(luabridge::LuaRef cb)
+{
+	m_creditEventCallback = [cb](int chip)
+	{
+		cb(chip);
+	};
+}
+
+void JoyTube::RegisterErrorStatusCB(luabridge::LuaRef cb)
+{
+	m_errorStatusCallback = [cb](int chip)
+	{
+		cb(chip);
+	};
+}
+
+void JoyTube::ResetErrorStatus()
+{
+	m_joyTubeNative->n_clearErrorDefine();
+}
+
+int JoyTube::GetGameStatus()
+{
+	return m_joyTubeNative->n_isGameStatus();
+}
+
+int JoyTube::GetPlayState()
+{
+	return m_joyTubeNative->n_isPlayState();
+}
+
+bool JoyTube::IsEnteringSetting()
+{
+	return m_joyTubeNative->n_enteringSetting();
 }

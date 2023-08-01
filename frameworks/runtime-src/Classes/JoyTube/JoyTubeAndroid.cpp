@@ -5,6 +5,7 @@
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 
+#define JOYTUBE_TEST
 
 #if ( CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID )
 extern std::string helloWorldFun();
@@ -66,6 +67,59 @@ extern "C" {
     void SetInputActive(bool bActive);
     void setAbort();
 }
+#if defined(JOYTUBE_TEST)
+void JoyTubeAndroid::n_set_debug_log_func(DebugLogFunc func) {}
+int JoyTubeAndroid::n_native(int left, int top, int width, int height, bool local) { return 0; }
+void JoyTubeAndroid::n_startTimer(bool atfirst) {}
+void JoyTubeAndroid::n_checkTimer() {}
+bool JoyTubeAndroid::n_passStartGame() { return false; }
+int JoyTubeAndroid::n_sendMessage(std::string system, std::string cmd, std::string jsonstring) { return 0; }
+int JoyTubeAndroid::n_useItem(std::string jsonstring) { return 0; }
+int JoyTubeAndroid::n_isUsedItem() { return 0; }
+void JoyTubeAndroid::n_setCredit(double credit) {}
+double JoyTubeAndroid::n_isCredit() { return 0; }
+bool JoyTubeAndroid::n_isCreditEvent() { return false; }
+int JoyTubeAndroid::n_isGameStatus() { return 0; }
+int JoyTubeAndroid::n_isPlayState() { return 0; }
+int JoyTubeAndroid::n_isErrorDefine() { return 0; }
+void JoyTubeAndroid::n_clearErrorDefine() {}
+int JoyTubeAndroid::n_isPostMessage() { return 0; }
+int* JoyTubeAndroid::n_getPostMessageString() { return nullptr; }
+void JoyTubeAndroid::n_openGameInfo(bool isActive) {}
+int* JoyTubeAndroid::n_getJsonString() { return nullptr; }
+void JoyTubeAndroid::n_stringFromUnity(std::string str) {}
+int JoyTubeAndroid::n_logout() { return 0; }
+int* JoyTubeAndroid::n_CreateTextureFunc() { return nullptr; }
+int JoyTubeAndroid::n_isTextureId() { return 0; }
+int JoyTubeAndroid::n_isTextureWidth() { return 0; }
+int JoyTubeAndroid::n_isTextureHeight() { return 0; }
+int JoyTubeAndroid::n_isTextureWidthGl() { return 0; }
+int JoyTubeAndroid::n_isTextureHeightGl() { return 0; }
+int* JoyTubeAndroid::n_NativeStepFunc() { return nullptr; }
+int JoyTubeAndroid::n_isRenderTextureId(int side) { return 0; }
+int JoyTubeAndroid::n_isRenderTextureWidth(int side) { return 0; }
+int JoyTubeAndroid::n_isRenderTextureHeight(int side) { return 0; }
+int JoyTubeAndroid::n_isRenderTextureWidthGl(int side) { return 0; }
+int JoyTubeAndroid::n_isRenderTextureHeightGl(int side) { return 0; }
+int JoyTubeAndroid::n_isRenderTextureSide() { return 0; }
+bool JoyTubeAndroid::n_isDrawRenderTexture() { return true; }
+int JoyTubeAndroid::n_isFinishInitialize() { return 0; }
+bool JoyTubeAndroid::n_isArrivedUpdateTex() { return true; }
+int JoyTubeAndroid::n_isArrivedTextureId() { return 0; }
+int JoyTubeAndroid::n_isArrivedTextureWidth() { return 0; }
+int JoyTubeAndroid::n_isArrivedTextureHeight() { return 0; }
+int JoyTubeAndroid::n_isArrivedTextureWidthGl() { return 0; }
+int JoyTubeAndroid::n_isArrivedTextureHeightGl() { return 0; }
+int JoyTubeAndroid::n_isArrivedTextureFormat() { return 0; }
+void JoyTubeAndroid::n_PushButtons(int type) {}
+void JoyTubeAndroid::n_PullButtons(int type) {}
+void JoyTubeAndroid::n_toPause(bool pause) {}
+void JoyTubeAndroid::n_GameDestroy() {}
+void JoyTubeAndroid::n_setSoundMute(bool isMute) {}
+bool JoyTubeAndroid::n_enteringSetting() { return true; }
+void JoyTubeAndroid::n_SetInputActive(bool bActive) {}
+void JoyTubeAndroid::n_setAbort() {}
+#else
 void JoyTubeAndroid::n_set_debug_log_func(DebugLogFunc func) {return set_debug_log_func(func); }
 int JoyTubeAndroid::n_native(int left, int top, int width, int height, bool local) { return native( left, top, width, height, local); }
 void JoyTubeAndroid::n_startTimer(bool atfirst) { return startTimer(atfirst); }
@@ -117,7 +171,7 @@ void JoyTubeAndroid::n_setSoundMute(bool isMute) { return setSoundMute(isMute);}
 bool JoyTubeAndroid::n_enteringSetting() { return enteringSetting();}
 void JoyTubeAndroid::n_SetInputActive(bool bActive) { return SetInputActive(bActive);}
 void JoyTubeAndroid::n_setAbort() { return setAbort();}
-
+#endif
 
 
 JoyTubeAndroid::JoyTubeAndroid(int width, int height)

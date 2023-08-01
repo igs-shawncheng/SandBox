@@ -5,6 +5,8 @@
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 
+#define JOYTUBE_TEST
+
 struct HandleData {
 	HMODULE m_hDll;
 };
@@ -76,6 +78,7 @@ void JoyTubeWin32::TestLibInputXY(int x, int y)
 	}
 }
 
+#if defined(JOYTUBE_TEST)
 void JoyTubeWin32::n_set_debug_log_func(DebugLogFunc func) {}
 int JoyTubeWin32::n_native(int left, int top, int width, int height, bool local) { return 0; }
 void JoyTubeWin32::n_startTimer(bool atfirst){}
@@ -86,7 +89,7 @@ int JoyTubeWin32::n_useItem(std::string jsonstring) { return 0; }
 int JoyTubeWin32::n_isUsedItem(){ return 0; }
 void JoyTubeWin32::n_setCredit(double credit){}
 double JoyTubeWin32::n_isCredit(){ return 0; }
-bool JoyTubeWin32::n_isCreditEvent(){ return true; }
+bool JoyTubeWin32::n_isCreditEvent(){ return false; }
 int JoyTubeWin32::n_isGameStatus(){ return 0; }
 int JoyTubeWin32::n_isPlayState(){ return 0; }
 int JoyTubeWin32::n_isErrorDefine(){ return 0; }
@@ -127,3 +130,5 @@ void JoyTubeWin32::n_setSoundMute(bool isMute){}
 bool JoyTubeWin32::n_enteringSetting(){ return true; }
 void JoyTubeWin32::n_SetInputActive(bool bActive){}
 void JoyTubeWin32::n_setAbort(){}
+#else
+#endif

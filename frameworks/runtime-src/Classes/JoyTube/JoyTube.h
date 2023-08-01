@@ -21,10 +21,21 @@ public:
 	virtual ~JoyTube();
 
 	void RegisterLua();
-	
-	void Init(luabridge::LuaRef node);
-	void AddSprite(cocos2d::Node* node);
+
+	void AddSprite(luabridge::LuaRef node);
 	void OnTouch(int x, int y);
+
+	void SetSourcePath(std::string sourcePath);
+	void InitPlugin(int left, int top, int width, int height, bool local);
+	void OnLeaveGame();
+	void SetMusicMute(bool isMute);
+	void Abort();
+	void RegisterCreditEventCB(luabridge::LuaRef cb);
+	void RegisterErrorStatusCB(luabridge::LuaRef cb);
+	void ResetErrorStatus();
+	int GetGameStatus();
+	int GetPlayState();
+	bool IsEnteringSetting();
 	
 	int m_testInt = 640;
 protected:
@@ -44,5 +55,15 @@ protected:
 
 	void Process(float tick);
 	void UpdateTextureData();
+
+	void CallEndOfFrames();
+private:
+	typedef std::function< void(int) > OnCreditEventCallback;
+	OnCreditEventCallback m_creditEventCallback = nullptr;
+
+	typedef std::function< void(int) > OnErrorStatusCallback;
+	OnErrorStatusCallback m_errorStatusCallback = nullptr;
+
+	EventListenerCustom* m_callEndOfFramesListener;
 };
 

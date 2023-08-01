@@ -13,7 +13,9 @@ GameView.RESOURCE_BINDING = {
 
 local REGISTER_EVENTS = {
     cc.exports.define.EVENTS.LOGIN,
+    cc.exports.define.EVENTS.CLICKED_BACK_BTN,
     cc.exports.define.EVENTS.LOGOUT,
+    cc.exports.define.EVENTS.PLUGIN_ERROR_STATUS,
 }
 
 local GAMEVIEW_STATE = {
@@ -36,10 +38,8 @@ local GAMEVIEW_STATE = {
 function GameView:onCreate()
     print("GameView:onCreate")
 
-    local testInt = Inanna.GetJoyTube().m_testInt
-    print("Inanna.GetJoyTube().m_testInt", testInt)
-
     self.m_state = cc.exports.FiniteState:create( GAMEVIEW_STATE.WAIT_LOGIN )
+    self.m_pluginProgram = cc.exports.PluginProgram:create()
 
     self:RegisterEvent()
 end
@@ -52,6 +52,10 @@ function GameView:RegisterEvent()
             self:OnLogin()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LOGOUT ) then
             self:OnLogout()
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CLICKED_BACK_BTN ) then
+            self:OnClickedBackBtn()
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.PLUGIN_ERROR_STATUS ) then
+            self:OnPluginErrorStatus( event._usedata )
         end
     end
 
@@ -67,7 +71,20 @@ function GameView:OnLogin()
 end
 
 function GameView:OnLogout()
+    self.m_pluginProgram:OnLeaveGame()
     self.m_state:Transit( GAMEVIEW_STATE.WAIT_LOGIN )
+end
+
+function GameView:OnClickedBackBtn()
+    if self.m_state:Current() ~= GAMEVIEW_STATE.WAIT_LOGIN then
+        cc.exports.dispatchEvent( cc.exports.define.EVENTS.LOGOUT )
+    end
+end
+
+function GameView:OnPluginErrorStatus( errorStatus )
+    -- 處理 errorStatus
+
+    self.m_state:Transit( GAMEVIEW_STATE.ERROR )
 end
 
 function GameView:OnEnter()
@@ -88,7 +105,7 @@ function GameView:InitJoyTube()
     end )
 
     -- output
-    Inanna.GetJoyTube():Init( self.m_joyTubeOutput )
+    Inanna.GetJoyTube():AddSprite( self.m_joyTubeOutput )
 end
 
 function GameView:OnExit()
@@ -112,6 +129,9 @@ function GameView:OnUpdate( dt )
             self:setVisible( true )
             self.m_touch_layer:setTouchEnabled( true )
             self.m_joyTubeOutput:setVisible( true )
+
+            self.m_pluginProgram:SetMusicMute( true )
+            self.m_pluginProgram:Init( "testSourcePath" )
 
             self.m_state:Transit( GAMEVIEW_STATE.IDLE )
         end
@@ -151,8 +171,13 @@ function GameView:OnUpdate( dt )
     elseif currentState == GAMEVIEW_STATE.ERROR then
         if self.m_state:IsEntering() then
             print("GAMEVIEW_STATE.ERROR")
+
+            self.m_pluginProgram:Abort()
         end
     end
+
+    self.m_pluginProgram:GetGameStatus()
+    self.m_pluginProgram:GetPlayState()
 end
 
 return GameView

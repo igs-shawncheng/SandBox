@@ -108,7 +108,7 @@ end
 
 function NavigationView:OnClickedBackBtn( event )
     if event.name == "ended" then
-        cc.exports.dispatchEvent( cc.exports.define.EVENTS.LOGOUT )
+        cc.exports.dispatchEvent( cc.exports.define.EVENTS.CLICKED_BACK_BTN )
     end
 end
 

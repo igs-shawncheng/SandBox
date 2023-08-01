@@ -1,8 +1,13 @@
 local EVENTS = {
+	CLICKED_BACK_BTN = "clicked_back_btn",
+
+	LOGIN = "login",
+	LOGOUT = "logout",
+
     CHIP_UPDATE = "chip_update",
     SET_ARCADE_NO = "set_arcade_no",
-    LOGIN = "login",
-    LOGOUT = "logout",
+
+    PLUGIN_ERROR_STATUS = "plugin_error_status",
 }
 
 local DEFAULT_FONT = "Microsoft JhengHei"  -- 微軟正黑體
