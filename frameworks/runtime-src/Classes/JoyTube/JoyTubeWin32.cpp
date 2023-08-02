@@ -34,6 +34,7 @@ void JoyTubeWin32::InitLibrary()
 	if (m_hData->m_hDll == NULL)
 	{
 		CCLOG("JoyTube::InitLibrary LoadLibraryA GetLastError %d", GetLastError());
+		throw std::runtime_error("JoyTube::InitLibrary LoadLibraryA GetLastError");
 	}
 	else
 	{

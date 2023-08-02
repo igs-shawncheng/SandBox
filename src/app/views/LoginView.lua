@@ -1,4 +1,3 @@
-
 local LoginView = class("LoginView", cc.load("mvc").ViewBase)
 
 LoginView.RESOURCE_FILENAME = "Game/LoginView.csb"
@@ -83,12 +82,12 @@ end
 function LoginView:ReqLogin()
     -- 登入Server
     print("機台號碼:", tonumber(self.m_eb_input:getText()))
-
     if self.m_eb_input:getText() == "" then
         self:OnLoginFail( "尚未輸入機台號碼" )
     else
-        -- 待串登入協定
-        self:OnLoginAck()
+        -- 串登入協定
+        --cc.NetSystem:GetInstance():Connect("127.0.0.1", "8888")
+		self:OnLoginAck()
     end
 end
 
