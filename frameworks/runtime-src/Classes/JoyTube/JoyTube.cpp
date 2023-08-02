@@ -91,6 +91,8 @@ void JoyTube::RegisterLua()
 		.addFunction("InitPlugin", &JoyTube::InitPlugin)
 		.addFunction("OnLeaveGame", &JoyTube::OnLeaveGame)
 		.addFunction("SetMusicMute", &JoyTube::SetMusicMute)
+		.addFunction("SetGameInfoOpen", &JoyTube::SetGameInfoOpen)
+		.addFunction("SetInputActive", &JoyTube::SetInputActive)
 		.addFunction("Abort", &JoyTube::Abort)
 		.addFunction("RegisterCreditEventCB", &JoyTube::RegisterCreditEventCB)
 		.addFunction("RegisterErrorStatusCB", &JoyTube::RegisterErrorStatusCB)
@@ -180,6 +182,16 @@ void JoyTube::OnLeaveGame()
 void JoyTube::SetMusicMute(bool isMute)
 {
 	m_joyTubeNative->n_setSoundMute(isMute);
+}
+
+void JoyTube::SetGameInfoOpen(bool isOpen)
+{
+	m_joyTubeNative->n_openGameInfo(isOpen);
+}
+
+void JoyTube::SetInputActive(bool isActive)
+{
+	m_joyTubeNative->n_SetInputActive(isActive);
 }
 
 void JoyTube::Abort()

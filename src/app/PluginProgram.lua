@@ -2,6 +2,7 @@ local PluginProgram = class( "PluginProgram" )
 PluginProgram.__index = PluginProgram
 
 PluginProgram.m_isMute = false
+PluginProgram.m_isInputActive = true
 
 local ERROR_DEFINE = {
 	NONE = 0,
@@ -64,10 +65,30 @@ function PluginProgram:SetMusicMute( isMute )
 
 	self.m_isMute = isMute
 	Inanna.GetJoyTube():SetMusicMute( isMute )
+
+	cc.exports.dispatchEvent( cc.exports.define.EVENTS.MUTE_SETTING_CHANGED, isMute )
 end
 
 function PluginProgram:GetMusicMute()
 	return self.m_isMute
+end
+
+function PluginProgram:SetGameInfoOpen( isOpen )
+	Inanna.GetJoyTube():SetGameInfoOpen( isOpen )
+end
+
+-- 關閉輸入避免平台視窗跳出時點到遊戲
+function PluginProgram:SetInputActive( isActive )
+	if self.m_isInputActive == isActive then return end
+
+	self.m_isInputActive = isActive
+	Inanna.GetJoyTube():SetInputActive( isActive )
+
+	cc.exports.dispatchEvent( cc.exports.define.EVENTS.IO_SETTING_CHANGED, isActive )
+end
+
+function PluginProgram:GetInputActive()
+	return self.m_isInputActive
 end
 
 function PluginProgram:RegisterCreditEventCB()

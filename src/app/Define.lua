@@ -1,5 +1,14 @@
 local EVENTS = {
 	CLICKED_BACK_BTN = "clicked_back_btn",
+	CLICKED_MALL_BTN = "clicked_mall_btn",
+	CLICKED_GAME_STATUS_BTN = "clicked_game_status_btn",
+	CLICKED_INFO_BTN = "clicked_info_btn",
+	CLICKED_ITEM_BTN = "clicked_item_btn",
+	CLICKED_MUSIC_BTN = "clicked_music_btn",
+	CLICKED_INPUT_BTN = "clicked_input_btn",
+
+	MUTE_SETTING_CHANGED = "mute_setting_changed",
+	IO_SETTING_CHANGED = "io_setting_changed",
 
 	LOGIN = "login",
 	LOGOUT = "logout",

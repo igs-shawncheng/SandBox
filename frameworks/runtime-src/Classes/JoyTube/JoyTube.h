@@ -29,6 +29,8 @@ public:
 	void InitPlugin(int left, int top, int width, int height, bool local);
 	void OnLeaveGame();
 	void SetMusicMute(bool isMute);
+	void SetGameInfoOpen(bool isOpen);
+	void SetInputActive(bool isActive);
 	void Abort();
 	void RegisterCreditEventCB(luabridge::LuaRef cb);
 	void RegisterErrorStatusCB(luabridge::LuaRef cb);

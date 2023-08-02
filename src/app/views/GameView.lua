@@ -9,6 +9,9 @@ GameView.RESOURCE_BINDING = {
     ["n_JoyTube_Input"] = {
         ["varname"] = "m_joyTubeInput",
     },
+    ["n_GameStatus"] = {
+        ["varname"] = "m_n_gameStatus",
+    },
     ["txt_GameStatus"] = {
         ["varname"] = "m_txt_gameStatus",
     },
@@ -22,6 +25,11 @@ local REGISTER_EVENTS = {
     cc.exports.define.EVENTS.CLICKED_BACK_BTN,
     cc.exports.define.EVENTS.LOGOUT,
     cc.exports.define.EVENTS.PLUGIN_ERROR_STATUS,
+    cc.exports.define.EVENTS.CLICKED_GAME_STATUS_BTN,
+    cc.exports.define.EVENTS.CLICKED_INFO_BTN,
+    cc.exports.define.EVENTS.CLICKED_ITEM_BTN,
+    cc.exports.define.EVENTS.CLICKED_MUSIC_BTN,
+    cc.exports.define.EVENTS.CLICKED_INPUT_BTN,
 }
 
 local GAMEVIEW_STATE = {
@@ -62,6 +70,17 @@ function GameView:RegisterEvent()
             self:OnClickedBackBtn()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.PLUGIN_ERROR_STATUS ) then
             self:OnPluginErrorStatus( event._usedata )
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CLICKED_GAME_STATUS_BTN ) then
+            self.m_n_gameStatus:setVisible( not self.m_n_gameStatus:isVisible() )
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CLICKED_INFO_BTN ) then
+            self.m_pluginProgram:SetGameInfoOpen( true ) -- 僅打開，關閉會在日方遊戲中關閉說明頁
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CLICKED_ITEM_BTN ) then
+            -- 使用道具卡
+            self.m_pluginProgram:SetGameInfoOpen( false )
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CLICKED_MUSIC_BTN ) then
+            self.m_pluginProgram:SetMusicMute( not self.m_pluginProgram:GetMusicMute() )
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CLICKED_INPUT_BTN ) then
+            self.m_pluginProgram:SetInputActive( not self.m_pluginProgram:GetInputActive() )
         end
     end
 
@@ -122,6 +141,8 @@ end
 
 function GameView:OnEnter()
     print("GameView:OnEnter()")
+
+    self.m_n_gameStatus:setVisible( false )
 
     self:InitJoyTube()
 end
