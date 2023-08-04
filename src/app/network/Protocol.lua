@@ -1,5 +1,3 @@
-local Protocol = class("Protocol")
-
 local PACHIN_U2G_PROTOCOL =
 {
     PACHIN_U2G_GAME_INFO_REQ				= 1,            -- 遊戲資訊要求( 押注, 桌號.... )
@@ -19,5 +17,6 @@ local PACHIN_G2U_PROTOCOL =
     SLOT_G2U_GET_BONUS_RECORD_ACK			= 5,			-- std::<BonusRecord>,Uint
 }
 
-cc.Protocol = Protocol
-return Protocol
+cc.Protocol = {}
+cc.Protocol.PachinG2UProtocol = PACHIN_G2U_PROTOCOL
+cc.Protocol.PachinU2GProtocol = PACHIN_U2G_PROTOCOL

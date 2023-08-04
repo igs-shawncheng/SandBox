@@ -22,6 +22,8 @@ LoginView.RESOURCE_BINDING = {
 local REGISTER_EVENTS = {
     cc.exports.define.EVENTS.LOGIN,
     cc.exports.define.EVENTS.LOGOUT,
+    cc.exports.define.EVENTS.NET_LOGIN_SUCCESS,
+    cc.exports.define.EVENTS.NET_LOGIN_FAIL,
 }
 
 function LoginView:onCreate()
@@ -38,6 +40,10 @@ function LoginView:RegisterEvent()
             self:setVisible( false )
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LOGOUT ) then
             self:setVisible( true )
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.NET_LOGIN_SUCCESS ) then
+            self:OnLoginAck()
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.NET_LOGIN_FAIL ) then
+            self:OnLoginFail(event._usedata)
         end
     end
 
@@ -84,18 +90,27 @@ function LoginView:ReqLogin()
     print("機台號碼:", tonumber(self.m_eb_input:getText()))
     if self.m_eb_input:getText() == "" then
         self:OnLoginFail( "尚未輸入機台號碼" )
+        return
+    end
+
+    -- 串登入協定
+    if cc.exports.define.QUICK_TEST then
+        self:OnLoginAck()
     else
-        -- 串登入協定
-        --cc.NetSystem:GetInstance():Connect("127.0.0.1", "8888")
-		self:OnLoginAck()
+        cc.NetService:GetInstance():Connect("127.0.0.1", "8888")
     end
 end
 
 function LoginView:OnLoginAck()
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.SET_ARCADE_NO, tonumber(self.m_eb_input:getText()) )
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.CHIP_UPDATE, 5678 )
-
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.LOGIN )
+    
+    if cc.NetService:IsConnected() then
+        local command = cc.Command.new(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ)
+        cc.NetService:GetInstance():Send(command)
+    end
+    
 end
 
 function LoginView:OnLoginFail( reason )

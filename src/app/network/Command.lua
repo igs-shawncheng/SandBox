@@ -5,8 +5,11 @@ local Command = class("Command")
 function Command:ctor(commandType, content)
     self._data = {}
     self._data.commandType = commandType
-    self._data.content = content
-    print("Command ctor cmd:",commandType)
+    if content == nil then
+        self._data.content = ""
+    else
+        self._data.content = content
+    end
 end
 
 function Command:Serialize()

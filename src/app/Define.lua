@@ -19,13 +19,21 @@ local EVENTS = {
     PLUGIN_ERROR_STATUS = "plugin_error_status",
 
     SHOW_MSG = "show_msg",
+
+	NET_LOGIN_SUCCESS = "net_login_success",
+	NET_LOGIN_FAIL = "net_login_fail",
+	NET_ON_DISCONNECT = "net_on_disconnect",
+	NET_ON_RECONNECT = "net_on_reconnect",
 }
 
 local DEFAULT_FONT = "Microsoft JhengHei"  -- 微軟正黑體
 
 local BLANK_PNG = "Platform/BlankPNG.png"
 
+local QUICK_TEST = true
+
 cc.exports.define = {}
 cc.exports.define.EVENTS = EVENTS
 cc.exports.define.DEFAULT_FONT = DEFAULT_FONT
 cc.exports.define.BLANK_PNG = BLANK_PNG
+cc.exports.define.QUICK_TEST = QUICK_TEST
