@@ -1,20 +1,21 @@
 require ("app.network.Connection")
 require ("app.network.Command")
 require ("app.network.Protocol")
+require ("app.network.Processor.ResponseTrackerProcessor")
 
 local NetService = class("NetService")
 local scheduler = cc.Director:getInstance():getScheduler()
---local commandType = cc.Protocol.PACHIN_G2U_PROTOCOL
+
 local CHECK_SELECT_INTERVAL = 0.05
+local CommandProcessor = {}
 
 local CONNECT_STATE = {
-    INIT            = 1,
-    WAIT_CONNECT    = 2,    -- 等待連線
-    CONNECT         = 3,    -- 連線
-    CONNECTING      = 4,    -- 連線中
-    CONNECTED       = 5,    -- 已連線
-    DISCONNECT      = 6,    -- 離線
-    RECONNECT       = 7,    -- 重新連線
+    WAIT_CONNECT    = 1,    -- 等待連線
+    CONNECT         = 2,    -- 連線
+    CONNECTING      = 3,    -- 連線中
+    CONNECTED       = 4,    -- 已連線
+    DISCONNECT      = 5,    -- 離線
+    RECONNECT       = 6,    -- 重新連線
 }
 
 function NetService:ctor()
@@ -29,31 +30,39 @@ function NetService:GetInstance()
 end
 
 function NetService:Init()
-    self._loginState = cc.exports.FiniteState:create(CONNECT_STATE.INIT)
+    if self.isInit then
+        return
+    end
+    print("NetService:Init")
+    self.isInit = true
+    self._loginState = cc.exports.FiniteState:create(CONNECT_STATE.WAIT_CONNECT)
+    self._connectData = {}
+    self._connection = cc.Connection:create(self.OnRecvSocket)
     self._schedulerID = scheduler:scheduleScriptFunc(handler(self, self.Update), CHECK_SELECT_INTERVAL, false)
+    table.insert(CommandProcessor, cc.ResponseTrackerProcessor.create())
+end
+
+function NetService:Connect(ip, port)
+    print("NetService:connect ip, port = ", ip, port)
+    self._connectData.ip = ip
+    self._connectData.port = port
+    self._loginState:Transit(CONNECT_STATE.CONNECT)
 end
 
 function NetService:Update()
     local currentState = self._loginState:Tick()
-    if currentState == CONNECT_STATE.INIT then
+    if currentState == CONNECT_STATE.WAIT_CONNECT then
         if self._loginState:IsEntering() then
-            self._connection = cc.Connection.create(self.OnRecvSocket)
-            self._connectData = {}
-            self._loginState:Transit(CONNECT_STATE.WAIT_CONNECT)
-        end
-    elseif currentState == CONNECT_STATE.WAIT_CONNECT then
-        if self._loginState:IsEntering() then
-            print("LOGIN_STATE.WAIT_CONNECT")
         end
     elseif currentState == CONNECT_STATE.CONNECT then
         if self._loginState:IsEntering() then
-            print("LOGIN_STATE.CONNECT")
+            --print("LOGIN_STATE.CONNECT")
             self._connection:Connect(self._connectData.ip, self._connectData.port)
             self._loginState:Transit(CONNECT_STATE.CONNECTING)
         end
     elseif currentState == CONNECT_STATE.CONNECTING then
         if self._loginState:IsEntering() then
-            print("LOGIN_STATE.CONNECTING")
+            --print("LOGIN_STATE.CONNECTING")
         end
         --todo connect timeout
         if self._connection:IsConnected() then
@@ -61,7 +70,7 @@ function NetService:Update()
         end
     elseif currentState == CONNECT_STATE.CONNECTED then
         if self._loginState:IsEntering() then
-            print("LOGIN_STATE.CONNECTED")
+            print("NetService:Connect Success.")
             cc.exports.dispatchEvent( cc.exports.define.EVENTS.NET_LOGIN_SUCCESS )
         end
         self._connection:HandleSocketIOLoop()
@@ -71,7 +80,6 @@ function NetService:Update()
         end
     elseif currentState == CONNECT_STATE.RECONNECT then
         if self._loginState:IsEntering() then
-            self._connection = cc.Connection:create(self.OnRecvSocket)
             self._loginState:Transit(CONNECT_STATE.CONNECT)
             print("LOGIN_STATE.RECONNECT")
         end
@@ -84,6 +92,10 @@ function NetService:OnRecvSocket(buffer)
         print("NetService:DeSerialize Success command:", command.commandType)
     else
         print("NetService:DeSerialize Fail command:", command.commandType)
+    end
+
+    for key, value in pairs(CommandProcessor) do
+        value:PreProcessRecv(command)
     end
 end
 
@@ -102,17 +114,16 @@ end
 --     end
 -- end
 
-function NetService:Connect(ip, port)
-    print("[NetService:connect] ip, port = ", ip, port)
-    self._connectData.ip = ip
-    self._connectData.port = port
-    self._loginState:Transit(CONNECT_STATE.CONNECT)
-end
-
 function NetService:Send(command)
     if self._loginState:Tick() ~= CONNECT_STATE.CONNECTED then
+        print("Send Command [".. command.commandType.. "] Fail! Connection doesn't Connected.")
         return
     end
+    
+    for key, value in pairs(CommandProcessor) do
+        value:PreProcessSend(command)
+    end
+
     self._connection:Send(command:Serialize())
 end
 

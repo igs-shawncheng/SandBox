@@ -105,12 +105,9 @@ function LoginView:OnLoginAck()
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.SET_ARCADE_NO, tonumber(self.m_eb_input:getText()) )
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.CHIP_UPDATE, 5678 )
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.LOGIN )
-    
-    if cc.NetService:IsConnected() then
-        local command = cc.Command.new(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ)
-        cc.NetService:GetInstance():Send(command)
-    end
-    
+
+    local command = cc.Command.new(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ)
+    cc.NetService:GetInstance():Send(command)
 end
 
 function LoginView:OnLoginFail( reason )

@@ -24,13 +24,17 @@ end
 function Command:DeSerialize(buffer)
     local success, command = pcall(json.decode, buffer)
     if not success then
-        print("Command ToCommand Error data:", command)
+        print("Command ToCommand Error data:", buffer)
         return false
     end
-    print("Command ToCommand Result:", dump(command))
+    dump(command)
     self._data.commandType = command.commandType
     self._data.content = command.content
     return true
+end
+
+function Command:CommandType()
+    return self._data.commandType
 end
 
 

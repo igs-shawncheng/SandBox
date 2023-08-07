@@ -8,7 +8,6 @@ require "app.network.NetService"
 
 local function main()
     require("app.MyApp"):create():run()
-    cc.NetService:GetInstance():Init()
 end
 
 local status, msg = xpcall(main, __G__TRACKBACK__)

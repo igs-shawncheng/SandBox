@@ -1,3 +1,4 @@
+require "cocos.cocos2d.json"
 require("luasocket.socket")
 local Connection = class("Connection")
 
@@ -8,7 +9,7 @@ local Connection = class("Connection")
 
 function Connection:ctor(socketCallback)
     self._socketCallBack = socketCallback
-    --self:_socketCallBack(1234)
+    print("Connection:ctor", self._socketCallBack)
     self._isConnected = false
     self._sendPacketQueue = {}
 end
@@ -65,23 +66,40 @@ end
 function Connection:HandleReceivePacket()
     --檢查有無socket
     local recvt, sendt, status = socket.select({self._socket}, nil, 0)
-    print("Connection:HandleReceivePacket = ", #recvt, sendt, status)
+    --print("Connection:HandleReceivePacket = ", #recvt, sendt, status)
     if #recvt <= 0 then
         return
     end
-    local buffer = self._socket:receive(0)
-    self._socketCallBack(buffer)
+    
+    local buffer = ""
+    while true do
+        local data, err, partial = self._socket:receive(1)
+        --print("HandleReceivePacket:", data, err, partial)
+        if data then
+            buffer = buffer .. data
+        else
+            if err ~= "timeout" then
+                print("Error receiving data:", err)
+            end
+            break
+        end
+    end
+    --print(buffer)
+
+    if self._socketCallBack then
+        self._socketCallBack(buffer)
+    end
 end
 
 --[[
     private 處理發送任務  
 ]]
 function Connection:HandleSendPacket()
-    if self.Packet and #self._sendPacketQueue > 0 then
+    if self._sendPacketQueue and #self._sendPacketQueue > 0 then
         local data = self._sendPacketQueue[#self._sendPacketQueue]
-        print("Connection:HandleSendPacket data:", data)
         if data then
             local _len, _error = self._socket:send(data)
+            print("Connection:HandleSendPacket data:", data)
             if _len ~= nil and _len == #data then
                 table.remove(self._sendPacketQueue, #self._sendPacketQueue)
             else
