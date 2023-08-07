@@ -547,8 +547,11 @@ void ParticleSystemQuad::setupVBOandVAO()
 {
     // clean VAO
     glDeleteBuffers(2, &_buffersVBO[0]);
-    glDeleteVertexArrays(1, &_VAOname);
-    GL::bindVAO(0);
+    if (_VAOname)
+    {
+        glDeleteVertexArrays(1, &_VAOname);
+        GL::bindVAO(0);
+    }
     
     glGenVertexArrays(1, &_VAOname);
     GL::bindVAO(_VAOname);
