@@ -56,8 +56,9 @@ function Connection:HandleSocketIOLoop()
 end
 
 function Connection:Close()
-    self._socket:Close()
+    self._socket:close()
     self._isConnected = false
+    print("Close Connection")
 end
 
 --[[
@@ -66,28 +67,37 @@ end
 function Connection:HandleReceivePacket()
     --檢查有無socket
     local recvt, sendt, status = socket.select({self._socket}, nil, 0)
-    --print("Connection:HandleReceivePacket = ", #recvt, sendt, status)
-    if #recvt <= 0 then
+
+    if #recvt > 0 then
+        print("Connection:HandleReceivePacket = ", #recvt, sendt, status)
+        if status == nil then
+            self:Close()
+            return
+        end
+    else
         return
     end
     
     local buffer = ""
     while true do
-        local data, err, partial = self._socket:receive(1)
-        --print("HandleReceivePacket:", data, err, partial)
+        local data, receiveStatus, partial = self._socket:receive(1)
         if data then
             buffer = buffer .. data
         else
-            if err ~= "timeout" then
-                print("Error receiving data:", err)
+            if receiveStatus ~= "timeout" then
+                print("Error receiving data:", receiveStatus)
+                break
             end
-            break
+
+            if receiveStatus ~= "closed" then
+                break
+            end
         end
     end
-    --print(buffer)
+    print(buffer)
 
     if self._socketCallBack then
-        self._socketCallBack(buffer)
+        self:_socketCallBack(buffer)
     end
 end
 

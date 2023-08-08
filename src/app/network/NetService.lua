@@ -88,10 +88,10 @@ end
 
 function NetService:OnRecvSocket(buffer)
     local command = cc.Command:create()
-    if command.DeSerialize(buffer) then
-        print("NetService:DeSerialize Success command:", command.commandType)
+    if command:DeSerialize(buffer) then
+        print("NetService:DeSerialize Success command:", command:CommandType())
     else
-        print("NetService:DeSerialize Fail command:", command.commandType)
+        print("NetService:DeSerialize Fail buffer:", buffer)
     end
 
     for key, value in pairs(CommandProcessor) do
