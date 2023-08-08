@@ -12,6 +12,7 @@ end
 
 local ZOrder = {
     GAME = MIN_ZORDER,
+    FREE_SPIN_CARD = GetZorder(),
     NAVIGATION = GetZorder(),
     LOGIN = GetZorder(),
     MESSAGE_BOX = GetZorder(),
@@ -39,6 +40,9 @@ function MainScene:onCreate()
 
     local view = self:getApp():createView( "MessageBoxView" )
     self:addChild( view, ZOrder.MESSAGE_BOX )
+
+    local view = self:getApp():createView( "FreeSpinCardView" )
+    self:addChild( view, ZOrder.FREE_SPIN_CARD )
 end
 
 return MainScene

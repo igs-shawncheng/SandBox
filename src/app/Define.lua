@@ -19,8 +19,13 @@ local EVENTS = {
     PLUGIN_ERROR_STATUS = "plugin_error_status",
 
     SHOW_MSG = "show_msg",
+	
+    FREE_SPIN_CARD_TOTAL_BET = "free_spin_card_total_bet",
+    FREE_SPIN_CARD_INFO = "free_spin_card_info",
+    FREE_SPIN_CARD_SHOW = "free_spin_card_show",
+    FREE_SPIN_CARD_HIDE = "free_spin_card_hide",
 
-	NET_LOGIN_SUCCESS = "net_login_success",
+    NET_LOGIN_SUCCESS = "net_login_success",
 	NET_LOGIN_FAIL = "net_login_fail",
 	NET_ON_DISCONNECT = "net_on_disconnect",
 	NET_ON_RECONNECT = "net_on_reconnect",

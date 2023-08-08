@@ -55,6 +55,8 @@ function GameView:onCreate()
     self.m_state = cc.exports.FiniteState:create( GAMEVIEW_STATE.WAIT_LOGIN )
     self.m_pluginProgram = cc.exports.PluginProgram:create()
 
+    self.m_isUseItem = false
+
     self:RegisterEvent()
 end
 
@@ -75,7 +77,7 @@ function GameView:RegisterEvent()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CLICKED_INFO_BTN ) then
             self.m_pluginProgram:SetGameInfoOpen( true ) -- 僅打開，關閉會在日方遊戲中關閉說明頁
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CLICKED_ITEM_BTN ) then
-            -- 使用道具卡
+            self:OnClickedItemBtn()
             self.m_pluginProgram:SetGameInfoOpen( false )
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CLICKED_MUSIC_BTN ) then
             self.m_pluginProgram:SetMusicMute( not self.m_pluginProgram:GetMusicMute() )
@@ -137,6 +139,44 @@ function GameView:OnPluginErrorStatus( errorStatus )
     } )
 
     self.m_state:Transit( GAMEVIEW_STATE.ERROR )
+end
+
+function GameView:OnClickedItemBtn()
+    -- 測試道具卡介面
+    if self.m_isUseItem then
+        self.m_itemLeftTimes = self.m_itemLeftTimes - 1
+        self.m_itemTotalWin = self.m_itemTotalWin + 1000
+        cc.exports.dispatchEvent( cc.exports.define.EVENTS.FREE_SPIN_CARD_INFO,
+        {
+            leftTimes = self.m_itemLeftTimes,
+            totalWin = string.formatnumberthousands( self.m_itemTotalWin ),
+            totalCount = self.m_itemTotalCount,
+        } )
+
+        if self.m_itemLeftTimes == 0 then
+            cc.exports.dispatchEvent( cc.exports.define.EVENTS.FREE_SPIN_CARD_HIDE )
+            self.m_isUseItem = false
+        end
+
+        return
+    end
+
+    self.m_isUseItem = true
+
+    self.m_itemLeftTimes = 10
+    self.m_itemTotalWin = 0
+    self.m_itemTotalCount = 10
+    self.m_itemTotalBet = 1000
+
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.FREE_SPIN_CARD_INFO,
+    {
+        leftTimes = self.m_itemLeftTimes,
+        totalWin = string.formatnumberthousands( self.m_itemTotalWin ),
+        totalCount = self.m_itemTotalCount,
+    } )
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.FREE_SPIN_CARD_TOTAL_BET, string.formatnumberthousands( self.m_itemTotalBet ) )
+
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.FREE_SPIN_CARD_SHOW )
 end
 
 function GameView:OnEnter()
