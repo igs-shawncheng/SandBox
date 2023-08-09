@@ -6,6 +6,8 @@ local PACHIN_U2G_PROTOCOL =
     PACHIN_U2G_FREE_SPIN_REQ				= 4,
     PACHIN_U2G_FREE_SPIN_END_REQ			= 5,
     PACHIN_U2G_GET_BONUS_RECORD_REQ			= 6,            -- party 機台列表 BonusReocrdReq
+
+    PACHIN_U2G_LOGIN_REQ                    = 100,          -- 玩家登入
 }
 
 local PACHIN_G2U_PROTOCOL =

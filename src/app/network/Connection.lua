@@ -8,28 +8,27 @@ local Connection = class("Connection")
 ]]
 
 function Connection:ctor(socketCallback)
-    self._socketCallBack = socketCallback
-    print("Connection:ctor", self._socketCallBack)
-    self._isConnected = false
-    self._sendPacketQueue = {}
+    self.socketCallBack = socketCallback
+    self.isConnected = false
+    self.sendPacketQueue = {}
 end
 
 function Connection:Connect(ip, port)
-    self._ip = ip
-    self._port = port
-    self._socket = socket.tcp()  -- socket 協定
-    self._socket:settimeout(0) -- 非阻塞
-    self._socket:setoption("tcp-nodelay", true) -- 去掉優化
-    self._socket:connect(self._ip, self._port) -- 連線
+    self.ip = ip
+    self.port = port
+    self.socket = socket.tcp()  -- socket 協定
+    self.socket:settimeout(0) -- 非阻塞
+    self.socket:setoption("tcp-nodelay", true) -- 去掉優化
+    self.socket:connect(self.ip, self.port) -- 連線
 end
 
 function Connection:IsConnected()
     local forWrite = {}
-    table.insert(forWrite, self._socket)
+    table.insert(forWrite, self.socket)
     local readyForWrite
     _, readyForWrite, _ = socket.select(nil, forWrite, 0)
     if #readyForWrite > 0 then
-        self._isConnected = true
+        self.isConnected = true
         return true
     end
     return false
@@ -41,14 +40,14 @@ end
     @param: content
 ]]
 function Connection:Send(jsonStr)
-    table.insert(self._sendPacketQueue, 1, jsonStr)
+    table.insert(self.sendPacketQueue, 1, jsonStr)
 end
 
 --[[
     update socket loop by external
 ]]
 function Connection:HandleSocketIOLoop()
-    if not self._isConnected then
+    if not self.isConnected then
         return
     end
     self:HandleReceivePacket()
@@ -56,8 +55,8 @@ function Connection:HandleSocketIOLoop()
 end
 
 function Connection:Close()
-    self._socket:close()
-    self._isConnected = false
+    self.socket:close()
+    self.isConnected = false
     print("Close Connection")
 end
 
@@ -65,39 +64,50 @@ end
     private 處理接收任務
 ]]
 function Connection:HandleReceivePacket()
-    --檢查有無socket
-    local recvt, sendt, status = socket.select({self._socket}, nil, 0)
-
-    if #recvt > 0 then
-        print("Connection:HandleReceivePacket = ", #recvt, sendt, status)
-        if status == nil then
-            self:Close()
-            return
-        end
-    else
+    --檢查有無socket timeout 1
+    local recvt, sendt, status = socket.select({self.socket}, nil, 1)
+    
+    if #recvt <= 0 then
         return
     end
+
+    --直接關server status == nil
+    -- if status == nil then
+    --     self:Close()
+    --     return
+    -- end
+    print("Connection:HandleReceivePacket = ", #recvt, sendt, status)
     
-    local buffer = ""
+    --開始接收資料
+    local buffer = {}
     while true do
-        local data, receiveStatus, partial = self._socket:receive(1)
+        --不知道長度，所以一次讀一個byte
+        local data, receiveStatus, partial = self.socket:receive(1)
+        --print("Connection:data:", data, receiveStatus, partial)
         if data then
-            buffer = buffer .. data
+            table.insert(buffer, data)
         else
-            if receiveStatus ~= "timeout" then
-                print("Error receiving data:", receiveStatus)
+            --讀取完畢脫離
+            if receiveStatus == "closed" then
                 break
             end
 
-            if receiveStatus ~= "closed" then
+            if receiveStatus ~= "timeout" then
+                print("Error receiving data:", data, receiveStatus)
                 break
             end
         end
     end
-    print(buffer)
 
-    if self._socketCallBack then
-        self:_socketCallBack(buffer)
+    --收到空封包測試應為server斷線
+    if #buffer == 0 then
+        self:Close()
+        return
+    end
+
+    --print("Buffer", table.concat(buffer))
+    if self.socketCallBack then
+        self.socketCallBack(table.concat(buffer))
     end
 end
 
@@ -105,13 +115,13 @@ end
     private 處理發送任務  
 ]]
 function Connection:HandleSendPacket()
-    if self._sendPacketQueue and #self._sendPacketQueue > 0 then
-        local data = self._sendPacketQueue[#self._sendPacketQueue]
+    if self.sendPacketQueue and #self.sendPacketQueue > 0 then
+        local data = self.sendPacketQueue[#self.sendPacketQueue]
         if data then
-            local _len, _error = self._socket:send(data)
+            local len, error = self.socket:send(data)
             print("Connection:HandleSendPacket data:", data)
-            if _len ~= nil and _len == #data then
-                table.remove(self._sendPacketQueue, #self._sendPacketQueue)
+            if len ~= nil and len == #data then
+                table.remove(self.sendPacketQueue, #self.sendPacketQueue)
             else
 
             end

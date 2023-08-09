@@ -18,20 +18,20 @@ local TRACK_SECOND = 15
 local TRACK_DURATION = 1
 
 function ResponseTrackerProcessor:ctor()
-    self._trackList = {}
+    self.trackList = {}
     scheduler:scheduleScriptFunc(handler(self, self.Update), TRACK_DURATION, false)
 end
 
 function ResponseTrackerProcessor:Update()
     local deleteIndex = nil
-    for index, value in ipairs(self._trackList) do
+    for index, value in ipairs(self.trackList) do
         if value:Update(TRACK_DURATION) then
             deleteIndex = index
         end
     end
 
     if deleteIndex then
-        table.remove(self._trackList, deleteIndex)
+        table.remove(self.trackList, deleteIndex)
     end
 end
 
@@ -43,7 +43,7 @@ function ResponseTrackerProcessor:PreProcessSend(command)
     for index, value in ipairs(commandSorrespond) do
         local requestId, responseId = value[1], value[2]
         if requestId == command:CommandType() and responseId ~= nil then
-             table.insert(self._trackList, cc.ResponseTracker:create(responseId, TRACK_SECOND))
+             table.insert(self.trackList, cc.ResponseTracker:create(responseId, TRACK_SECOND))
              break
         end
     end
@@ -55,7 +55,7 @@ function ResponseTrackerProcessor:PreProcessRecv(command)
     end
 
     local removeIndex = nil
-    for index, value in ipairs(self._trackList) do
+    for index, value in ipairs(self.trackList) do
         if value == command.commandType then
             removeIndex = index
             break
@@ -63,7 +63,7 @@ function ResponseTrackerProcessor:PreProcessRecv(command)
     end
 
     if removeIndex then
-        table.remove(self._trackList, removeIndex)
+        table.remove(self.trackList, removeIndex)
         print("PreProcessRecv", command.commandType)
     end
 end
