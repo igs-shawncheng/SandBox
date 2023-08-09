@@ -35,7 +35,7 @@ local DEFAULT_FONT = "Microsoft JhengHei"  -- 微軟正黑體
 
 local BLANK_PNG = "Platform/BlankPNG.png"
 
-local QUICK_TEST = true
+local QUICK_TEST = false
 
 cc.exports.define = {}
 cc.exports.define.EVENTS = EVENTS
