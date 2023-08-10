@@ -17,7 +17,7 @@ function ResponseTracker:Update(delta)
         return false
     else
         --response time out
-        print("ResponseTracker.Update TimeOut", self.trackResponseId)
+        print("ResponseTracker TimeOut! Suppose Recv ResponseId:", self.trackResponseId)
         return true
     end
 end

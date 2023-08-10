@@ -1,3 +1,5 @@
+require "app.network.Command.LoginRequest"
+
 local LoginView = class("LoginView", cc.load("mvc").ViewBase)
 
 LoginView.RESOURCE_FILENAME = "Game/LoginView.csb"
@@ -70,6 +72,9 @@ function LoginView:OnEnter()
     self.m_eb_input:setPlaceHolder( "請輸入機台號碼" )
     
     self:addChild( self.m_eb_input )
+
+    --cc.SubSystemBase:GetInstance():Login("127.0.0.1", "8888")
+    cc.SubSystemBase:GetInstance():Login("192.168.44.101", "8888")
 end
 
 function LoginView:OnExit()
@@ -97,7 +102,9 @@ function LoginView:ReqLogin()
     if cc.exports.define.QUICK_TEST then
         self:OnLoginAck()
     else
-        cc.NetService:GetInstance():Connect("127.0.0.1", "8888")
+        local accountId = 1234
+        local request = cc.LoginRequest:create(accountId, tonumber(self.m_eb_input:getText()))
+        cc.SubSystemBase:GetInstance():Send(request)
     end
 end
 
@@ -105,9 +112,6 @@ function LoginView:OnLoginAck()
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.SET_ARCADE_NO, tonumber(self.m_eb_input:getText()) )
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.CHIP_UPDATE, 5678 )
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.LOGIN )
-
-    local command = cc.Command.new(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ)
-    cc.NetService:GetInstance():Send(command)
 end
 
 function LoginView:OnLoginFail( reason )

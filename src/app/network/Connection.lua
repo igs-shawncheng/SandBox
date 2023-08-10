@@ -40,6 +40,7 @@ end
     @param: content
 ]]
 function Connection:Send(jsonStr)
+    print("Connection:Send", jsonStr)
     table.insert(self.sendPacketQueue, 1, jsonStr)
 end
 
@@ -66,13 +67,17 @@ end
 function Connection:HandleReceivePacket()
     --檢查有無socket timeout 1
     local recvt, sendt, status = socket.select({self.socket}, nil, 1)
-    print("Connection:HandleReceivePacket = ", #recvt, sendt, status)
     
+    if #recvt <= 0 then
+        return
+    end  
+    print("Connection:HandleReceivePacket = ", #recvt, sendt, status)
     --開始接收資料
     local buffer = {}
-    while #recvt > 0 do
+    local data, receiveStatus, partial
+    while true do
         --不知道長度，所以一次讀一個byte
-        local data, receiveStatus, partial = self.socket:receive(1)
+        data, receiveStatus, partial = self.socket:receive(1)
         --print("Connection:data:", data, receiveStatus, partial)
         if data then
             table.insert(buffer, data)
@@ -90,9 +95,12 @@ function Connection:HandleReceivePacket()
         end
     end
 
-    --收到空封包測試應為server主動close socket
     if #buffer == 0 then
-        self:Close()
+        --收到空封包，經測試應為server主動close socket
+        if receiveStatus == "closed" then
+            self:Close() 
+        end
+
         return
     end
 

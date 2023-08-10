@@ -2,14 +2,10 @@ require "cocos.cocos2d.json"
 
 local Command = class("Command")
 
-function Command:ctor(commandType, content)
+function Command:ctor(commandType)
     self.data = {}
     self.data.commandType = commandType
-    if content == nil then
-        self.data.content = ""
-    else
-        self.data.content = content
-    end
+    self.data.content = {}
 end
 
 function Command:Serialize()
@@ -22,22 +18,22 @@ function Command:Serialize()
 end
 
 function Command:DeSerialize(buffer)
-    local success, command = pcall(json.decode, buffer)
+    local success, result = pcall(json.decode, buffer)
     if not success then
         print("Command ToCommand Error data:", buffer)
         return false
     end
-    dump(command)
-    self.data.commandType = command.commandType
-    self.data.content = command.content
+
+    self.data.commandType = result.commandType
+    self.data.content = result.content
     return true
 end
 
-function Command:CommandType()
+function Command:GetType()
     return self.data.commandType
 end
 
-function Command:Con()
+function Command:GetContent()
     return self.data.content
 end
 

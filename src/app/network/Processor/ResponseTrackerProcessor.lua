@@ -42,7 +42,7 @@ function ResponseTrackerProcessor:PreProcessSend(command)
     
     for index, value in ipairs(commandSorrespond) do
         local requestId, responseId = value[1], value[2]
-        if requestId == command:CommandType() and responseId ~= nil then
+        if requestId == command.commandType and responseId ~= nil then
              table.insert(self.trackList, cc.ResponseTracker:create(responseId, TRACK_SECOND))
              break
         end
