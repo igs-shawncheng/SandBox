@@ -38,7 +38,7 @@ function SubSystemBase:OnCommand(command)
     if recvCommand == ServerCommand.SLOT_G2U_GAME_INFO_ACK then
         local response = cc.GameInfoResponse:create(command:GetContent())
         dump(response)
-        --cc.exports.dispatchEvent( cc.exports.define.EVENTS.NET_LOGIN_SUCCESS )
+        cc.exports.dispatchEvent( cc.exports.define.EVENTS.NET_LOGIN_SUCCESS )
     elseif recvCommand == ServerCommand.SLOT_G2U_SPIN_ACK then
         print("Recv Command 2")
     elseif recvCommand == ServerCommand.SLOT_G2U_FREE_SPIN_ACK then

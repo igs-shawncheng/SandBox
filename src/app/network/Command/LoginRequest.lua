@@ -15,7 +15,9 @@ function LoginRequest:ctor(accountId, roomId)
     requestData.loginData.roomIndex = roomId
 
     local success, jsonStr = pcall(json.encode, requestData)
-    self.content = jsonStr
+    if success then
+        self.content = jsonStr
+    end
     --self.Serialize(self)
 end
 
