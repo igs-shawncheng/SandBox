@@ -7,9 +7,9 @@ local ResponseTrackerProcessor = class("ResponseTrackerProcessor")
 local commandSorrespond = {
     {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ, cc.Protocol.PachinG2UProtocol.SLOT_G2U_GAME_INFO_ACK},
     {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_SPIN_REQ, cc.Protocol.PachinG2UProtocol.SLOT_G2U_SPIN_ACK},
-    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_SPIN_END_REQ, nil},
-    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_FREE_SPIN_REQ, cc.Protocol.PachinG2UProtocol.SLOT_G2U_FREE_SPIN_ACK},
-    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_FREE_SPIN_END_REQ, nil},
+    --{cc.Protocol.PachinU2GProtocol.PACHIN_U2G_SPIN_END_REQ, nil},
+    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_BONUS_SPIN_REQ, cc.Protocol.PachinG2UProtocol.SLOT_G2U_BONUS_SPIN_ACK},
+    --{cc.Protocol.PachinU2GProtocol.PACHIN_U2G_BONUS_SPIN_END_REQ, nil},
     {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GET_BONUS_RECORD_REQ, cc.Protocol.PachinG2UProtocol.SLOT_G2U_GET_BONUS_RECORD_ACK},
 }
 
@@ -35,28 +35,28 @@ function ResponseTrackerProcessor:Update()
     end
 end
 
-function ResponseTrackerProcessor:PreProcessSend(command)
-    if command == nil then
+function ResponseTrackerProcessor:PreProcessSend(commandId, content)
+    if commandId == nil then
         return
     end
     
     for index, value in ipairs(commandSorrespond) do
         local requestId, responseId = value[1], value[2]
-        if requestId == command.commandType and responseId ~= nil then
+        if requestId == commandId and responseId ~= nil then
              table.insert(self.trackList, cc.ResponseTracker:create(responseId, TRACK_SECOND))
              break
         end
     end
 end
 
-function ResponseTrackerProcessor:PreProcessRecv(command)
-    if command == nil then
+function ResponseTrackerProcessor:PreProcessRecv(deserializeResult)
+    if deserializeResult == nil then
         return
     end
 
     local removeIndex = nil
     for index, value in ipairs(self.trackList) do
-        if value == command.commandType then
+        if value == deserializeResult.commandType then
             removeIndex = index
             break
         end
@@ -64,7 +64,7 @@ function ResponseTrackerProcessor:PreProcessRecv(command)
 
     if removeIndex then
         table.remove(self.trackList, removeIndex)
-        print("PreProcessRecv", command.commandType)
+        print("PreProcessRecv", deserializeResult.commandType)
     end
 end
 

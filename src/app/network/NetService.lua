@@ -2,6 +2,7 @@ require ("app.network.Connection")
 require ("app.network.Command")
 require ("app.network.Protocol")
 require ("app.network.Processor.ResponseTrackerProcessor")
+require "cocos.cocos2d.json"
 
 local NetService = class("NetService")
 local scheduler = cc.Director:getInstance():getScheduler()
@@ -47,13 +48,13 @@ function NetService:Update()
         end
     elseif currentState == CONNECT_STATE.CONNECT then
         if self.loginState:IsEntering() then
-            --print("NetService.CONNECT")
+            print("NetService.CONNECT")
             self.connection:Connect(self.connectData.ip, self.connectData.port)
             self.loginState:Transit(CONNECT_STATE.CONNECTING)
         end
     elseif currentState == CONNECT_STATE.CONNECTING then
         if self.loginState:IsEntering() then
-            --print("NetService.CONNECTING")
+            print("NetService.CONNECTING")
         end
         --todo connect timeout
         if self.connection:IsConnected() then
@@ -78,30 +79,29 @@ function NetService:Update()
 end
 
 function NetService:OnRecvSocket(buffer)
-    local command = cc.Command:create()
-    if command:DeSerialize(buffer) then
-        print("NetService:DeSerialize Success command:", command:GetType())
-    else
-        print("NetService:DeSerialize Fail buffer:", buffer)
+    local success, result = pcall(json.decode, buffer)
+    if not success then
+        print("Command ToCommand Error data:", buffer)
+        return false
     end
 
     for key, value in pairs(CommandProcessor) do
-        value:PreProcessRecv(command)
+        value:PreProcessRecv(result)
     end
-
+    dump(result)
     if self.subSystemBase then
-        self.subSystemBase:OnCommand(command)
+        self.subSystemBase:OnCommand(result)
     end
 end
 
 function NetService:Send(command)
     if self.loginState:Tick() ~= CONNECT_STATE.CONNECTED then
-        print("Send Command [".. command:GetType().. "] Fail! Connection doesn't Connected.")
+        print("Send Command [".. command.commandType .. "] Fail! Connection doesn't Connected.")
         return
     end
     
     for key, value in pairs(CommandProcessor) do
-        value:PreProcessSend(command)
+        value:PreProcessSend(command.commandType, command.content)
     end
 
     self.connection:Send(command:Serialize())

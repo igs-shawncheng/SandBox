@@ -1,4 +1,4 @@
-require "app.network.Command.LoginRequest"
+require "app.network.Command.PACHIN_U2G_GAME_INFO_REQ"
 
 local LoginView = class("LoginView", cc.load("mvc").ViewBase)
 
@@ -103,8 +103,8 @@ function LoginView:ReqLogin()
         self:OnLoginAck()
     else
         local accountId = 1234
-        local request = cc.LoginRequest:create(accountId, tonumber(self.m_eb_input:getText()))
-        cc.SubSystemBase:GetInstance():Send(request)
+        local request = cc.PACHIN_U2G_GAME_INFO_REQ:create(accountId, tonumber(self.m_eb_input:getText()))
+        cc.SubSystemBase:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ+99, request:Serialize())
     end
 end
 

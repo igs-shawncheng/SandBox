@@ -78,13 +78,13 @@ function Connection:HandleReceivePacket()
     while true do
         --不知道長度，所以一次讀一個byte
         data, receiveStatus, partial = self.socket:receive(1)
-        --print("Connection:data:", data, receiveStatus, partial)
+        print("Connection:data:", data, receiveStatus, partial)
         if data then
             table.insert(buffer, data)
         else
             recvt, sendt, status = socket.select({self.socket}, nil, 1)
             --讀取完畢脫離
-            if receiveStatus == "closed" then
+            if receiveStatus == "closed" or receiveStatus == "timeout" then
                 break
             end
 
