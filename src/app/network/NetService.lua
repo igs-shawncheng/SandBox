@@ -6,7 +6,7 @@ require "cocos.cocos2d.json"
 
 local NetService = class("NetService")
 local scheduler = cc.Director:getInstance():getScheduler()
-local CHECK_SELECT_INTERVAL = 0.1
+local CHECK_SELECT_INTERVAL = 0.02
 local CommandProcessor = {}
 
 local CONNECT_STATE = {

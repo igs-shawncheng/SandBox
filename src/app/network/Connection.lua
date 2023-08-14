@@ -64,21 +64,22 @@ end
 --[[
     private 處理接收任務
 ]]
+local recvt, sendt, status
 function Connection:HandleReceivePacket()
     --檢查有無socket timeout 1
-    local recvt, sendt, status = socket.select({self.socket}, nil, 1)
+    recvt, sendt, status = socket.select({self.socket}, nil, 0)
     
     if #recvt <= 0 then
         return
     end  
-    print("Connection:HandleReceivePacket = ", #recvt, sendt, status)
+    --print("Connection:HandleReceivePacket = ", #recvt, sendt, status)
     --開始接收資料
     local buffer = {}
     local data, receiveStatus, partial
     while true do
         --不知道長度，所以一次讀一個byte
         data, receiveStatus, partial = self.socket:receive(1)
-        print("Connection:data:", data, receiveStatus, partial)
+        --print("Connection:data:", data, receiveStatus, partial)
         if data then
             table.insert(buffer, data)
         else
