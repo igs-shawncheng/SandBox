@@ -104,7 +104,7 @@ function LoginView:ReqLogin()
     else
         local accountId = 1234
         local request = cc.PACHIN_U2G_GAME_INFO_REQ:create(accountId, tonumber(self.m_eb_input:getText()))
-        cc.SubSystemBase:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ+99, request:Serialize())
+        cc.SubSystemBase:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ, request:Serialize())
     end
 end
 

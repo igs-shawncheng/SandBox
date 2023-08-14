@@ -14,7 +14,7 @@ local commandSorrespond = {
 }
 
 local scheduler = cc.Director:getInstance():getScheduler()
-local TRACK_SECOND = 15
+local TRACK_SECOND = 10
 local TRACK_DURATION = 1
 
 function ResponseTrackerProcessor:ctor()
@@ -53,10 +53,9 @@ function ResponseTrackerProcessor:PreProcessRecv(deserializeResult)
     if deserializeResult == nil then
         return
     end
-
     local removeIndex = nil
     for index, value in ipairs(self.trackList) do
-        if value == deserializeResult.commandType then
+        if value.trackResponseId == deserializeResult.commandType then
             removeIndex = index
             break
         end
