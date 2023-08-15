@@ -73,8 +73,8 @@ function LoginView:OnEnter()
     
     self:addChild( self.m_eb_input )
 
-    --cc.SubSystemBase:GetInstance():Login("127.0.0.1", "8888")
-    cc.SubSystemBase:GetInstance():Login("192.168.44.101", "8888")
+    --cc.SandBoxSystem:Login("127.0.0.1", "8888")
+    cc.SandBoxSystem:Login("192.168.44.101", "8888")
 end
 
 function LoginView:OnExit()
@@ -104,7 +104,7 @@ function LoginView:ReqLogin()
     else
         local accountId = 1234
         local request = cc.PACHIN_U2G_GAME_INFO_REQ:create(accountId, tonumber(self.m_eb_input:getText()))
-        cc.SubSystemBase:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ, request:Serialize())
+        cc.SandBoxSystem:Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ, request:Serialize())
     end
 end
 
