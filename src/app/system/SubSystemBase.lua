@@ -67,7 +67,7 @@ function SubSystemBase:CallRegisterCommand(command)
     end
 
     for index, value in ipairs(RegisteOnCommand[command.commandType]) do
-        value(self, command)
+        value(command)
     end
 end
 

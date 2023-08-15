@@ -15,7 +15,7 @@ function SandBoxSystem:Send(commandType, content)
     self:GetInstance():Send(commandType, content)--call subSystem Send
 end
 
-function SandBoxSystem:OnCommand(command)
+function SandBoxSystem.OnCommand(command)
     print("SandBoxSystem Recv Command:", command.commandType)
     local recvCommand = command.commandType
 
