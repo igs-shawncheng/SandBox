@@ -1,6 +1,6 @@
-require("app.network.Command.ISerialize")
+require("app.message.JsonSerialize")
 
-local PACHIN_U2G_SPIN_REQ = class("PACHIN_U2G_SPIN_REQ", cc.ISerialize:create())
+local PACHIN_U2G_SPIN_REQ = class("PACHIN_U2G_SPIN_REQ", cc.JsonSerialize:create())
 
 function PACHIN_U2G_SPIN_REQ:ctor(bet, useCard, cardKind)
     self.SpinReq = {}

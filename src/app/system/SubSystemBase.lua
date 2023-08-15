@@ -1,7 +1,6 @@
 require ("app.network.NetService")
-require ("app.network.Command.PACHIN_U2G_GAME_INFO_REQ")
-require ("app.network.Command")
-require ("app.network.Command.SLOT_G2U_GAME_INFO_ACK")
+require ("app.message.PACHIN_U2G_GAME_INFO_REQ")
+require ("app.message.SLOT_G2U_GAME_INFO_ACK")
 
 local SubSystemBase = class("SubSystemBase")
 local ServerCommand = cc.Protocol.PachinG2UProtocol
@@ -28,27 +27,25 @@ function SubSystemBase:Login(ip, port)
     self.netService:Connect(ip, port)
 end
 
-function SubSystemBase:Send(commandType, content)
-    local command = cc.Command:create(commandType, content)
-    self.netService:Send(command)
+function SubSystemBase:Send(commandType, content) 
+    self.netService:Send(commandType, content)
 end
 
-function SubSystemBase:OnCommand(deserializeResult)
-    print("SubSystemBase Recv Command:", deserializeResult.commandType)
-    local recvCommand = deserializeResult.commandType
-    
+function SubSystemBase:OnCommand(command)
+    print("SubSystemBase Recv Command:", command.commandType)
+    local recvCommand = command.commandType
 
     if recvCommand == ServerCommand.SLOT_G2U_GAME_INFO_ACK then
-        local response = cc.SLOT_G2U_GAME_INFO_ACK:create(deserializeResult.content)
+        local response = cc.SLOT_G2U_GAME_INFO_ACK:create(command.content)
         cc.exports.dispatchEvent( cc.exports.define.EVENTS.NET_LOGIN_SUCCESS )
     elseif recvCommand == ServerCommand.SLOT_G2U_SPIN_ACK then
         print("Recv Command 2")
-    elseif recvCommand == ServerCommand.SLOT_G2U_FREE_SPIN_ACK then
-        print("Recv Command 3")
-    elseif recvCommand == ServerCommand.SLOT_G2U_BONUS_RECORD_ACK then
+    elseif recvCommand == ServerCommand.SLOT_G2U_BONUS_SPIN_ACK then
         print("Recv Command 4")
     elseif recvCommand == ServerCommand.SLOT_G2U_GET_BONUS_RECORD_ACK then
-        print("Recv Command 5")
+        print("Recv Command 6")
+    elseif recvCommand == ServerCommand.SLOT_G2U_BONUS_RECORD_NOTIFY then
+        print("Recv Command 7")
     end
 end
 

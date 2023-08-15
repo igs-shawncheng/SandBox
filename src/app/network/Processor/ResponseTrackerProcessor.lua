@@ -49,13 +49,13 @@ function ResponseTrackerProcessor:PreProcessSend(commandId, content)
     end
 end
 
-function ResponseTrackerProcessor:PreProcessRecv(deserializeResult)
-    if deserializeResult == nil then
+function ResponseTrackerProcessor:PreProcessRecv(commandId, content)
+    if commandId == nil then
         return
     end
     local removeIndex = nil
     for index, value in ipairs(self.trackList) do
-        if value.trackResponseId == deserializeResult.commandType then
+        if value.trackResponseId == commandId then
             removeIndex = index
             break
         end
@@ -63,7 +63,7 @@ function ResponseTrackerProcessor:PreProcessRecv(deserializeResult)
 
     if removeIndex then
         table.remove(self.trackList, removeIndex)
-        print("PreProcessRecv", deserializeResult.commandType)
+        --print("PreProcessRecv", commandId)
     end
 end
 

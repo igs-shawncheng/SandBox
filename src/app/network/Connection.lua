@@ -1,4 +1,3 @@
-require "cocos.cocos2d.json"
 require("luasocket.socket")
 local Connection = class("Connection")
 
@@ -34,14 +33,9 @@ function Connection:IsConnected()
     return false
 end
 
---[[
-    發送任務
-    @param: commandType
-    @param: content
-]]
-function Connection:Send(jsonStr)
-    print("Connection:Send", jsonStr)
-    table.insert(self.sendPacketQueue, 1, jsonStr)
+function Connection:Send(buffer)
+    print("Connection:Send", buffer)
+    table.insert(self.sendPacketQueue, 1, buffer)
 end
 
 --[[

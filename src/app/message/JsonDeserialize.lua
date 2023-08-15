@@ -1,7 +1,7 @@
 require "cocos.cocos2d.json"
-local IDeserialize = class("IDeserialize")
+local JsonDeserialize = class("JsonDeserialize")
 
-function IDeserialize:Deserialize(content)
+function JsonDeserialize:Deserialize(content)
     local success, data = pcall(json.decode, content)
     if success then
         for key, value in pairs(data) do
@@ -9,9 +9,9 @@ function IDeserialize:Deserialize(content)
             self[key] = value
         end
     else
-        print("IDeserialize:json DeSerialize fail!", content)
+        print("JsonDeserialize:json DeSerialize fail!", content)
     end
     --dump(data)
 end
 
-cc.IDeserialize = IDeserialize
+cc.JsonDeserialize = JsonDeserialize

@@ -1,10 +1,10 @@
 require "cocos.cocos2d.json"
-local ISerialize = class("ISerialize")
+local JsonSerialize = class("JsonSerialize")
 
-function ISerialize:ctor()
+function JsonSerialize:ctor()
 end
 
-function ISerialize:Serialize()
+function JsonSerialize:Serialize()
     --dump(self)
     local data = {}
     for key, value in pairs(self) do
@@ -14,10 +14,10 @@ function ISerialize:Serialize()
         --print("Serialize:", key)
     end
     local success, jsonStr = pcall(json.encode, data)
-    --print("ISerialize:", success, jsonStr)
+    --print("JsonSerialize:", success, jsonStr)
     if success then
         return jsonStr
     end
 end
 
-cc.ISerialize = ISerialize
+cc.JsonSerialize = JsonSerialize

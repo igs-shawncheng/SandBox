@@ -1,6 +1,6 @@
-require("app.network.Command.ISerialize")
+require("app.message.JsonSerialize")
 
-local PACHIN_U2G_GAME_INFO_REQ = class("PACHIN_U2G_GAME_INFO_REQ", cc.ISerialize:create())
+local PACHIN_U2G_GAME_INFO_REQ = class("PACHIN_U2G_GAME_INFO_REQ", cc.JsonSerialize:create())
 function PACHIN_U2G_GAME_INFO_REQ:ctor(accountId, roomIndex)
     self.loginData = {}
     self.loginData.accountId = accountId

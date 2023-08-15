@@ -1,5 +1,5 @@
-require "app.network.Command.IDeserialize"
-local SLOT_G2U_BONUS_RECORD_NOTIFY = class("SLOT_G2U_BONUS_RECORD_NOTIFY", cc.IDeserialize:create())
+require "app.message.JsonDeserialize"
+local SLOT_G2U_BONUS_RECORD_NOTIFY = class("SLOT_G2U_BONUS_RECORD_NOTIFY", cc.JsonDeserialize:create())
 
 function SLOT_G2U_BONUS_RECORD_NOTIFY:ctor(content)
     self:Deserialize(content)

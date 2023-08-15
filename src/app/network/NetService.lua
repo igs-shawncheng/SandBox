@@ -1,8 +1,8 @@
 require ("app.network.Connection")
-require ("app.network.Command")
 require ("app.network.Protocol")
 require ("app.network.Processor.ResponseTrackerProcessor")
-require "cocos.cocos2d.json"
+require ("app.message.CommandRecv")
+require ("app.message.CommandSend")
 
 local NetService = class("NetService")
 local scheduler = cc.Director:getInstance():getScheduler()
@@ -79,22 +79,19 @@ function NetService:Update()
 end
 
 function NetService:OnRecvSocket(buffer)
-    local success, result = pcall(json.decode, buffer)
-    if not success then
-        print("Command ToCommand Error data:", buffer)
-        return false
-    end
+    local deCommand = cc.CommandRecv:create(buffer)
 
     for key, value in pairs(CommandProcessor) do
-        value:PreProcessRecv(result)
+        value:PreProcessRecv(deCommand.commandType, deCommand.content)
     end
-    dump(result)
+
     if self.subSystemBase then
-        self.subSystemBase:OnCommand(result)
+        self.subSystemBase:OnCommand(deCommand)
     end
 end
 
-function NetService:Send(command)
+function NetService:Send(commandType, content)
+    local command = cc.CommandSend:create(commandType, content)
     if self.loginState:Tick() ~= CONNECT_STATE.CONNECTED then
         print("Send Command [".. command.commandType .. "] Fail! Connection doesn't Connected.")
         return

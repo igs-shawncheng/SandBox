@@ -1,4 +1,4 @@
-require "app.network.Command.PACHIN_U2G_GAME_INFO_REQ"
+require "app.message.PACHIN_U2G_GAME_INFO_REQ"
 
 local LoginView = class("LoginView", cc.load("mvc").ViewBase)
 

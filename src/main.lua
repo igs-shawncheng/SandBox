@@ -4,7 +4,7 @@ cc.FileUtils:getInstance():setPopupNotify(false)
 
 require "config"
 require "cocos.init"
-require "app.network.SubSystemBase"
+require "app.system.SubSystemBase"
 
 local function main()
     require("app.MyApp"):create():run()
