@@ -1,6 +1,7 @@
 require ("app.network.NetService")
 require ("app.message.PACHIN_U2G_GAME_INFO_REQ")
 require ("app.message.SLOT_G2U_GAME_INFO_ACK")
+require ("app.message.Protocol")
 
 local SubSystemBase = class("SubSystemBase")
 local RegisteOnCommand = {}

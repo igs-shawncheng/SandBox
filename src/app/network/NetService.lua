@@ -1,5 +1,4 @@
 require ("app.network.Connection")
-require ("app.network.Protocol")
 require ("app.network.Processor.ResponseTrackerProcessor")
 require ("app.message.CommandRecv")
 require ("app.message.CommandSend")

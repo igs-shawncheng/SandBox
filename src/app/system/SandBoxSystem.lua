@@ -3,11 +3,11 @@ require ("app.message.PACHIN_U2G_GAME_INFO_REQ")
 require ("app.message.SLOT_G2U_GAME_INFO_ACK")
 
 local SandBoxSystem = class("SandBoxSystem", cc.SubSystemBase:GetInstance())
-local ServerCommand = cc.Protocol.PachinG2UProtocol
+local RecvCommand = cc.Protocol.PachinG2UProtocol
 
 function SandBoxSystem:ctor()
-    self:Registers(ServerCommand.SLOT_G2U_GAME_INFO_ACK, self.OnCommand)
-    self:Registers(ServerCommand.SLOT_G2U_BONUS_RECORD_NOTIFY, self.OnCommand)
+    self:Registers(RecvCommand.SLOT_G2U_GAME_INFO_ACK, self.OnCommand)
+    self:Registers(RecvCommand.SLOT_G2U_BONUS_RECORD_NOTIFY, self.OnCommand)
 end
 
 function SandBoxSystem:Send(commandType, content)
@@ -19,16 +19,16 @@ function SandBoxSystem:OnCommand(command)
     print("SandBoxSystem Recv Command:", command.commandType)
     local recvCommand = command.commandType
 
-    if recvCommand == ServerCommand.SLOT_G2U_GAME_INFO_ACK then
+    if recvCommand == RecvCommand.SLOT_G2U_GAME_INFO_ACK then
         local response = cc.SLOT_G2U_GAME_INFO_ACK:create(command.content)
         cc.exports.dispatchEvent( cc.exports.define.EVENTS.NET_LOGIN_SUCCESS )
-    elseif recvCommand == ServerCommand.SLOT_G2U_SPIN_ACK then
+    elseif recvCommand == RecvCommand.SLOT_G2U_SPIN_ACK then
         print("Recv Command 2")
-    elseif recvCommand == ServerCommand.SLOT_G2U_BONUS_SPIN_ACK then
+    elseif recvCommand == RecvCommand.SLOT_G2U_BONUS_SPIN_ACK then
         print("Recv Command 4")
-    elseif recvCommand == ServerCommand.SLOT_G2U_GET_BONUS_RECORD_ACK then
+    elseif recvCommand == RecvCommand.SLOT_G2U_GET_BONUS_RECORD_ACK then
         print("Recv Command 6")
-    elseif recvCommand == ServerCommand.SLOT_G2U_BONUS_RECORD_NOTIFY then
+    elseif recvCommand == RecvCommand.SLOT_G2U_BONUS_RECORD_NOTIFY then
         print("Recv Command 7")
     end
 end
