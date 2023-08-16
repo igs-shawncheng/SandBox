@@ -2,12 +2,10 @@ require ("app.network.NetService")
 require ("app.message.PACHIN_U2G_GAME_INFO_REQ")
 require ("app.message.SLOT_G2U_GAME_INFO_ACK")
 require ("app.message.Protocol")
+require ("app.system.SystemName")
 
 local SubSystemBase = class("SubSystemBase")
 local RegisteOnCommand = {}
-function SubSystemBase:ctor()
-    self:Init()
-end
 
 function SubSystemBase:GetInstance()
     if not self.instance then
@@ -16,12 +14,26 @@ function SubSystemBase:GetInstance()
     return self.instance
 end
 
+function SubSystemBase:ctor()
+    --self:Init()
+end
+
 function SubSystemBase:Init()
     if self.isInit then
         return
     end
     self.isInit = true
     self.netService = cc.NetService:create(self)
+    self.SystemList = {}
+    for key, value in pairs(cc.exports.SystemName) do
+        table.insert(self.SystemList, value, require("app.system." .. key):create())
+    end
+end
+
+function SubSystemBase:GetSystem(SystemName)
+    dump(self.SystemList)
+    --print("SubSystemBase:GetSystem", self.SystemList, SystemName)
+    return self.SystemList[SystemName]
 end
 
 function SubSystemBase:Login(ip, port)
@@ -43,7 +55,7 @@ function SubSystemBase:Registers(commandType, OnCommand)
             return
         end
     end
-    print("Registers", commandType, self)
+    --print("Registers", commandType, self)
     table.insert(RegisteOnCommand[commandType], OnCommand)
 end
 
