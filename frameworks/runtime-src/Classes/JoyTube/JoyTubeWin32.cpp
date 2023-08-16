@@ -96,7 +96,7 @@ int JoyTubeWin32::n_isPlayState(){ return 0; }
 int JoyTubeWin32::n_isErrorDefine(){ return 0; }
 void JoyTubeWin32::n_clearErrorDefine(){}
 int JoyTubeWin32::n_isPostMessage(){ return 0; }
-int* JoyTubeWin32::n_getPostMessageString(){ return nullptr; }
+int* JoyTubeWin32::n_getPostMessageString() { return (int*)"testString"; }
 void JoyTubeWin32::n_openGameInfo(bool isActive){}
 int* JoyTubeWin32::n_getJsonString(){ return nullptr; }
 void JoyTubeWin32::n_stringFromUnity(std::string str){}

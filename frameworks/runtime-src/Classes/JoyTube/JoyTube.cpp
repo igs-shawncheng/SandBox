@@ -100,6 +100,9 @@ void JoyTube::RegisterLua()
 		.addFunction("GetGameStatus", &JoyTube::GetGameStatus)
 		.addFunction("GetPlayState", &JoyTube::GetPlayState)
 		.addFunction("IsEnteringSetting", &JoyTube::IsEnteringSetting)
+		.addFunction("SendMessage", &JoyTube::SendMessages)
+		.addFunction("IsPostMessage", &JoyTube::IsPostMessage)
+		.addFunction("GetPostMessageString", &JoyTube::GetPostMessageString)
 		.endClass()
 		.endNamespace();
 }
@@ -233,4 +236,19 @@ int JoyTube::GetPlayState()
 bool JoyTube::IsEnteringSetting()
 {
 	return m_joyTubeNative->n_enteringSetting();
+}
+
+int JoyTube::SendMessages(char const* system, char const* cmd, char const* jsonstring)
+{
+	//CCLOG("JoyTube::SendMessages %s", system);
+	return m_joyTubeNative->n_sendMessage(system, cmd, jsonstring);
+}
+
+int JoyTube::IsPostMessage()
+{
+	return m_joyTubeNative->n_isPostMessage();
+}
+std::string JoyTube::GetPostMessageString()
+{
+	return (const char*)m_joyTubeNative->n_getPostMessageString();
 }

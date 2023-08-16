@@ -125,6 +125,18 @@ function PluginProgram:Abort()
 	Inanna.GetJoyTube():Abort()
 end
 
+function PluginProgram:SendMessage(system, cmd, jsonString)
+	return Inanna.GetJoyTube():SendMessage(system, cmd, jsonString)
+end
+
+function PluginProgram:IsPostMessage()
+	return Inanna.GetJoyTube():IsPostMessage()
+end
+
+function PluginProgram:GetPostMessageString()
+	return Inanna.GetJoyTube():GetPostMessageString()
+end
+
 cc.exports.PluginProgram = PluginProgram
 cc.exports.PluginProgram.ERROR_DEFINE = ERROR_DEFINE
 cc.exports.PluginProgram.GAME_STATUS = GAME_STATUS

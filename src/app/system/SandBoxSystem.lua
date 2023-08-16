@@ -31,6 +31,8 @@ function SandBoxSystem.OnCommand(command)
     elseif recvCommand == RecvCommand.SLOT_G2U_BONUS_RECORD_NOTIFY then
         print("Recv Command 7")
     end
+    --cc.exports.PluginProgram:SendMessage("testSyste", "tsetCmd", "123456")
+    --print("LoginVIewTest", cc.exports.PluginProgram:GetPostMessageString())
 end
 
 cc.SandBoxSystem = SandBoxSystem

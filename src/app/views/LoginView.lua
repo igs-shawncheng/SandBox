@@ -99,7 +99,7 @@ function LoginView:ReqLogin()
     end
 
     -- 串登入協定
-    if cc.exports.define.QUICK_TEST then
+    if cc.exports.define.TEST_WITH_CONNECT then
         self:OnLoginAck()
     else
         local accountId = 1234

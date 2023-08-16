@@ -73,20 +73,7 @@ end
 
 function SubSystemBase:OnCommand(command)
     print("SubSystemBase Recv Command:", command.commandType)
-    --local recvCommand = command.commandType
     self:CallRegisterCommand(command)
-    -- if recvCommand == ServerCommand.SLOT_G2U_GAME_INFO_ACK then
-    --     local response = cc.SLOT_G2U_GAME_INFO_ACK:create(command.content)
-    --     cc.exports.dispatchEvent( cc.exports.define.EVENTS.NET_LOGIN_SUCCESS )
-    -- elseif recvCommand == ServerCommand.SLOT_G2U_SPIN_ACK then
-    --     print("Recv Command 2")
-    -- elseif recvCommand == ServerCommand.SLOT_G2U_BONUS_SPIN_ACK then
-    --     print("Recv Command 4")
-    -- elseif recvCommand == ServerCommand.SLOT_G2U_GET_BONUS_RECORD_ACK then
-    --     print("Recv Command 6")
-    -- elseif recvCommand == ServerCommand.SLOT_G2U_BONUS_RECORD_NOTIFY then
-    --     print("Recv Command 7")
-    -- end
 end
 
 cc.SubSystemBase = SubSystemBase
