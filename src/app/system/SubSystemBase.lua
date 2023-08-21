@@ -10,12 +10,9 @@ local RegisteOnCommand = {}
 function SubSystemBase:GetInstance()
     if not self.instance then
         self.instance = SubSystemBase:create()
+        self.instance:Init()
     end
     return self.instance
-end
-
-function SubSystemBase:ctor()
-    --self:Init()
 end
 
 function SubSystemBase:Init()

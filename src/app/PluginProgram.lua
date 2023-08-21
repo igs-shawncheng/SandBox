@@ -1,3 +1,5 @@
+require "app.system.SubSystemBase"
+
 local PluginProgram = class( "PluginProgram" ) 
 PluginProgram.__index = PluginProgram
 
@@ -28,6 +30,13 @@ local RUN_KIND = {
 	INFO_SETTING = 2,   -- Infomation or Setting Menu
 }
 
+
+local REGISTER_EVENTS = {
+    cc.exports.define.EVENTS.PLUGIN_RESPONSE,
+}
+
+local CHECK_PLUGIN_INTERVAL = 0.05
+
 function PluginProgram:extend( target )
 	setmetatable( target, PluginProgram )
 	return target
@@ -54,6 +63,17 @@ function PluginProgram:Init( sourcePath )
 
 	self:RegisterCreditEventCB()
 	self:RegisterErrorStatusCB()
+	self:RegisterSystemEvent()
+	self:ScheduleUpdate()
+	self.sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
+end
+
+function PluginProgram:Update()
+	local messageId = Inanna.GetJoyTube():IsPostMessage()
+	if messageId > 0 then
+		local postMessage = Inanna.GetJoyTube():GetPostMessageString()
+        self.sandBoxSystem:Send(messageId, postMessage)
+	end
 end
 
 function PluginProgram:OnLeaveGame()
@@ -109,6 +129,26 @@ function PluginProgram:RegisterErrorStatusCB()
 	Inanna.GetJoyTube():RegisterErrorStatusCB( cb )
 end
 
+function PluginProgram:RegisterSystemEvent()
+	local function eventHander( event )
+		print("Recv PLUGIN_RESPONSE", event._usedata[1], event._usedata[2])
+		if event:getEventName() == cc.exports.define.EVENTS.PLUGIN_RESPONSE then
+			self:SendMessage(0, event._usedata[1], event._usedata[2])
+		end
+	end
+
+	for _, eventName in pairs( REGISTER_EVENTS ) do
+		local listener = cc.EventListenerCustom:create( eventName, eventHander )
+		local dispatcher = cc.Director:getInstance():getEventDispatcher()
+		dispatcher:addEventListenerWithFixedPriority( listener, 10 )
+	end
+end
+
+function PluginProgram:ScheduleUpdate()
+	local schedule = cc.Director:getInstance():getScheduler()
+	self._schedulerID = schedule:scheduleScriptFunc(handler(self, self.Update), CHECK_PLUGIN_INTERVAL, false)
+end
+
 function PluginProgram:GetGameStatus()
 	return Inanna.GetJoyTube():GetGameStatus()
 end
@@ -126,6 +166,7 @@ function PluginProgram:Abort()
 end
 
 function PluginProgram:SendMessage(system, cmd, jsonString)
+	--print("Recv PLUGIN_RESPONSE", cmd, jsonString)
 	return Inanna.GetJoyTube():SendMessage(system, cmd, jsonString)
 end
 

@@ -9,7 +9,7 @@ require "cocos.init"
 
 local function main()
     require("app.MyApp"):create():run()
-    require ("app.system.SubSystemBase"):GetInstance():Init()
+    require ("app.system.SubSystemBase"):GetInstance()
 end
 
 local status, msg = xpcall(main, __G__TRACKBACK__)

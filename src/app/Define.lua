@@ -17,6 +17,7 @@ local EVENTS = {
     SET_ARCADE_NO = "set_arcade_no",
 
     PLUGIN_ERROR_STATUS = "plugin_error_status",
+	PLUGIN_RESPONSE = "plugin_response",
 
     SHOW_MSG = "show_msg",
 	
