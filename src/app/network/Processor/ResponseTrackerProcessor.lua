@@ -1,4 +1,4 @@
-require "app.network.Processor.ResponseTracker"
+require "app.network.processor.ResponseTracker"
 require "app.message.Protocol"
 
 local ResponseTrackerProcessor = class("ResponseTrackerProcessor")
