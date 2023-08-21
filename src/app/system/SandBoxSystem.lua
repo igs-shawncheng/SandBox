@@ -15,9 +15,9 @@ function SandBoxSystem:ctor()
     self:Registers(RecvCommand.PACHIN_U2G_PLUGIN_CUSTOM_ACK, self.OnCommand)
 end
 
-function SandBoxSystem:Send(commandType, content)
-    --SandBoxSystem implement
-    self:GetInstance():Send(commandType, content)--call subSystem Send
+function SandBoxSystem:RequestGameInfo(accountId, roomIndex)
+    local request = cc.PACHIN_U2G_GAME_INFO_REQ:create(accountId, roomIndex)
+    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ, request:Serialize())
 end
 
 function SandBoxSystem.OnCommand(command)

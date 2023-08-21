@@ -103,10 +103,9 @@ function LoginView:ReqLogin()
         self:OnLoginAck()
     else
         local accountId = 1234
-        local request = cc.PACHIN_U2G_GAME_INFO_REQ:create(accountId, tonumber(self.m_eb_input:getText()))
-
+        local roomIndex = tonumber(self.m_eb_input:getText())
         local sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
-        sandBoxSystem:Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ, request:Serialize())
+        sandBoxSystem:RequestGameInfo(accountId, roomIndex)
     end
 end
 
