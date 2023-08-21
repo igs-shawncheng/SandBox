@@ -1,4 +1,4 @@
-require "app.message.JsonSerialize"
+require "app.serialization.JsonSerialize"
 
 local CommandSend = class("CommandSend", cc.JsonSerialize:create())
 

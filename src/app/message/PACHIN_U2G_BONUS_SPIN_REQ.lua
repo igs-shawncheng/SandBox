@@ -1,4 +1,4 @@
-require("app.message.JsonSerialize")
+require("app.serialization.JsonSerialize")
 
 local PACHIN_U2G_BONUS_SPIN_REQ = class("PACHIN_U2G_BONUS_SPIN_REQ", cc.JsonSerialize:create())
 

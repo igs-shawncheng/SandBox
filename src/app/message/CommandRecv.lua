@@ -1,4 +1,4 @@
-require "app.message.JsonDeserialize"
+require "app.serialization.JsonDeserialize"
 local CommandRecv = class("CommandRecv", cc.JsonDeserialize:create())
 
 function CommandRecv:ctor(content)
