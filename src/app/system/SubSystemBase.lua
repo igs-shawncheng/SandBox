@@ -1,7 +1,4 @@
 require ("app.network.NetService")
-require ("app.message.PACHIN_U2G_GAME_INFO_REQ")
-require ("app.message.SLOT_G2U_GAME_INFO_ACK")
-require ("app.message.Protocol")
 require ("app.system.SystemName")
 
 local SubSystemBase = class("SubSystemBase")
@@ -22,6 +19,7 @@ function SubSystemBase:Init()
     self.isInit = true
     self.netService = cc.NetService:create(self)
     self.SystemList = {}
+    print("SubSystemBase:Init")
     for key, value in pairs(cc.exports.SystemName) do
         table.insert(self.SystemList, value, require("app.system." .. key):create())
     end

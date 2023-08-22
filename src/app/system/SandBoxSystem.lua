@@ -1,5 +1,5 @@
 require ("app.message.PACHIN_U2G_GAME_INFO_REQ")
-require ("app.message.SLOT_G2U_GAME_INFO_ACK")
+require ("app.message.PACHIN_G2U_GAME_INFO_ACK")
 
 local SandBoxSystem = class("SandBoxSystem", cc.SubSystemBase:GetInstance())
 local RecvCommand = cc.Protocol.PachinG2UProtocol

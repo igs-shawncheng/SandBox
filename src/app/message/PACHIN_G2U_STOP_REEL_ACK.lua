@@ -1,10 +1,10 @@
 require "app.serialization.JsonDeserialize"
-local SLOT_G2U_GAME_INFO_ACK = class("SLOT_G2U_GAME_INFO_ACK", cc.JsonDeserialize:create())
+local PACHIN_G2U_STOP_REEL_ACK = class("PACHIN_G2U_STOP_REEL_ACK", cc.JsonDeserialize:create())
 
-function SLOT_G2U_GAME_INFO_ACK:ctor(content)
+function PACHIN_G2U_STOP_REEL_ACK:ctor(content)
     self:Deserialize(content)
     --     self.StopReelAck = {}
-    --     self.StopReelAck.ackType 
+    --     self.StopReelAck.ackType --SUCCESS 0, FAIL 1
 end
 
-cc.SLOT_G2U_GAME_INFO_ACK = SLOT_G2U_GAME_INFO_ACK
+cc.PACHIN_G2U_STOP_REEL_ACK = PACHIN_G2U_STOP_REEL_ACK

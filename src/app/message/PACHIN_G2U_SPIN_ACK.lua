@@ -1,13 +1,11 @@
 require "app.serialization.JsonDeserialize"
-local SLOT_G2U_GAME_INFO_ACK = class("SLOT_G2U_GAME_INFO_ACK", cc.JsonDeserialize:create())
+local PACHIN_G2U_SPIN_ACK = class("PACHIN_G2U_SPIN_ACK", cc.JsonDeserialize:create())
 
-function SLOT_G2U_GAME_INFO_ACK:ctor(content)
+function PACHIN_G2U_SPIN_ACK:ctor(content)
     self:Deserialize(content)
-    --     self.GameInfoAck = {}
-    --     self.GameInfoAck.bet 
-    --     self.GameInfoAck.currCount
-    --     self.GameInfoAck.gameMode
-    --     self.GameInfoAck.money
+    --     self.SpinAck = {}
+    --     self.SpinAck.bet 
+    --     self.SpinAck.ackType     --SUCCESS 0
 end
 
-cc.SLOT_G2U_GAME_INFO_ACK = SLOT_G2U_GAME_INFO_ACK
+cc.PACHIN_G2U_SPIN_ACK = PACHIN_G2U_SPIN_ACK

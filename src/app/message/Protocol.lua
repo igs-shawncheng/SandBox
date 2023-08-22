@@ -11,9 +11,9 @@ local PACHIN_U2G_PROTOCOL =
 
 local PACHIN_G2U_PROTOCOL =
 {
-    SLOT_G2U_GAME_INFO_ACK					= 1,			-- GameInfoAck
+    PACHIN_G2U_GAME_INFO_ACK				= 1,			-- GameInfoAck
     PACHIN_G2U_START_GAME_ACK               = 2,            -- StartGameAck
-    SLOT_G2U_SPIN_ACK						= 3,			-- SpinAck
+    PACHIN_G2U_SPIN_ACK						= 3,			-- SpinAck
     PACHIN_G2U_STOP_REEL_ACK                = 4,			-- StopReelAck			
     PACHIN_G2U_TAKE_MONEY_IN_ACK			= 5,            -- TakeMoneyAck
     PACHIN_G2U_USE_CARD_ACK                 = 6,            -- UseCardAck
