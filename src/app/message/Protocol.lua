@@ -17,7 +17,8 @@ local PACHIN_G2U_PROTOCOL =
     PACHIN_G2U_STOP_REEL_ACK                = 4,			-- StopReelAck			
     PACHIN_G2U_TAKE_MONEY_IN_ACK			= 5,            -- TakeMoneyAck
     PACHIN_G2U_USE_CARD_ACK                 = 6,            -- UseCardAck
-    PACHIN_U2G_PLUGIN_CUSTOM_ACK            = 7,
+    PACHIN_G2U_PLUGIN_CUSTOM_ACK            = 7,
+    PACHIN_G2U_PLUGIN_CUSTOM_NOTIFY         = 8,
 }
 
 cc.Protocol = {}
