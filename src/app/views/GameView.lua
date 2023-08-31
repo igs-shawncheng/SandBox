@@ -195,7 +195,8 @@ function GameView:InitJoyTube()
     self.m_touch_layer:onTouch( function( event )
         print("layer onTouch x:" .. event.x .. " y:" .. event.y)
         local sceneY = (display.height - CC_DESIGN_RESOLUTION.height) / 2
-        Inanna.GetJoyTube():OnTouch( event.x, event.y - sceneY )
+        local sceneX = (display.width - CC_DESIGN_RESOLUTION.width) / 2
+        Inanna.GetJoyTube():OnTouch( event.x - sceneX, event.y - sceneY )
     end )
 
     -- output
