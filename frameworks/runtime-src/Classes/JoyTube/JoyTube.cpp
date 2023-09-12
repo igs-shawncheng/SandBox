@@ -26,7 +26,7 @@ JoyTube::JoyTube()
 #elif ( CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID )
 	m_joyTubeNative = IJoyTubeNativePtr(new JoyTubeAndroid(m_width, m_height));
 #elif ( CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
-
+    m_joyTubeNative = IJoyTubeNativePtr(new JoyTubeIOS(m_width, m_height));
 #endif
 
 	m_textureData = m_joyTubeNative->GetTextureData();

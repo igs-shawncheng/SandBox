@@ -26,7 +26,8 @@ function MainScene:onCreate()
     --     :addTo(self)
 
     local sceneY = (display.height - CC_DESIGN_RESOLUTION.height) / 2
-    self:setPosition( cc.p( 0, sceneY ) )
+    local sceneX = (display.width - CC_DESIGN_RESOLUTION.width) / 2
+    self:setPosition( cc.p( sceneX, sceneY ) )
 
     local view = self:getApp():createView( "NavigationView" )
     view:setPosition( cc.p( 0, 496 ) )

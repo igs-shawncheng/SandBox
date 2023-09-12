@@ -11,6 +11,8 @@
 #include "JoyTubeWin32.h"
 #elif ( CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID )
 #include "JoyTubeAndroid.h"
+#elif ( CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
+#include "JoyTubeIOS.h"
 #endif
 
 class JoyTube : public cocos2d::Ref
