@@ -21,6 +21,33 @@ function SandBoxSystem:RequestGameInfo(accountId, roomIndex)
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ, request:Serialize())
 end
 
+function SandBoxSystem:RequestStartGame()
+    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_START_GAME_REQ)
+end
+
+function SandBoxSystem:RequestSpin(bet)
+    local request = cc.PACHIN_U2G_SPIN_REQ:create(bet)
+    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_SPIN_REQ, request)
+end
+
+function SandBoxSystem:RequestStopReel(reelIndex)
+    local request = cc.PACHIN_U2G_STOP_REEL_REQ:create(reelIndex)
+    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_STOP_REEL_REQ, request)
+end
+
+function SandBoxSystem:RequestMoney()
+    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_TAKE_MONEY_IN_REQ)
+end
+
+function SandBoxSystem:RequestUseCard(cardType)
+    local request = cc.PACHIN_U2G_USE_CARD_REQ:create(cardType)
+    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_USE_CARD_REQ, request)
+end
+
+function SandBoxSystem:RequestCustomCmd()
+    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_PLUGIN_CUSTOM_REQ)
+end
+
 function SandBoxSystem.OnCommand(command)
     print("SandBoxSystem Recv Command:", command.commandType)
     local recvCommand = command.commandType
