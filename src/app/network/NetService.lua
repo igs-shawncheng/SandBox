@@ -62,6 +62,7 @@ function NetService:Update()
     elseif currentState == CONNECT_STATE.CONNECTED then
         if self.loginState:IsEntering() then
             print("NetService:Connect Success.")
+            cc.exports.dispatchEvent( cc.exports.define.EVENTS.NET_ON_CONNECTED )
         end
         self.connection:HandleSocketIOLoop()
     elseif currentState == CONNECT_STATE.DISCONNECT then

@@ -10,8 +10,8 @@ local EVENTS = {
 	MUTE_SETTING_CHANGED = "mute_setting_changed",
 	IO_SETTING_CHANGED = "io_setting_changed",
 
-	LOGIN = "login",
-	LOGOUT = "logout",
+	JOINGAME ="joingame",
+	LEAVEGAME = "leavegame",
 
     CHIP_UPDATE = "chip_update",
     SET_ARCADE_NO = "set_arcade_no",
@@ -20,16 +20,20 @@ local EVENTS = {
 	PLUGIN_RESPONSE = "plugin_response",
 
     SHOW_MSG = "show_msg",
-	
+
     FREE_SPIN_CARD_TOTAL_BET = "free_spin_card_total_bet",
     FREE_SPIN_CARD_INFO = "free_spin_card_info",
     FREE_SPIN_CARD_SHOW = "free_spin_card_show",
     FREE_SPIN_CARD_HIDE = "free_spin_card_hide",
 
-    NET_LOGIN_SUCCESS = "net_login_success",
-	NET_LOGIN_FAIL = "net_login_fail",
 	NET_ON_DISCONNECT = "net_on_disconnect",
 	NET_ON_RECONNECT = "net_on_reconnect",
+	NET_ON_CONNECTED = "net_on_connect",
+
+	LOGIN_SUCCESS = "login_success",
+	ROOM_INFO_ACK = "room_info_ack",
+	GAME_INFO_ACK = "game_info_ack",
+	JOIN_ROOM_ACK = "join_room_ack",
 }
 
 local DEFAULT_FONT = "Microsoft JhengHei"  -- 微軟正黑體

@@ -1,7 +1,8 @@
 require "app.serialization.JsonDeserialize"
+
 local PACHIN_G2U_USE_CARD_ACK = class("PACHIN_G2U_USE_CARD_ACK", cc.JsonDeserialize:create())
 
-local CARD_TYPE =
+local CARD_TYPE = 
 {
     CARD_TYPE_NONE					= 0,
 	UP_CARD							= 12001,

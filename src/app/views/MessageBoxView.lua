@@ -127,6 +127,9 @@ end
 
 function MessageBoxView:OnClickedCloseBtn( event )
     if event.name == "ended" then
+        if self.m_config.closeCB then
+            self.m_config.closeCB()
+        end
         self:Hide()
     end
 end

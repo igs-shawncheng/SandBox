@@ -6,14 +6,21 @@ local ResponseTrackerProcessor = class("ResponseTrackerProcessor")
 --[[
     處理command綁定，command逾時處理
 ]]
-local commandSorrespond = {
-    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ, cc.Protocol.PachinG2UProtocol.SLOT_G2U_GAME_INFO_ACK},
+local commandSorrespond = 
+{
+    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_LOGIN_REQ, nil},
+    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_ROOM_INFO_REQ, cc.Protocol.PachinG2UProtocol.PACHIN_G2U_ROOM_INFO_ACK},
+    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_JOIN_ROOM_REQ, cc.Protocol.PachinG2UProtocol.PACHIN_G2U_JOIN_ROOM_ACK},
+    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_LEAVE_ROOM_REQ, nil},
+    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ, cc.Protocol.PachinG2UProtocol.PACHIN_G2U_GAME_INFO_ACK},
+    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_START_GAME_REQ, nil},
     {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_SPIN_REQ, cc.Protocol.PachinG2UProtocol.SLOT_G2U_SPIN_ACK},
-    --{cc.Protocol.PachinU2GProtocol.PACHIN_U2G_SPIN_END_REQ, nil},
-    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_BONUS_SPIN_REQ, cc.Protocol.PachinG2UProtocol.SLOT_G2U_BONUS_SPIN_ACK},
-    --{cc.Protocol.PachinU2GProtocol.PACHIN_U2G_BONUS_SPIN_END_REQ, nil},
-    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GET_BONUS_RECORD_REQ, cc.Protocol.PachinG2UProtocol.SLOT_G2U_GET_BONUS_RECORD_ACK},
+    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_STOP_REEL_REQ, cc.Protocol.PachinG2UProtocol.PACHIN_G2U_STOP_REEL_ACK},
+    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_TAKE_MONEY_IN_REQ, cc.Protocol.PachinG2UProtocol.PACHIN_G2U_TAKE_MONEY_IN_ACK},
+    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_USE_CARD_REQ, cc.Protocol.PachinG2UProtocol.PACHIN_G2U_USE_CARD_ACK},
+    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_PLUGIN_CUSTOM_REQ, cc.Protocol.PachinG2UProtocol.PACHIN_G2U_PLUGIN_CUSTOM_ACK},
 }
+
 
 local scheduler = cc.Director:getInstance():getScheduler()
 local TRACK_SECOND = 10
@@ -42,7 +49,7 @@ function ResponseTrackerProcessor:PreProcessSend(commandId, content)
         return
     end
     
-    for index, value in ipairs(commandSorrespond) do
+    for _ , value in ipairs(commandSorrespond) do
         local requestId, responseId = value[1], value[2]
         if requestId == commandId and responseId ~= nil then
              table.insert(self.trackList, cc.ResponseTracker:create(responseId, TRACK_SECOND))

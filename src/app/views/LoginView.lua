@@ -15,21 +15,34 @@ LoginView.RESOURCE_BINDING = {
         ["events"] = {
             {
                 event = "touch",
-                method ="OnClickedLoginBtn"
+                method ="OnClickedPlayBtn"
             }
         }
     },
 }
 
 local REGISTER_EVENTS = {
-    cc.exports.define.EVENTS.LOGIN,
-    cc.exports.define.EVENTS.LOGOUT,
-    cc.exports.define.EVENTS.NET_LOGIN_SUCCESS,
-    cc.exports.define.EVENTS.NET_LOGIN_FAIL,
+    cc.exports.define.EVENTS.JOINGAME,
+    cc.exports.define.EVENTS.LEAVEGAME,
+    cc.exports.define.EVENTS.ROOM_INFO_ACK,
+    cc.exports.define.EVENTS.NET_ON_CONNECTED,
+    cc.exports.define.EVENTS.LOGIN_SUCCESS,
+    cc.exports.define.EVENTS.JOIN_ROOM_ACK,
+    cc.exports.define.EVENTS.GAME_INFO_ACK,
 }
 
 function LoginView:onCreate()
     print("LoginView:onCreate")
+
+    self.sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
+
+    --cc.SubSystemBase:GetInstance():Login("127.0.0.1", "8888")
+    -- cc.SubSystemBase:GetInstance():Login("192.168.165.191", "8888") --教和主機ip
+    cc.SubSystemBase:GetInstance():Login("192.168.44.101", "8888")
+
+    self.accoundId = 1234
+    self.roomIndex = nil
+    self.reserve = nil
 
     self:RegisterEvent()
 end
@@ -38,18 +51,35 @@ function LoginView:RegisterEvent()
     print("LoginView:RegisterEvent")
 
     local function eventHander( event )
-        if event:getEventName() == tostring( cc.exports.define.EVENTS.LOGIN ) then
+        print("LoginView:event",event)
+        if event:getEventName() == tostring( cc.exports.define.EVENTS.JOINGAME ) then
             self:setVisible( false )
-        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LOGOUT ) then
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LEAVEGAME ) then
             self:setVisible( true )
-        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.NET_LOGIN_SUCCESS ) then
-            self:OnLoginAck()
-        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.NET_LOGIN_FAIL ) then
-            self:OnLoginFail(event._usedata)
+            self.sandBoxSystem:RequestLeaveRoom( self.accoundId, event._usedata)
+            self.m_eb_input:setText( "" )
+            self.m_eb_input:setPlaceHolder( "請輸入機台號碼" )
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.ROOM_INFO_ACK) then
+            self.reserve = event._usedata.reserve
+            self.roomIndex = event._usedata.roomIndex
+            self:ReqJoinGame()
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.NET_ON_CONNECTED ) then
+            self.sandBoxSystem:RequestLogin(self.accoundId)
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LOGIN_SUCCESS ) then
+
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.JOIN_ROOM_ACK ) then
+            self.success = event._usedata.success
+            if self.success then
+                self:OnJoinGameAck()
+            else
+                self:OnJoinGameFail( "請洽遊戲客服人員謝謝" )
+            end
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.GAME_INFO_ACK ) then
+            self:OnGameInfoAck()
         end
     end
 
-    for i, eventName in pairs( REGISTER_EVENTS ) do
+    for _, eventName in pairs( REGISTER_EVENTS ) do
         local listener = cc.EventListenerCustom:create( tostring(eventName), eventHander )
         local dispatcher = cc.Director:getInstance():getEventDispatcher()
         dispatcher:addEventListenerWithFixedPriority( listener, 10 )
@@ -70,11 +100,7 @@ function LoginView:OnEnter()
     self.m_eb_input:setPlaceholderFont( cc.exports.define.DEFAULT_FONT, 25 )
     self.m_eb_input:setPlaceholderFontColor( cc.c4b( 206, 154, 223, 255 ) )
     self.m_eb_input:setPlaceHolder( "請輸入機台號碼" )
-    
     self:addChild( self.m_eb_input )
-
-    --cc.SubSystemBase:GetInstance():Login("127.0.0.1", "8888")
-    cc.SubSystemBase:GetInstance():Login("192.168.44.101", "8888")
 end
 
 function LoginView:OnExit()
@@ -84,47 +110,76 @@ end
 function LoginView:OnUpdate( dt )
 end
 
-function LoginView:OnClickedLoginBtn( event )
+function LoginView:OnClickedPlayBtn( event )
     if event.name == "ended" then
-        self:ReqLogin()
+        self.sandBoxSystem:RequestRoomInfo(self.accoundId)
     end
 end
 
-function LoginView:ReqLogin()
+function LoginView:ReqJoinGame()
     -- 登入Server
-    print("機台號碼:", tonumber(self.m_eb_input:getText()))
-    if self.m_eb_input:getText() == "" then
-        self:OnLoginFail( "尚未輸入機台號碼" )
+    local roomIndex = tonumber(self.m_eb_input:getText())
+    print("機台號碼:",roomIndex)
+    if roomIndex == "" or type( roomIndex ) ~= "number" then
+        self:OnJoinGameFail( "機台號碼錯誤" )
         return
     end
 
-    -- 串登入協定
+    -- 直接進入遊戲
     if cc.exports.define.TEST_WITH_CONNECT then
-        self:OnLoginAck()
+        self.roomIndex = roomIndex
+        self:OnJoinGameAck()
     else
-        local accountId = 1234
-        local roomIndex = tonumber(self.m_eb_input:getText())
-        local sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
-        sandBoxSystem:RequestGameInfo(accountId, roomIndex)
+
+        --新進入的機台與保留機台不一樣
+        if self.reserve == true and self.roomIndex ~= roomIndex then
+            cc.exports.dispatchEvent( cc.exports.define.EVENTS.SHOW_MSG,
+            {
+                title = "系統資訊",
+                content = "您目前有保留機台， 機台號碼: " .. self.roomIndex,
+                cancelBtnText = "玩保留機台",
+                confirmBtnText = "玩新機台",
+                showCloseBtn = true,
+                confirmCB = function ()
+                    print("click confirmCB",roomIndex)
+                    self.sandBoxSystem:RequestJoinRoom(self.accoundId,roomIndex)
+                    self.roomIndex = roomIndex
+                end,
+                cancelCB = function ()
+                    print("click cancelCB",self.roomIndex)
+                    self.sandBoxSystem:RequestJoinRoom(self.accoundId,self.roomIndex)
+                end,
+                closeCB = function ()
+                    print("click closeCB")
+                end,
+            } )
+            return
+        end
+
+        self.sandBoxSystem:RequestJoinRoom(self.accoundId,roomIndex)
+        self.roomIndex = roomIndex
     end
 end
 
-function LoginView:OnLoginAck()
-    cc.exports.dispatchEvent( cc.exports.define.EVENTS.SET_ARCADE_NO, tonumber(self.m_eb_input:getText()) )
-    cc.exports.dispatchEvent( cc.exports.define.EVENTS.CHIP_UPDATE, 5678 )
-    cc.exports.dispatchEvent( cc.exports.define.EVENTS.LOGIN )
+function LoginView:OnJoinGameAck()
+    print("RequestGameInfo",self.accoundId,self.roomIndex)
+    self.sandBoxSystem:RequestGameInfo(self.accoundId,self.roomIndex)
 end
 
-function LoginView:OnLoginFail( reason )
+function LoginView:OnGameInfoAck()
+    print("OnGameInfoAck",self.roomIndex)
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.SET_ARCADE_NO, self.roomIndex )
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.CHIP_UPDATE, 5678 )
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.JOINGAME )
+end
+
+function LoginView:OnJoinGameFail( reason )
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.SHOW_MSG,
     {
-        title = "登入失敗",
-        content = "原因: " .. reason,
+        title = "系統資訊",
+        content = "加入遊戲失敗: " .. reason,
         confirmCB = function ()
             print("click confirmCB")
-        end,
-        cancelCB = function ()
-            print("click cancelCB")
         end,
         btnPosType = 1,
     } )

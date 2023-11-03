@@ -1,4 +1,3 @@
-
 local MainScene = class("MainScene", cc.load("mvc").ViewBase)
 
 MainScene.RESOURCE_FILENAME = "MainScene.csb"
@@ -10,12 +9,28 @@ local function GetZorder()
     return curZorder
 end
 
-local ZOrder = {
-    GAME = MIN_ZORDER,
-    FREE_SPIN_CARD = GetZorder(),
-    NAVIGATION = GetZorder(),
-    LOGIN = GetZorder(),
-    MESSAGE_BOX = GetZorder(),
+local VIEWS = {
+    Game  = { 
+        ZOrder =  MIN_ZORDER,
+        NAME = "GameView", 
+    },
+    FreeSpinCard  = { 
+        ZOrder =  GetZorder(),
+        NAME = "FreeSpinCardView",
+    },
+    Navigation  = { 
+        ZOrder =  GetZorder(),
+        NAME = "NavigationView",
+        POSITION =  cc.p( 0, 496 )
+    },
+    Login  = { 
+        ZOrder =  GetZorder(),
+        NAME = "LoginView",
+    },
+    MessageBox  = { 
+        ZOrder =  GetZorder(),
+        NAME = "MessageBoxView",
+    },
 }
 
 function MainScene:onCreate()
@@ -29,21 +44,11 @@ function MainScene:onCreate()
     local sceneX = (display.width - CC_DESIGN_RESOLUTION.width) / 2
     self:setPosition( cc.p( sceneX, sceneY ) )
 
-    local view = self:getApp():createView( "NavigationView" )
-    view:setPosition( cc.p( 0, 496 ) )
-    self:addChild( view, ZOrder.NAVIGATION )
-
-    local view = self:getApp():createView( "GameView" )
-    self:addChild( view, ZOrder.GAME )
-
-    local view = self:getApp():createView( "LoginView" )
-    self:addChild( view, ZOrder.LOGIN )
-
-    local view = self:getApp():createView( "MessageBoxView" )
-    self:addChild( view, ZOrder.MESSAGE_BOX )
-
-    local view = self:getApp():createView( "FreeSpinCardView" )
-    self:addChild( view, ZOrder.FREE_SPIN_CARD )
+    for _, value in pairs(VIEWS) do
+        local view = self:getApp():createView( value.NAME )
+        self:addChild( view, value.ZOrder )
+        if value.POSITION then view:setPosition( value.POSITION ) end
+    end
 end
 
 return MainScene

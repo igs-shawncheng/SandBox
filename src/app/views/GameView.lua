@@ -21,20 +21,21 @@ GameView.RESOURCE_BINDING = {
 }
 
 local REGISTER_EVENTS = {
-    cc.exports.define.EVENTS.LOGIN,
+    cc.exports.define.EVENTS.JOINGAME,
+    cc.exports.define.EVENTS.LEAVEGAME,
+    cc.exports.define.EVENTS.GAME_INFO_ACK,
     cc.exports.define.EVENTS.CLICKED_BACK_BTN,
-    cc.exports.define.EVENTS.LOGOUT,
-    cc.exports.define.EVENTS.PLUGIN_ERROR_STATUS,
     cc.exports.define.EVENTS.CLICKED_GAME_STATUS_BTN,
     cc.exports.define.EVENTS.CLICKED_INFO_BTN,
     cc.exports.define.EVENTS.CLICKED_ITEM_BTN,
     cc.exports.define.EVENTS.CLICKED_MUSIC_BTN,
     cc.exports.define.EVENTS.CLICKED_INPUT_BTN,
+    cc.exports.define.EVENTS.PLUGIN_ERROR_STATUS,
 }
 
 local GAMEVIEW_STATE = {
-    WAIT_LOGIN = 1, -- 等待登入Server
-    INIT = 2,       -- 登入後初始化
+    WAIT_JOIN_GAME = 1, -- 等待玩家加入遊戲
+    INIT = 2,       -- 進遊戲後初始化
 
     IDLE = 10,  -- 等待spin
     START = 11, -- 開始轉動
@@ -52,10 +53,14 @@ local GAMEVIEW_STATE = {
 function GameView:onCreate()
     print("GameView:onCreate")
 
-    self.m_state = cc.exports.FiniteState:create( GAMEVIEW_STATE.WAIT_LOGIN )
+    self.m_state = cc.exports.FiniteState:create( GAMEVIEW_STATE.WAIT_JOIN_GAME )
     self.m_pluginProgram = cc.exports.PluginProgram:create()
 
     self.m_isUseItem = false
+
+    self.bet = nil
+    self.currCount = nil
+    self.gameMode = nil
 
     self:RegisterEvent()
 end
@@ -64,10 +69,14 @@ function GameView:RegisterEvent()
     print("GameView:RegisterEvent")
 
     local function eventHander( event )
-        if event:getEventName() == tostring( cc.exports.define.EVENTS.LOGIN ) then
-            self:OnLogin()
-        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LOGOUT ) then
-            self:OnLogout()
+        if event:getEventName() == tostring( cc.exports.define.EVENTS.JOINGAME ) then
+            self:OnJoinGame()
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LEAVEGAME ) then
+            self:OnLeaveGame()
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.GAME_INFO_ACK) then
+            self.bet = event._usedata.bet
+            self.currCount = event._usedata.currCount
+            self.gameMode = event._usedata.gameMode
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CLICKED_BACK_BTN ) then
             self:OnClickedBackBtn()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.PLUGIN_ERROR_STATUS ) then
@@ -93,32 +102,42 @@ function GameView:RegisterEvent()
     end
 end
 
-function GameView:OnLogin()
+function GameView:OnJoinGame()
     self.m_state:Transit( GAMEVIEW_STATE.INIT )
 end
 
-function GameView:OnLogout()
+--離桌結算可以做在這裡
+function GameView:OnLeaveGame()
     self.m_pluginProgram:OnLeaveGame()
-    self.m_state:Transit( GAMEVIEW_STATE.WAIT_LOGIN )
+    self.m_state:Transit( GAMEVIEW_STATE.WAIT_JOIN_GAME )
 end
 
 function GameView:OnClickedBackBtn()
-    if self.m_state:Current() == GAMEVIEW_STATE.WAIT_LOGIN then
+    if self.m_state:Current() == GAMEVIEW_STATE.WAIT_JOIN_GAME then
         return
     end
 
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.SHOW_MSG,
     {
-        title = "提示訊息",
-        content = "是否登出？",
+        title = "系統資訊",
+        content = "是否保留機台座位？ 按下確定後將替您保留機台。",
+        cancelBtnText = "不保留",
+        confirmBtnText = "保留",
+        showCloseBtn = true,
         confirmCB = function ()
             print("click confirmCB")
-            if self.m_state:Current() ~= GAMEVIEW_STATE.WAIT_LOGIN then
-                cc.exports.dispatchEvent( cc.exports.define.EVENTS.LOGOUT )
+            if self.m_state:Current() ~= GAMEVIEW_STATE.WAIT_JOIN_GAME then
+                cc.exports.dispatchEvent( cc.exports.define.EVENTS.LEAVEGAME, true )
             end
         end,
         cancelCB = function ()
             print("click cancelCB")
+            if self.m_state:Current() ~= GAMEVIEW_STATE.WAIT_JOIN_GAME then
+                cc.exports.dispatchEvent( cc.exports.define.EVENTS.LEAVEGAME, false )
+            end
+        end,
+        closeCB = function ()
+            print("click closeCB")
         end,
     } )
 end
@@ -209,9 +228,9 @@ end
 
 function GameView:OnUpdate( dt )
     local currentState = self.m_state:Tick()
-    if currentState == GAMEVIEW_STATE.WAIT_LOGIN then
+    if currentState == GAMEVIEW_STATE.WAIT_JOIN_GAME then
         if self.m_state:IsEntering() then
-            print("GAMEVIEW_STATE.WAIT_LOGIN")
+            print("GAMEVIEW_STATE.WAIT_JOIN_GAME")
 
             self:setVisible( false )
             self.m_touch_layer:setTouchEnabled( false )

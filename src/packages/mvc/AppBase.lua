@@ -64,6 +64,7 @@ function AppBase:createView(name)
 end
 
 function AppBase:onCreate()
+
 end
 
 function AppBase:registerHandler( target )

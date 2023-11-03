@@ -1,4 +1,4 @@
-require("app.serialization.JsonSerialize")
+require "app.serialization.JsonSerialize"
 
 local PACHIN_U2G_STOP_REEL_REQ = class("PACHIN_U2G_STOP_REEL_REQ", cc.JsonSerialize:create())
 

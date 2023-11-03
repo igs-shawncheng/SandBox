@@ -90,8 +90,8 @@ NavigationView.RESOURCE_BINDING = {
 }
 
 local REGISTER_EVENTS = {
-    cc.exports.define.EVENTS.LOGIN,
-    cc.exports.define.EVENTS.LOGOUT,
+    cc.exports.define.EVENTS.JOINGAME,
+    cc.exports.define.EVENTS.LEAVEGAME,
     cc.exports.define.EVENTS.CHIP_UPDATE,
     cc.exports.define.EVENTS.SET_ARCADE_NO,
     cc.exports.define.EVENTS.MUTE_SETTING_CHANGED,
@@ -127,12 +127,11 @@ function NavigationView:RegisterEvent()
     print("NavigationView:RegisterEvent")
 
     local function eventHander( event )
-        if event:getEventName() == tostring( cc.exports.define.EVENTS.LOGIN ) then
-            self:OnLogin()
-        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LOGOUT ) then
-            self:OnLogout()
+        if event:getEventName() == tostring( cc.exports.define.EVENTS.JOINGAME ) then
+            self:OnJoinGame()
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LEAVEGAME ) then
+            self:OnLeaveGame()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CHIP_UPDATE ) then
-            print("eventHander " .. cc.exports.define.EVENTS.CHIP_UPDATE .. " ", event._usedata)
             self:SetChip( event._usedata )
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.SET_ARCADE_NO ) then
             self:SetArcadeNumber( event._usedata )
@@ -150,11 +149,11 @@ function NavigationView:RegisterEvent()
     end
 end
 
-function NavigationView:OnLogin()
+function NavigationView:OnJoinGame()
     self:setVisible( true )
 end
 
-function NavigationView:OnLogout()
+function NavigationView:OnLeaveGame()
     self:setVisible( false )
     self:SetChip( 0 )
     self:SetArcadeNumber( 0 )

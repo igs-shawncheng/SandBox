@@ -1,4 +1,3 @@
-
 local FreeSpinCardView = class("FreeSpinCardView", cc.load("mvc").ViewBase)
 
 FreeSpinCardView.RESOURCE_FILENAME = "Platform/gameCommonUI/freeSpinCard/FreeSpinCardView_HS.csb"
@@ -19,6 +18,7 @@ local REGISTER_EVENTS = {
     cc.exports.define.EVENTS.FREE_SPIN_CARD_INFO,
     cc.exports.define.EVENTS.FREE_SPIN_CARD_SHOW,
     cc.exports.define.EVENTS.FREE_SPIN_CARD_HIDE,
+    cc.exports.define.EVENTS.LEAVEGAME,
 }
 
 local INFO = {
@@ -61,6 +61,8 @@ function FreeSpinCardView:RegisterEvent()
             self:Show()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.FREE_SPIN_CARD_HIDE ) then
             self:Hide()
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LEAVEGAME ) then
+            self:Hide()
         end
     end
 
@@ -85,6 +87,7 @@ function FreeSpinCardView:Show()
 end
 
 function FreeSpinCardView:Hide()
+    self:setVisible( false )
     self.m_timeline:play( "End", false )
 end
 
@@ -93,7 +96,7 @@ function FreeSpinCardView:SetTotalBet( totalBet )
 end
 
 function FreeSpinCardView:UpdateInfo( info )
-    self.m_txt_leftTimes:setString( tostring( info.leftTimes ) .. "/" .. tostring( info.totalCount ) ) 
+    self.m_txt_leftTimes:setString( tostring( info.leftTimes ) .. "/" .. tostring( info.totalCount ) )
     self.m_txt_totalWin:setString( tostring( info.totalWin ) )
 end
 
