@@ -18,7 +18,6 @@ local PACHIN_G2U_PROTOCOL =
     PACHIN_G2U_LOGIN_ACK                    = 1,            -- 登入成功
     PACHIN_G2U_ROOM_INFO_ACK                = 2,            -- RoomInfo
     PACHIN_G2U_JOIN_ROOM_ACK                = 3,            -- 回應加入遊戲
-    PACHIN_G2U_LEAVE_ROOM_ACK               = 4,
     PACHIN_G2U_GAME_INFO_ACK				= 5,			-- GameInfo
     PACHIN_G2U_START_GAME_ACK               = 6,            -- StartGame
     PACHIN_G2U_SPIN_ACK						= 7,			-- Spin

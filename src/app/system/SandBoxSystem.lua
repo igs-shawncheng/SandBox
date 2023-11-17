@@ -25,8 +25,6 @@ function SandBoxSystem:ctor()
     self:Registers(RecvCommand.PACHIN_G2U_USE_CARD_ACK, handler(self, self.OnRecvUseCard))
 end
 
-
-
 function SandBoxSystem:RequestStartGame()
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_START_GAME_REQ)
 end

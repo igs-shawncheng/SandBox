@@ -34,10 +34,7 @@ function LoginView:onCreate()
     print("LoginView:onCreate")
  
     self.loginSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
-    self.accoundId = 1234
-    self.port = "8888"
-    self.IP = "192.168.165.191"--教和主機ip
-    self.roomIndex = 1
+    
     self:RegisterEvent()
 end
 
@@ -114,29 +111,11 @@ end
 
 function LoginView:OnClickedLoginBtn( event )
     if event.name == "ended" then
-        self.loginSystem:Connect(self:GetConnectInputInfo())
+        local ip = self.m_ip_input:getText();
+        local accountId = self.m_account_input:getText();
+        local roomIndex = self.m_room_input:getText();
+        self.loginSystem:Connect(ip, accountId, roomIndex)
     end
-end
-
-function LoginView:GetConnectInputInfo()
-    self.IP = self:GetDefaultorTextValue(self.IP, self.m_ip_input:getText())
-    print("IP and Port:", self.IP .. self.port)
-
-    self.accoundId = self:GetDefaultorTextValue(self.accoundId, self.m_account_input:getText())
-    print("AccountId:",  self.accoundId)
-    
-    self.roomIndex = self:GetDefaultorTextValue(self.roomIndex, self.m_room_input:getText())
-    print("Room NO:",  self.roomIndex)
-
-    return self.IP, self.port, self.accoundId, self.roomIndex
-end
-
-function LoginView:GetDefaultorTextValue(defaultValue, textValue)
-    local numberValue = tonumber(textValue)
-    if numberValue ~= nil and type( numberValue ) == "number" then
-        defaultValue = numberValue
-    end
-    return defaultValue
 end
 
 function LoginView:OnLeaveGame()

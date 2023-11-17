@@ -14,22 +14,39 @@ function LoginSystem:ctor()
     print("LoginSystem:ctor")
     self:Registers(RecvCommand.PACHIN_G2U_LOGIN_ACK, handler(self, self.OnRecvLogin))
     self:Registers(RecvCommand.PACHIN_G2U_ROOM_INFO_ACK, handler(self, self.OnRecvRoomInfo))
-    self:Registers(RecvCommand.PACHIN_G2U_JOIN_ROOM_ACK, handler(self, self.OnRecvJoinRoom))
-    self:Registers(RecvCommand.PACHIN_G2U_LEAVE_ROOM_ACK, handler(self, self.OnLeaveRoom))
-    
+    self:Registers(RecvCommand.PACHIN_G2U_JOIN_ROOM_ACK, handler(self, self.OnRecvJoinRoom)) 
 
-    self.roomIndex = nil
+    --defaultValue
+    self.accoundId = 1234
+    self.port = "8888"
+    self.IP = "192.168.165.191"--教和主機ip
+    self.roomIndex = 1
 end
 
 function LoginSystem:Connect(ip, port, accountID, roomIndex)
-    self.netService:Connect(ip, port, handler(self, self.OnConnected))
-    self.accountID = accountID
-    self.roomIndex = roomIndex
+    self.IP = self:GetDefaultorTextValue(self.IP, ip)
+    print("IP and Port:", self.IP .. " ".. self.port)
+
+    self.accoundId = self:GetDefaultorTextValue(self.accoundId, accountID)
+    print("AccountId:",  self.accoundId)
+    
+    self.roomIndex = self:GetDefaultorTextValue(self.roomIndex, roomIndex)
+    print("Room NO:",  self.roomIndex)
+
+    self:GetInstance():Connect(self.IP, self.port, handler(self, self.OnConnected))
+end
+
+function LoginSystem:GetDefaultorTextValue(defaultValue, textValue)
+    local numberValue = tonumber(textValue)
+    if numberValue ~= nil and type( numberValue ) == "number" then
+        defaultValue = numberValue
+    end
+    return defaultValue
 end
 
 
 function LoginSystem:OnConnected()
-    self.sandBoxSystem:RequestLogin(self.accoundId)
+    self:RequestLogin(self.accoundId)
 end
 
 function LoginSystem:RequestLogin(accountid)
@@ -70,22 +87,19 @@ function LoginSystem:RequestJoinRoom(accountId, roomIndex, roomInfo)
         return
     end
 
-    local request = cc.PACHIN_U2G_JOIN_ROOM_REQ:create(accountId,roomIndex)
+    local request = cc.PACHIN_U2G_JOIN_ROOM_REQ:create(accountId, roomIndex)
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_JOIN_ROOM_REQ, request:Serialize())
 end
 
 function LoginSystem:RequestLeaveRoom(reserve)
-    local request = cc.PACHIN_U2G_LEAVE_ROOM_REQ:create(accountid,reserve)
+    local request = cc.PACHIN_U2G_LEAVE_ROOM_REQ:create(self.accountid, reserve)
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_LEAVE_ROOM_REQ, request:Serialize())
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.LEAVEGAME )
 end
 
 function LoginSystem:RequestGameInfo(accountId, roomIndex)
     local request = cc.PACHIN_U2G_GAME_INFO_REQ:create(accountId, roomIndex)
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ, request:Serialize())
-end
-
-function LoginSystem:OnLeaveRoom()
-    cc.exports.dispatchEvent( cc.exports.define.EVENTS.LEAVEGAME )
 end
 
 function LoginSystem:OnRecvLogin(command)
@@ -111,7 +125,7 @@ function LoginSystem:OnRecvRoomInfo(command)
     local response = cc.PACHIN_G2U_ROOM_INFO_ACK:create(command.content)
     dump(response)
 
-    self.sandBoxSystem:RequestJoinRoom(self.accoundId, self.roomIndex, response.RoomInfoAck)
+    self:RequestJoinRoom(self.accoundId, self.roomIndex, response.RoomInfoAck)
 end
 
 function LoginSystem:OnRecvJoinRoom(command)
