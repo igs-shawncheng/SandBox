@@ -1,5 +1,6 @@
 local SystemName = {
-    SandBoxSystem = 1,
+    LoginSystem = 1,
+    SandBoxSystem = 2,
 }
 
 cc.exports.SystemName = SystemName

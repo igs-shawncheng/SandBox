@@ -31,8 +31,8 @@ function SubSystemBase:GetSystem(SystemName)
     return self.SystemList[SystemName]
 end
 
-function SubSystemBase:Login(ip, port)
-    self.netService:Connect(ip, port)
+function SubSystemBase:Connect(ip, port, connectedCallback)
+    self.netService:Connect(ip, port, connectedCallback)
 end
 
 function SubSystemBase:Send(commandType, content) 

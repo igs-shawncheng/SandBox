@@ -1,6 +1,3 @@
-require "app.message.PACHIN_G2U_LOGIN_ACK"
-require "app.message.PACHIN_G2U_ROOM_INFO_ACK"
-require "app.message.PACHIN_G2U_JOIN_ROOM_ACK"
 require "app.message.PACHIN_G2U_GAME_INFO_ACK"
 require "app.message.PACHIN_G2U_START_GAME_ACK"
 require "app.message.PACHIN_G2U_SPIN_ACK"
@@ -8,10 +5,6 @@ require "app.message.PACHIN_G2U_STOP_REEL_ACK"
 require "app.message.PACHIN_G2U_TAKE_MONEY_IN_ACK"
 require "app.message.PACHIN_G2U_USE_CARD_ACK"
 require "app.message.PACHIN_U2G_LOGIN_REQ"
-require "app.message.PACHIN_U2G_ROOM_INFO_REQ"
-require "app.message.PACHIN_U2G_JOIN_ROOM_REQ"
-require "app.message.PACHIN_U2G_LEAVE_ROOM_REQ"
-require "app.message.PACHIN_U2G_GAME_INFO_REQ"
 require "app.message.PACHIN_U2G_START_GAME_REQ"
 require "app.message.PACHIN_U2G_SPIN_REQ"
 require "app.message.PACHIN_U2G_STOP_REEL_REQ"
@@ -24,41 +17,15 @@ local RecvCommand = cc.Protocol.PachinG2UProtocol
 
 function SandBoxSystem:ctor()
     print("SandBoxSystem:ctor")
-    self:Registers(RecvCommand.PACHIN_G2U_LOGIN_ACK, self.OnCommand)
-    self:Registers(RecvCommand.PACHIN_G2U_ROOM_INFO_ACK, self.OnCommand)
-    self:Registers(RecvCommand.PACHIN_G2U_JOIN_ROOM_ACK, self.OnCommand)
-    self:Registers(RecvCommand.PACHIN_G2U_GAME_INFO_ACK, self.OnCommand)
-    self:Registers(RecvCommand.PACHIN_G2U_START_GAME_ACK, self.OnCommand)
-    self:Registers(RecvCommand.PACHIN_G2U_SPIN_ACK, self.OnCommand)
-    self:Registers(RecvCommand.PACHIN_G2U_STOP_REEL_ACK, self.OnCommand)
-    self:Registers(RecvCommand.PACHIN_G2U_TAKE_MONEY_IN_ACK, self.OnCommand)
-    self:Registers(RecvCommand.PACHIN_G2U_USE_CARD_ACK, self.OnCommand)
+    self:Registers(RecvCommand.PACHIN_G2U_GAME_INFO_ACK, handler(self, self.OnRecvGameInfo))
+    self:Registers(RecvCommand.PACHIN_G2U_START_GAME_ACK, handler(self, self.OnRecvStartGame))
+    self:Registers(RecvCommand.PACHIN_G2U_SPIN_ACK, handler(self, self.OnRecvSpin))
+    self:Registers(RecvCommand.PACHIN_G2U_STOP_REEL_ACK, handler(self, self.OnRecvStopReel))
+    self:Registers(RecvCommand.PACHIN_G2U_TAKE_MONEY_IN_ACK, handler(self, self.OnRecvTakeMoneyIn))
+    self:Registers(RecvCommand.PACHIN_G2U_USE_CARD_ACK, handler(self, self.OnRecvUseCard))
 end
 
-function SandBoxSystem:RequestLogin(accountid)
-    local request = cc.PACHIN_U2G_LOGIN_REQ:create(accountid)
-    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_LOGIN_REQ, request:Serialize())
-end
 
-function SandBoxSystem:RequestRoomInfo(accountid)
-    local request = cc.PACHIN_U2G_ROOM_INFO_REQ:create(accountid)
-    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_ROOM_INFO_REQ, request:Serialize())
-end
-
-function SandBoxSystem:RequestJoinRoom(accountId,roomIndex)
-    local request = cc.PACHIN_U2G_JOIN_ROOM_REQ:create(accountId,roomIndex)
-    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_JOIN_ROOM_REQ, request:Serialize())
-end
-
-function SandBoxSystem:RequestLeaveRoom(accountid,reserve)
-    local request = cc.PACHIN_U2G_LEAVE_ROOM_REQ:create(accountid,reserve)
-    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_LEAVE_ROOM_REQ, request:Serialize())
-end
-
-function SandBoxSystem:RequestGameInfo(accountId, roomIndex)
-    local request = cc.PACHIN_U2G_GAME_INFO_REQ:create(accountId, roomIndex)
-    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ, request:Serialize())
-end
 
 function SandBoxSystem:RequestStartGame()
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_START_GAME_REQ)
@@ -83,45 +50,36 @@ function SandBoxSystem:RequestUseCard(cardType)
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_USE_CARD_REQ, request)
 end
 
-function SandBoxSystem.OnCommand(command)
-    print("SandBoxSystem Recv Command:", command.commandType)
+function SandBoxSystem:OnRecvGameInfo(command)
+    print("Recv Command 5")
+    local response = cc.PACHIN_G2U_GAME_INFO_ACK:create(command.content)
+    dump(response)
+    --cc.exports.dispatchEvent( cc.exports.define.EVENTS.GAME_INFO_ACK, response.GameInfoAck )
 
-    local recvCommand = command.commandType
+    print("OnGameInfoAck",self.roomIndex)
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.SET_ARCADE_NO, self.roomIndex )
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.CHIP_UPDATE, 5678 )
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.JOINGAME )
+end
 
-    if recvCommand == RecvCommand.PACHIN_G2U_LOGIN_ACK then
-        print("Recv Command 1")
-        local response = cc.PACHIN_G2U_LOGIN_ACK:create(command.content)
-        cc.exports.dispatchEvent( cc.exports.define.EVENTS.LOGIN_SUCCESS, response.LoginAck )
-    elseif recvCommand == RecvCommand.PACHIN_G2U_ROOM_INFO_ACK then 
-        print("Recv Command 2")
-        local response = cc.PACHIN_G2U_ROOM_INFO_ACK:create(command.content)
-        dump(response)
-        cc.exports.dispatchEvent( cc.exports.define.EVENTS.ROOM_INFO_ACK, response.RoomInfoAck )
-    elseif recvCommand == RecvCommand.PACHIN_G2U_JOIN_ROOM_ACK then
-        print("Recv Command 3")
-        local response = cc.PACHIN_G2U_JOIN_ROOM_ACK:create(command.content)
-        dump(response)
-        cc.exports.dispatchEvent( cc.exports.define.EVENTS.JOIN_ROOM_ACK, response.JoinRoomAck )
-    elseif recvCommand == RecvCommand.PACHIN_G2U_GAME_INFO_ACK then
-        print("Recv Command 5")
-        local response = cc.PACHIN_G2U_GAME_INFO_ACK:create(command.content)
-        dump(response)
-        cc.exports.dispatchEvent( cc.exports.define.EVENTS.GAME_INFO_ACK, response.GameInfoAck )
-    elseif recvCommand == RecvCommand.PACHIN_G2U_START_GAME_ACK then
-        print("Recv Command 6")
-    elseif recvCommand == RecvCommand.PACHIN_G2U_SPIN_ACK then
-        print("Recv Command 7")
-    elseif recvCommand == RecvCommand.PACHIN_G2U_STOP_REEL_ACK then
-        print("Recv Command 8")
-    elseif recvCommand == RecvCommand.PACHIN_G2U_TAKE_MONEY_IN_ACK then
-        print("Recv Command 9")
-    elseif recvCommand == RecvCommand.PACHIN_G2U_USE_CARD_ACK then
-        print("Recv Command 10")
-    end
-
+function SandBoxSystem:OnRecvStartGame(command)
     cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
-    --cc.exports.PluginProgram:SendMessage("testSyste", "tsetCmd", "123456")
-    --print("LoginVIewTest", cc.exports.PluginProgram:GetPostMessageString())
+end
+
+function SandBoxSystem:OnRecvSpin(command)
+    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
+end
+
+function SandBoxSystem:OnRecvStopReel(command)
+    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
+end
+
+function SandBoxSystem:OnRecvTakeMoneyIn(command)
+    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
+end
+
+function SandBoxSystem:OnRecvUseCard(command)
+    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
 end
 
 return SandBoxSystem

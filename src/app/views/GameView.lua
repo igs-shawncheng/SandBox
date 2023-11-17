@@ -127,13 +127,15 @@ function GameView:OnClickedBackBtn()
         confirmCB = function ()
             print("click confirmCB")
             if self.m_state:Current() ~= GAMEVIEW_STATE.WAIT_JOIN_GAME then
-                cc.exports.dispatchEvent( cc.exports.define.EVENTS.LEAVEGAME, true )
+                self.loginSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
+                self.loginSystem:RequestLeaveRoom(true)
             end
         end,
         cancelCB = function ()
             print("click cancelCB")
             if self.m_state:Current() ~= GAMEVIEW_STATE.WAIT_JOIN_GAME then
-                cc.exports.dispatchEvent( cc.exports.define.EVENTS.LEAVEGAME, false )
+                self.loginSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
+                self.loginSystem:RequestLeaveRoom(false)
             end
         end,
         closeCB = function ()

@@ -33,10 +33,11 @@ function NetService:Init(subSystemBase)
     table.insert(CommandProcessor, cc.ResponseTrackerProcessor.create())
 end
 
-function NetService:Connect(ip, port)
+function NetService:Connect(ip, port, connectedCallback)
     print("NetService:connect ip, port = ", ip, port)
     self.connectData.ip = ip
     self.connectData.port = port
+    self.connectedCallback = connectedCallback
     self.loginState:Transit(CONNECT_STATE.CONNECT)
 end
 
@@ -62,7 +63,7 @@ function NetService:Update()
     elseif currentState == CONNECT_STATE.CONNECTED then
         if self.loginState:IsEntering() then
             print("NetService:Connect Success.")
-            cc.exports.dispatchEvent( cc.exports.define.EVENTS.NET_ON_CONNECTED )
+            self.connectedCallback()
         end
         self.connection:HandleSocketIOLoop()
     elseif currentState == CONNECT_STATE.DISCONNECT then

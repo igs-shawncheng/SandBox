@@ -1,5 +1,3 @@
-require "app.message.PACHIN_U2G_GAME_INFO_REQ"
-
 local LoginView = class("LoginView", cc.load("mvc").ViewBase)
 
 LoginView.RESOURCE_FILENAME = "Game/LoginView.csb"
@@ -7,15 +5,21 @@ LoginView.RESOURCE_BINDING = {
     ["s_Default"] = {
         ["varname"] = "m_s_default",
     },
-    ["img_Input"] = {
-        ["varname"] = "m_img_input",
+    ["img_ipInput"] = {
+        ["varname"] = "m_ipInput",
+    },
+    ["img_accountInput"] = {
+        ["varname"] = "m_accountInput",
+    },
+    ["img_roomInput"] = {
+        ["varname"] = "m_roomInput",
     },
     ["btn_Login"] = {
         ["varname"] = "m_btn_login",
         ["events"] = {
             {
                 event = "touch",
-                method ="OnClickedPlayBtn"
+                method ="OnClickedLoginBtn"
             }
         }
     },
@@ -24,26 +28,16 @@ LoginView.RESOURCE_BINDING = {
 local REGISTER_EVENTS = {
     cc.exports.define.EVENTS.JOINGAME,
     cc.exports.define.EVENTS.LEAVEGAME,
-    cc.exports.define.EVENTS.ROOM_INFO_ACK,
-    cc.exports.define.EVENTS.NET_ON_CONNECTED,
-    cc.exports.define.EVENTS.LOGIN_SUCCESS,
-    cc.exports.define.EVENTS.JOIN_ROOM_ACK,
-    cc.exports.define.EVENTS.GAME_INFO_ACK,
 }
 
 function LoginView:onCreate()
     print("LoginView:onCreate")
-
-    self.sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
-
-    --cc.SubSystemBase:GetInstance():Login("127.0.0.1", "8888")
-    -- cc.SubSystemBase:GetInstance():Login("192.168.165.191", "8888") --教和主機ip
-    cc.SubSystemBase:GetInstance():Login("192.168.44.101", "8888")
-
+ 
+    self.loginSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
     self.accoundId = 1234
-    self.roomIndex = nil
-    self.reserve = nil
-
+    self.port = "8888"
+    self.IP = "192.168.165.191"--教和主機ip
+    self.roomIndex = 1
     self:RegisterEvent()
 end
 
@@ -55,27 +49,7 @@ function LoginView:RegisterEvent()
         if event:getEventName() == tostring( cc.exports.define.EVENTS.JOINGAME ) then
             self:setVisible( false )
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LEAVEGAME ) then
-            self:setVisible( true )
-            self.sandBoxSystem:RequestLeaveRoom( self.accoundId, event._usedata)
-            self.m_eb_input:setText( "" )
-            self.m_eb_input:setPlaceHolder( "請輸入機台號碼" )
-        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.ROOM_INFO_ACK) then
-            self.reserve = event._usedata.reserve
-            self.roomIndex = event._usedata.roomIndex
-            self:ReqJoinGame()
-        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.NET_ON_CONNECTED ) then
-            self.sandBoxSystem:RequestLogin(self.accoundId)
-        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LOGIN_SUCCESS ) then
-
-        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.JOIN_ROOM_ACK ) then
-            self.success = event._usedata.success
-            if self.success then
-                self:OnJoinGameAck()
-            else
-                self:OnJoinGameFail( "請洽遊戲客服人員謝謝" )
-            end
-        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.GAME_INFO_ACK ) then
-            self:OnGameInfoAck()
+            self:OnLeaveGame()
         end
     end
 
@@ -88,101 +62,87 @@ end
 
 function LoginView:OnEnter()
     print("LoginView:OnEnter()")
+    -- 直接進入遊戲
+    if cc.exports.define.TEST_WITH_CONNECT then
+        cc.exports.dispatchEvent( cc.exports.define.EVENTS.JOINGAME )
+        return
+    end
 
-    self.m_eb_input = ccui.EditBox:create( self.m_img_input:getContentSize(), cc.exports.define.BLANK_PNG, ccui.TextureResType.localType )
-    self.m_eb_input:setPosition( cc.p( self.m_img_input:getPosition() ) )
-    self.m_eb_input:setInputMode( 6 )
-    self.m_eb_input:setMaxLength( 4 )
-    self.m_eb_input:setFontName( cc.exports.define.DEFAULT_FONT )
-    self.m_eb_input:setFontColor( cc.c4b( 0, 0, 0, 255 ) )
-    self.m_eb_input:setFontSize( 25 )
-    self.m_eb_input:setReturnType( 1 )  -- DONE
-    self.m_eb_input:setPlaceholderFont( cc.exports.define.DEFAULT_FONT, 25 )
-    self.m_eb_input:setPlaceholderFontColor( cc.c4b( 206, 154, 223, 255 ) )
-    self.m_eb_input:setPlaceHolder( "請輸入機台號碼" )
-    self:addChild( self.m_eb_input )
+    self.m_ip_input = ccui.EditBox:create( self.m_ipInput:getContentSize(), cc.exports.define.BLANK_PNG, ccui.TextureResType.localType )
+    self.m_ip_input:setPosition( cc.p( self.m_ipInput:getPosition() ) )
+    self.m_ip_input:setInputMode( 6 )
+    self.m_ip_input:setMaxLength( 4 )
+    self.m_ip_input:setFontName( cc.exports.define.DEFAULT_FONT )
+    self.m_ip_input:setFontColor( cc.c4b( 0, 0, 0, 255 ) )
+    self.m_ip_input:setFontSize( 25 )
+    self.m_ip_input:setReturnType( 1 )  -- DONE
+    self.m_ip_input:setPlaceholderFont( cc.exports.define.DEFAULT_FONT, 25 )
+    self.m_ip_input:setPlaceholderFontColor( cc.c4b( 206, 154, 223, 255 ) )
+    self.m_ip_input:setPlaceHolder( "ip EX:192.168.44.101" )
+    self:addChild( self.m_ip_input )
+
+    self.m_account_input = ccui.EditBox:create( self.m_accountInput:getContentSize(), cc.exports.define.BLANK_PNG, ccui.TextureResType.localType )
+    self.m_account_input:setPosition( cc.p( self.m_accountInput:getPosition() ) )
+    self.m_account_input:setInputMode( 6 )
+    self.m_account_input:setMaxLength( 4 )
+    self.m_account_input:setFontName( cc.exports.define.DEFAULT_FONT )
+    self.m_account_input:setFontColor( cc.c4b( 0, 0, 0, 255 ) )
+    self.m_account_input:setFontSize( 25 )
+    self.m_account_input:setReturnType( 1 )  -- DONE
+    self.m_account_input:setPlaceholderFont( cc.exports.define.DEFAULT_FONT, 25 )
+    self.m_account_input:setPlaceholderFontColor( cc.c4b( 206, 154, 223, 255 ) )
+    self.m_account_input:setPlaceHolder( "account number" )
+    self:addChild( self.m_account_input )
+
+    self.m_room_input = ccui.EditBox:create( self.m_roomInput:getContentSize(), cc.exports.define.BLANK_PNG, ccui.TextureResType.localType )
+    self.m_room_input:setPosition( cc.p( self.m_roomInput:getPosition() ) )
+    self.m_room_input:setInputMode( 6 )
+    self.m_room_input:setMaxLength( 4 )
+    self.m_room_input:setFontName( cc.exports.define.DEFAULT_FONT )
+    self.m_room_input:setFontColor( cc.c4b( 0, 0, 0, 255 ) )
+    self.m_room_input:setFontSize( 25 )
+    self.m_room_input:setReturnType( 1 )  -- DONE
+    self.m_room_input:setPlaceholderFont( cc.exports.define.DEFAULT_FONT, 25 )
+    self.m_room_input:setPlaceholderFontColor( cc.c4b( 206, 154, 223, 255 ) )
+    self.m_room_input:setPlaceHolder( "room number" )
+    self:addChild( self.m_room_input )
 end
 
 function LoginView:OnExit()
     print("LoginView:OnExit()")
 end
 
-function LoginView:OnUpdate( dt )
-end
-
-function LoginView:OnClickedPlayBtn( event )
+function LoginView:OnClickedLoginBtn( event )
     if event.name == "ended" then
-        self.sandBoxSystem:RequestRoomInfo(self.accoundId)
+        self.loginSystem:Connect(self:GetConnectInputInfo())
     end
 end
 
-function LoginView:ReqJoinGame()
-    -- 登入Server
-    local roomIndex = tonumber(self.m_eb_input:getText())
-    print("機台號碼:",roomIndex)
-    if roomIndex == "" or type( roomIndex ) ~= "number" then
-        self:OnJoinGameFail( "機台號碼錯誤" )
-        return
+function LoginView:GetConnectInputInfo()
+    self.IP = self:GetDefaultorTextValue(self.IP, self.m_ip_input:getText())
+    print("IP and Port:", self.IP .. self.port)
+
+    self.accoundId = self:GetDefaultorTextValue(self.accoundId, self.m_account_input:getText())
+    print("AccountId:",  self.accoundId)
+    
+    self.roomIndex = self:GetDefaultorTextValue(self.roomIndex, self.m_room_input:getText())
+    print("Room NO:",  self.roomIndex)
+
+    return self.IP, self.port, self.accoundId, self.roomIndex
+end
+
+function LoginView:GetDefaultorTextValue(defaultValue, textValue)
+    local numberValue = tonumber(textValue)
+    if numberValue ~= nil and type( numberValue ) == "number" then
+        defaultValue = numberValue
     end
-
-    -- 直接進入遊戲
-    if cc.exports.define.TEST_WITH_CONNECT then
-        self.roomIndex = roomIndex
-        self:OnJoinGameAck()
-    else
-
-        --新進入的機台與保留機台不一樣
-        if self.reserve == true and self.roomIndex ~= roomIndex then
-            cc.exports.dispatchEvent( cc.exports.define.EVENTS.SHOW_MSG,
-            {
-                title = "系統資訊",
-                content = "您目前有保留機台， 機台號碼: " .. self.roomIndex,
-                cancelBtnText = "玩保留機台",
-                confirmBtnText = "玩新機台",
-                showCloseBtn = true,
-                confirmCB = function ()
-                    print("click confirmCB",roomIndex)
-                    self.sandBoxSystem:RequestJoinRoom(self.accoundId,roomIndex)
-                    self.roomIndex = roomIndex
-                end,
-                cancelCB = function ()
-                    print("click cancelCB",self.roomIndex)
-                    self.sandBoxSystem:RequestJoinRoom(self.accoundId,self.roomIndex)
-                end,
-                closeCB = function ()
-                    print("click closeCB")
-                end,
-            } )
-            return
-        end
-
-        self.sandBoxSystem:RequestJoinRoom(self.accoundId,roomIndex)
-        self.roomIndex = roomIndex
-    end
+    return defaultValue
 end
 
-function LoginView:OnJoinGameAck()
-    print("RequestGameInfo",self.accoundId,self.roomIndex)
-    self.sandBoxSystem:RequestGameInfo(self.accoundId,self.roomIndex)
-end
-
-function LoginView:OnGameInfoAck()
-    print("OnGameInfoAck",self.roomIndex)
-    cc.exports.dispatchEvent( cc.exports.define.EVENTS.SET_ARCADE_NO, self.roomIndex )
-    cc.exports.dispatchEvent( cc.exports.define.EVENTS.CHIP_UPDATE, 5678 )
-    cc.exports.dispatchEvent( cc.exports.define.EVENTS.JOINGAME )
-end
-
-function LoginView:OnJoinGameFail( reason )
-    cc.exports.dispatchEvent( cc.exports.define.EVENTS.SHOW_MSG,
-    {
-        title = "系統資訊",
-        content = "加入遊戲失敗: " .. reason,
-        confirmCB = function ()
-            print("click confirmCB")
-        end,
-        btnPosType = 1,
-    } )
+function LoginView:OnLeaveGame()
+    self:setVisible( true )
+    self.m_room_input:setText( "" )
+    self.m_room_input:setPlaceHolder( "input room number" )
 end
 
 return LoginView
