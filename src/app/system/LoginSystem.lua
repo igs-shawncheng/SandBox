@@ -27,13 +27,11 @@ function LoginSystem:Connect(ip, port, accountID)
 end
 
 function LoginSystem:GetDefaultorTextValue(defaultValue, textValue)
-    local numberValue = tonumber(textValue)
-    if numberValue ~= nil and type( numberValue ) == "number" then
-        defaultValue = numberValue
+    if textValue ~= "" then
+        return textValue
     end
     return defaultValue
 end
-
 
 function LoginSystem:OnConnected()
     self:RequestLogin(self.accoundId)

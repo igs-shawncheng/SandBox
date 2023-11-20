@@ -85,7 +85,7 @@ function LoginView:OnEnter()
     self.m_ip_input:setReturnType( 1 )  -- DONE
     self.m_ip_input:setPlaceholderFont( cc.exports.define.DEFAULT_FONT, 25 )
     self.m_ip_input:setPlaceholderFontColor( cc.c4b( 206, 154, 223, 255 ) )
-    self.m_ip_input:setPlaceHolder( "ip:" .. DEFAULT_LOGIN_INFO.IP )
+    self.m_ip_input:setPlaceHolder( "ip:" .. "192.168..." )
     self:addChild( self.m_ip_input )
 
     self.m_port_input = ccui.EditBox:create( self.m_portInput:getContentSize(), cc.exports.define.BLANK_PNG, ccui.TextureResType.localType )
@@ -98,7 +98,7 @@ function LoginView:OnEnter()
     self.m_port_input:setReturnType( 1 )  -- DONE
     self.m_port_input:setPlaceholderFont( cc.exports.define.DEFAULT_FONT, 25 )
     self.m_port_input:setPlaceholderFontColor( cc.c4b( 206, 154, 223, 255 ) )
-    self.m_port_input:setPlaceHolder( "port:".. DEFAULT_LOGIN_INFO.port )
+    self.m_port_input:setPlaceHolder( "port" )
     self:addChild( self.m_port_input )
 
     self.m_account_input = ccui.EditBox:create( self.m_accountInput:getContentSize(), cc.exports.define.BLANK_PNG, ccui.TextureResType.localType )

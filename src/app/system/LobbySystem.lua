@@ -20,16 +20,9 @@ function LobbySystem:RequestRoomInfo()
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_ROOM_INFO_REQ, request:Serialize())
 end
 
-function LobbySystem:GetDefaultorTextValue(defaultValue, textValue)
-    local numberValue = tonumber(textValue)
-    if numberValue ~= nil and type( numberValue ) == "number" then
-        defaultValue = numberValue
-    end
-    return defaultValue
-end
-
 function LobbySystem:RequestJoinRoom(roomIndex)
-    self.roomIndex = self:GetDefaultorTextValue(DEFAULT_LOGIN_INFO.roomIndex, roomIndex)
+    local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
+    self.roomIndex = loginSystem:GetDefaultorTextValue(DEFAULT_LOGIN_INFO.roomIndex, roomIndex)
     print("Room NO:",  self.roomIndex)
 
     local reserveRoomIndex = self.roomInfo.roomIndex
