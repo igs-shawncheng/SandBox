@@ -46,13 +46,14 @@ function PluginProgram:create()
 	return PluginProgram:extend( {} )
 end
 
-function PluginProgram:Init( sourcePath )
-	print("PluginProgram:Init() sourcePath:", sourcePath)
+function PluginProgram:Init()
+	
 
 	local testInt = Inanna.GetJoyTube().m_testInt
     print("Inanna.GetJoyTube().m_testInt", testInt)
-
-	Inanna.GetJoyTube():SetSourcePath( sourcePath )
+	
+	print("PluginProgram:Init() sourcePath:", NATIVE_RESOURCE_PATH)
+	Inanna.GetJoyTube():SetSourcePath( NATIVE_RESOURCE_PATH )
 
 	local left = 0
 	local top = 0

@@ -23,6 +23,10 @@ local VIEWS = {
         NAME = "NavigationView",
         POSITION =  cc.p( 0, 496 )
     },
+    Lobby  = { 
+        ZOrder =  GetZorder(),
+        NAME = "LobbyView",
+    },
     Login  = { 
         ZOrder =  GetZorder(),
         NAME = "LoginView",

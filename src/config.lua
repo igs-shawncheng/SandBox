@@ -24,3 +24,12 @@ CC_DESIGN_RESOLUTION = {
         end
     end
 }
+
+DEFAULT_LOGIN_INFO = {
+    accoundId = 1234,
+    port = "8888",
+    IP = "192.168.44.102",--教和主機ip
+    roomIndex = 1,
+}
+
+NATIVE_RESOURCE_PATH = "download"

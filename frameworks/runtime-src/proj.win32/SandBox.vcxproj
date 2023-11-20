@@ -197,6 +197,7 @@ xcopy "$(ProjectDir)..\..\..\src" "$(LocalDebuggerWorkingDirectory)\Resources\sr
     <ClInclude Include="..\Classes\JoyTube\IJoyTubeNative.h" />
     <ClInclude Include="..\Classes\JoyTube\JoyTube.h" />
     <ClInclude Include="..\Classes\JoyTube\JoyTubeAndroid.h" />
+    <ClInclude Include="..\Classes\JoyTube\JoyTubeIOS.h" />
     <ClInclude Include="..\Classes\JoyTube\JoyTubeWin32.h" />
     <ClInclude Include="..\Classes\LuaBridge\detail\CFunctions.h" />
     <ClInclude Include="..\Classes\LuaBridge\detail\ClassInfo.h" />
@@ -225,6 +226,7 @@ xcopy "$(ProjectDir)..\..\..\src" "$(LocalDebuggerWorkingDirectory)\Resources\sr
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\JoyTube\JoyTube.cpp" />
     <ClCompile Include="..\Classes\JoyTube\JoyTubeAndroid.cpp" />
+    <ClCompile Include="..\Classes\JoyTube\JoyTubeIOS.cpp" />
     <ClCompile Include="..\Classes\JoyTube\JoyTubeWin32.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SimulatorWin.cpp" />
