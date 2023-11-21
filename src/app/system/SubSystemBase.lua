@@ -21,9 +21,11 @@ function SubSystemBase:Init()
     self.SystemList = {}
     print("SubSystemBase:Init")
     for key, value in pairs(cc.exports.SystemName) do
-        table.insert(self.SystemList, value, require("app.system." .. key):create())
+        self.SystemList[value] = require( "app.system." .. key):create()
     end
 end
+
+
 
 function SubSystemBase:GetSystem(SystemName)
     dump(self.SystemList)
