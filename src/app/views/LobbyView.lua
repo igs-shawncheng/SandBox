@@ -43,7 +43,8 @@ function LobbyView:RegisterEvent()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LEAVEGAME ) then
             self:OnLeaveGame()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CLICKED_BACK_BTN ) then
-            self:OnClickedBackBtn()
+            --todo make sure where to click
+            --self:OnClickedBackBtn()
         end
     end
 

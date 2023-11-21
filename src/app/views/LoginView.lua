@@ -122,6 +122,10 @@ end
 
 function LoginView:OnClickedLoginBtn( event )
     if event.name == "ended" then
+        if self.lobbySystem:IsInGame() then
+            return
+        end
+
         local ip = self.m_ip_input:getText();
         local port = self.m_port_input:getText();
         local accountId = self.m_account_input:getText();

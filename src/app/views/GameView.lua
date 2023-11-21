@@ -58,7 +58,6 @@ GameView.RESOURCE_BINDING = {
 
 local REGISTER_EVENTS = {
     cc.exports.define.EVENTS.JOINGAME,
-    cc.exports.define.EVENTS.LEAVEGAME,
     cc.exports.define.EVENTS.CLICKED_BACK_BTN,
     cc.exports.define.EVENTS.CLICKED_GAME_STATUS_BTN,
     cc.exports.define.EVENTS.CLICKED_INFO_BTN,
@@ -101,8 +100,6 @@ function GameView:RegisterEvent()
     local function eventHander( event )
         if event:getEventName() == tostring( cc.exports.define.EVENTS.JOINGAME ) then
             self:OnJoinGame()
-        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LEAVEGAME ) then
-            self:OnLeaveGame()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CLICKED_BACK_BTN ) then
             self:OnClickedBackBtn()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.PLUGIN_ERROR_STATUS ) then
@@ -130,12 +127,6 @@ end
 
 function GameView:OnJoinGame()
     self.m_state:Transit( GAMEVIEW_STATE.INIT )
-end
-
---離桌結算可以做在這裡
-function GameView:OnLeaveGame()
-    self.m_pluginProgram:OnLeaveGame()
-    self.m_state:Transit( GAMEVIEW_STATE.WAIT_JOIN_GAME )
 end
 
 function GameView:OnClickedSpin( event )
@@ -173,10 +164,10 @@ function GameView:OnClickedBackBtn()
 
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.SHOW_MSG,
     {
-        title = "系統資訊",
-        content = "是否保留機台座位？ 按下確定後將替您保留機台。",
-        cancelBtnText = "不保留",
-        confirmBtnText = "保留",
+        title = "systemInfo",
+        content = "Do you need to reserve your arcade?",
+        cancelBtnText = "Don't Reserve",
+        confirmBtnText = "Reserve",
         showCloseBtn = true,
         confirmCB = function ()
             print("click confirmCB")
@@ -199,6 +190,10 @@ end
 function GameView:DoLeaveRoom(reserve)
     self.lobbySystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.LobbySystem)
     self.lobbySystem:RequestLeaveRoom(reserve)
+
+    --離桌結算可以做在這裡
+    self.m_pluginProgram:OnLeaveGame()
+    self.m_state:Transit( GAMEVIEW_STATE.WAIT_JOIN_GAME )
 end
 
 function GameView:OnPluginErrorStatus( errorStatus )

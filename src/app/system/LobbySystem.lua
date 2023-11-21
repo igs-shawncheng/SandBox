@@ -65,7 +65,7 @@ function LobbySystem:RequestLeaveRoom(reserve)
     local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
     local request = cc.PACHIN_U2G_LEAVE_ROOM_REQ:create(loginSystem:GetAccount(), reserve)
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_LEAVE_ROOM_REQ, request:Serialize())
-    cc.exports.dispatchEvent( cc.exports.define.EVENTS.LEAVE_ROOM )
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.LEAVEGAME )
 end
 
 function LobbySystem:OnRecvRoomInfo(command)
@@ -82,7 +82,7 @@ function LobbySystem:OnRecvJoinRoom(command)
     print("LobbySystem:OnRecvJoinRoom")
     local response = cc.PACHIN_G2U_JOIN_ROOM_ACK:create(command.content)
     dump(response)
-    cc.exports.dispatchEvent( cc.exports.define.EVENTS.JOIN_ROOM_ACK, response.JoinRoomAck )
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.JOINGAME, response.JoinRoomAck )
 
     if response.JoinRoomAck.success then
         self:RequestGameInfo(self.roomIndex)

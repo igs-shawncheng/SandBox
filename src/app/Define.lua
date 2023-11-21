@@ -35,8 +35,6 @@ local EVENTS = {
 
 	ROOM_INFO_ACK = "room_info_ack",
 	GAME_INFO_ACK = "game_info_ack",
-	JOIN_ROOM_ACK = "join_room_ack",
-	LEAVE_ROOM = "leave_room",
 }
 
 local DEFAULT_FONT = "Microsoft JhengHei"  -- 微軟正黑體

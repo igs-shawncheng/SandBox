@@ -1,6 +1,5 @@
 require "app.message.PACHIN_G2U_LOGIN_ACK"
 require "app.message.PACHIN_G2U_ROOM_INFO_ACK"
-require "app.message.PACHIN_G2U_JOIN_ROOM_ACK"
 require "app.message.PACHIN_U2G_LOGIN_REQ"
 require "app.message.PACHIN_U2G_ROOM_INFO_REQ"
 
