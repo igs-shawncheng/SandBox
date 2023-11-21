@@ -60,8 +60,7 @@ end
 
 function LoginView:OnLogin()
     self:setVisible( false )
-    self.lobbySystem:RequestRoomInfo(self.accoundId)
-    self.userSystem:RequestUserInfo(1234)
+    self.lobbySystem:RequestRoomInfo()
 end
 
 function LoginView:OnLogout()

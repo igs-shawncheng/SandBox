@@ -22,7 +22,7 @@ NavigationView.RESOURCE_BINDING = {
         ["varname"] = "m_sp_menu"
     },
     ["n_prosperous_money"] = {
-        ["varname"] = "m_n_prosperous_money"
+        ["varname"] = "m_n_prosperous_money",
     },
     ["btn_back"] = {
         ["varname"] = "m_btn_back",
@@ -181,7 +181,8 @@ end
 
 function NavigationView:OnClickedMallBtn( event )
     if event.name == "ended" then
-        cc.exports.dispatchEvent( cc.exports.define.EVENTS.CLICKED_MALL_BTN )
+        self.userSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.UserSystem)
+        self.userSystem:RequestMoney()
     end
 end
 

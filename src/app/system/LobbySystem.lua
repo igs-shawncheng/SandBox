@@ -51,31 +51,35 @@ function LobbySystem:RequestJoinRoom(roomIndex)
         return
     end
     local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
-    local request = cc.PACHIN_U2G_JOIN_ROOM_REQ:create(loginSystem.accountId, roomIndex)
+    local request = cc.PACHIN_U2G_JOIN_ROOM_REQ:create(loginSystem:GetAccount(), self.roomIndex)
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_JOIN_ROOM_REQ, request:Serialize())
 end
 
 function LobbySystem:RequestGameInfo(roomIndex)
     local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
-    local request = cc.PACHIN_U2G_GAME_INFO_REQ:create(loginSystem.accountId, roomIndex)
+    local request = cc.PACHIN_U2G_GAME_INFO_REQ:create(loginSystem:GetAccount(), roomIndex)
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ, request:Serialize())
 end
 
 function LobbySystem:RequestLeaveRoom(reserve)
-    local request = cc.PACHIN_U2G_LEAVE_ROOM_REQ:create(self.accountid, reserve)
+    local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
+    local request = cc.PACHIN_U2G_LEAVE_ROOM_REQ:create(loginSystem:GetAccount(), reserve)
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_LEAVE_ROOM_REQ, request:Serialize())
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.LEAVE_ROOM )
 end
 
 function LobbySystem:OnRecvRoomInfo(command)
-    print("Recv Command 2")
+    print("LobbySystem:OnRecvRoomInfo")
     local response = cc.PACHIN_G2U_ROOM_INFO_ACK:create(command.content)
     dump(response)
     self.roomInfo = response.RoomInfoAck
+
+    local userSystem = self:GetInstance():GetSystem(cc.exports.SystemName.UserSystem)
+    userSystem:RequestUserInfo()
 end
 
 function LobbySystem:OnRecvJoinRoom(command)
-    print("Recv Command 3")
+    print("LobbySystem:OnRecvJoinRoom")
     local response = cc.PACHIN_G2U_JOIN_ROOM_ACK:create(command.content)
     dump(response)
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.JOIN_ROOM_ACK, response.JoinRoomAck )
