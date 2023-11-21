@@ -127,21 +127,24 @@ function GameView:OnClickedBackBtn()
         confirmCB = function ()
             print("click confirmCB")
             if self.m_state:Current() ~= GAMEVIEW_STATE.WAIT_JOIN_GAME then
-                self.loginSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
-                self.loginSystem:RequestLeaveRoom(true)
+                self:DoLeaveRoom(true)
             end
         end,
         cancelCB = function ()
             print("click cancelCB")
             if self.m_state:Current() ~= GAMEVIEW_STATE.WAIT_JOIN_GAME then
-                self.loginSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
-                self.loginSystem:RequestLeaveRoom(false)
+                self:DoLeaveRoom(false)
             end
         end,
         closeCB = function ()
             print("click closeCB")
         end,
     } )
+end
+
+function GameView:DoLeaveRoom(reserve)
+    self.lobbySystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.LobbySystem)
+    self.lobbySystem:RequestLeaveRoom(reserve)
 end
 
 function GameView:OnPluginErrorStatus( errorStatus )
