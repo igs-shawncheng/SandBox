@@ -35,7 +35,7 @@ function LoginView:onCreate()
  
     self.loginSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
     self.lobbySystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.LobbySystem)
-    
+    self.userSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.UserSystem)
     self:RegisterEvent()
 end
 
@@ -61,6 +61,7 @@ end
 function LoginView:OnLogin()
     self:setVisible( false )
     self.lobbySystem:RequestRoomInfo(self.accoundId)
+    self.userSystem:RequestUserInfo(1234)
 end
 
 function LoginView:OnLogout()
