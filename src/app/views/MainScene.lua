@@ -14,6 +14,10 @@ local VIEWS = {
         ZOrder =  MIN_ZORDER,
         NAME = "GameView", 
     },
+    Lobby  = { 
+        ZOrder =  GetZorder(),
+        NAME = "LobbyView",
+    },
     FreeSpinCard  = { 
         ZOrder =  GetZorder(),
         NAME = "FreeSpinCardView",
@@ -22,10 +26,6 @@ local VIEWS = {
         ZOrder =  GetZorder(),
         NAME = "NavigationView",
         POSITION =  cc.p( 0, 496 )
-    },
-    Lobby  = { 
-        ZOrder =  GetZorder(),
-        NAME = "LobbyView",
     },
     Login  = { 
         ZOrder =  GetZorder(),

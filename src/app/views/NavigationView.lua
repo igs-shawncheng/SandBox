@@ -127,9 +127,9 @@ function NavigationView:RegisterEvent()
     print("NavigationView:RegisterEvent")
 
     local function eventHander( event )
-        if event:getEventName() == tostring( cc.exports.define.EVENTS.JOINGAME ) then
+        if event:getEventName() == tostring( cc.exports.define.EVENTS.LOGIN_SUCCESS ) then
             self:OnJoinGame()
-        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LEAVEGAME ) then
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LOGOUT ) then
             self:OnLeaveGame()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CHIP_UPDATE ) then
             self:SetChip( event._usedata )

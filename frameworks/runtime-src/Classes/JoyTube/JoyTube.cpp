@@ -1,7 +1,8 @@
-#include "JoyTube.h"
+﻿#include "JoyTube.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "base/CCEventDispatcher.h"
+#include "platform/CCFileUtils.h"
 
 
 JoyTube *JoyTube::_instance = nullptr;
@@ -167,7 +168,17 @@ void JoyTube::UpdateTextureData()
 
 void JoyTube::SetSourcePath(std::string sourcePath)
 {
-	m_joyTubeNative->n_stringFromUnity(sourcePath);
+	std::string fullPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(sourcePath + "nativeResTest.txt");
+	CCLOG("JoyTube::Path:%s", fullPath.c_str());
+
+	std::string content = FileUtils::getInstance()->getStringFromFile(fullPath);
+	CCLOG("JoyTube::NativaResTestFile Contentn:%s", content.c_str());
+
+	size_t lastSlash = fullPath.find_last_of("/\\");
+	std::string nativeResPath = fullPath.substr(0, lastSlash + 1);
+	
+	CCLOG("JoyTube::NativeResPath:%s", nativeResPath.c_str());
+	m_joyTubeNative->n_stringFromUnity(nativeResPath.c_str());
 }
 
 void JoyTube::InitPlugin(int left, int top, int width, int height, bool local)

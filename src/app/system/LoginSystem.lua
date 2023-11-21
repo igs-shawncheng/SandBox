@@ -20,7 +20,7 @@ function LoginSystem:Connect(ip, port, accountID)
     self.port = self:GetDefaultorTextValue(DEFAULT_LOGIN_INFO.port, port)
     print("IP and Port:", self.IP .. " ".. self.port)
 
-    self.accoundId = self:GetDefaultorTextValue(DEFAULT_LOGIN_INFO.accoundId, accountID)
+    self.accoundId = tonumber(self:GetDefaultorTextValue(DEFAULT_LOGIN_INFO.accoundId, accountID))
     print("AccountId:",  self.accoundId)
 
     self:GetInstance():Connect(self.IP, self.port, handler(self, self.OnConnected))
@@ -38,6 +38,18 @@ function LoginSystem:OnConnected()
 end
 
 function LoginSystem:RequestLogin(accountid)
+    if accountid == nil then
+        cc.exports.dispatchEvent( cc.exports.define.EVENTS.SHOW_MSG,
+        {
+            title = "SystemInfo",
+            content = "accountid is not number! ",
+            confirmCB = function ()
+            print("click confirmCB")
+        end,
+            btnPosType = 1,
+        } )
+        return
+    end
     local request = cc.PACHIN_U2G_LOGIN_REQ:create(accountid)
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_LOGIN_REQ, request:Serialize())
 end

@@ -32,4 +32,4 @@ DEFAULT_LOGIN_INFO = {
     roomIndex = 1,
 }
 
-NATIVE_RESOURCE_PATH = "download"
+NATIVE_RESOURCE_PATH = "res/Native/"
