@@ -77,4 +77,8 @@ function LoginSystem:OnRecvLogin(command)
     end
 end
 
+function LoginSystem:GetAccount()
+    return self.accoundId
+end
+
 return LoginSystem

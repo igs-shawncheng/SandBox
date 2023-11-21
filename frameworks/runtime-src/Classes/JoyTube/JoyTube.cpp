@@ -172,7 +172,7 @@ void JoyTube::SetSourcePath(std::string sourcePath)
 	CCLOG("JoyTube::Path:%s", fullPath.c_str());
 
 	std::string content = FileUtils::getInstance()->getStringFromFile(fullPath);
-	CCLOG("JoyTube::NativaResTestFile Contentn:%s", content.c_str());
+	CCLOG("JoyTube::NativaResTestFile Content:%s", content.c_str());
 
 	size_t lastSlash = fullPath.find_last_of("/\\");
 	std::string nativeResPath = fullPath.substr(0, lastSlash + 1);

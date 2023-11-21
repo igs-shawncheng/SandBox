@@ -16,7 +16,7 @@ end
 
 function LobbySystem:RequestRoomInfo()
     local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
-    local request = cc.PACHIN_U2G_ROOM_INFO_REQ:create(loginSystem.accountid)
+    local request = cc.PACHIN_U2G_ROOM_INFO_REQ:create(loginSystem:GetAccount())
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_ROOM_INFO_REQ, request:Serialize())
 end
 
