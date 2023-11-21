@@ -65,6 +65,7 @@ function LoginView:OnLogin()
 end
 
 function LoginView:OnLogout()
+    print("LoginView:OnLogout")
     self:setVisible( true )
 end
 

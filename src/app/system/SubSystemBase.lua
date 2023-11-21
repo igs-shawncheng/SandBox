@@ -25,16 +25,18 @@ function SubSystemBase:Init()
     end
 end
 
-
-
 function SubSystemBase:GetSystem(SystemName)
-    dump(self.SystemList)
+    --dump(self.SystemList)
     --print("SubSystemBase:GetSystem", self.SystemList, SystemName)
     return self.SystemList[SystemName]
 end
 
 function SubSystemBase:Connect(ip, port, connectedCallback)
     self.netService:Connect(ip, port, connectedCallback)
+end
+
+function SubSystemBase:DisConnect()
+    self.netService:DisConnect()
 end
 
 function SubSystemBase:Send(commandType, content) 
@@ -82,6 +84,7 @@ end
 
 function SubSystemBase:OnCommand(command)
     print("SubSystemBase Recv Command:", command.commandType)
+    dump()
     self:CallRegisterCommand(command)
 end
 

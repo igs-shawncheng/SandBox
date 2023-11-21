@@ -127,10 +127,11 @@ function NavigationView:RegisterEvent()
     print("NavigationView:RegisterEvent")
 
     local function eventHander( event )
+        print("NavigationView:eventHander")
         if event:getEventName() == tostring( cc.exports.define.EVENTS.LOGIN_SUCCESS ) then
-            self:OnJoinGame()
+            self:OnLogin()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LOGOUT ) then
-            self:OnLeaveGame()
+            self:OnLogout()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CHIP_UPDATE ) then
             self:SetChip( event._usedata )
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.SET_ARCADE_NO ) then
@@ -149,14 +150,15 @@ function NavigationView:RegisterEvent()
     end
 end
 
-function NavigationView:OnJoinGame()
+function NavigationView:OnLogin()
     self:setVisible( true )
 end
 
-function NavigationView:OnLeaveGame()
+function NavigationView:OnLogout()
     self:setVisible( false )
     self:SetChip( 0 )
     self:SetArcadeNumber( 0 )
+    print("NavigationView:OnLogout")
 end
 
 function NavigationView:OnEnter()

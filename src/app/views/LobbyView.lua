@@ -20,6 +20,7 @@ local REGISTER_EVENTS = {
     cc.exports.define.EVENTS.LOGIN_SUCCESS,
     cc.exports.define.EVENTS.JOINGAME,
     cc.exports.define.EVENTS.LEAVEGAME,
+    cc.exports.define.EVENTS.CLICKED_BACK_BTN,
 }
 
 function LobbyView:onCreate()
@@ -41,6 +42,8 @@ function LobbyView:RegisterEvent()
             self:setVisible( false )
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LEAVEGAME ) then
             self:OnLeaveGame()
+        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CLICKED_BACK_BTN ) then
+            self:OnClickedBackBtn()
         end
     end
 
@@ -49,6 +52,12 @@ function LobbyView:RegisterEvent()
         local dispatcher = cc.Director:getInstance():getEventDispatcher()
         dispatcher:addEventListenerWithFixedPriority( listener, 10 )
     end
+end
+
+function LobbyView:OnClickedBackBtn()
+    self:setVisible( false )
+    self.loginSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
+    self.loginSystem:DisConnect()
 end
 
 function LobbyView:OnEnter()
@@ -82,13 +91,6 @@ function LobbyView:OnClickedEnter( event )
         local roomIndex = self.m_room_input:getText();
         self.lobbySystem:RequestJoinRoom(roomIndex)
     end
-end
-
-function LobbyView:OnClickedBackBtn()
-    self.loginSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
-    --to do logout
-
-    self:setVisible(false)
 end
 
 function LobbyView:OnLeaveGame()

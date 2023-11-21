@@ -68,7 +68,7 @@ function NetService:Update()
         self.connection:HandleSocketIOLoop()
     elseif currentState == CONNECT_STATE.DISCONNECT then
         if self.loginState:IsEntering() then
-            self.connection = nil
+            self.connection:Close()
             print("NetService:DISCONNECT.")
         end
     elseif currentState == CONNECT_STATE.RECONNECT then

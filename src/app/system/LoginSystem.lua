@@ -10,7 +10,6 @@ local RecvCommand = cc.Protocol.PachinG2UProtocol
 function LoginSystem:ctor()
     print("LoginSystem:ctor")
     self:Registers(RecvCommand.PACHIN_G2U_LOGIN_ACK, handler(self, self.OnRecvLogin))
-    self:Registers(RecvCommand.PACHIN_G2U_ROOM_INFO_ACK, handler(self, self.OnRecvRoomInfo))
     self:Registers(RecvCommand.PACHIN_G2U_JOIN_ROOM_ACK, handler(self, self.OnRecvJoinRoom)) 
 end
 
@@ -24,6 +23,12 @@ function LoginSystem:Connect(ip, port, accountID)
     print("AccountId:",  self.accoundId)
 
     self:GetInstance():Connect(self.IP, self.port, handler(self, self.OnConnected))
+end
+
+function LoginSystem:DisConnect()
+    print("LoginSystem:Disconnect")
+    self:GetInstance():DisConnect()
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.LOGOUT )
 end
 
 function LoginSystem:GetDefaultorTextValue(defaultValue, textValue)
