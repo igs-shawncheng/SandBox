@@ -11,6 +11,7 @@ local PACHIN_U2G_PROTOCOL =
     PACHIN_U2G_TAKE_MONEY_IN_REQ            = 9,            -- TakeMoneyIn
     PACHIN_U2G_USE_CARD_REQ                 = 10,           -- UseCard
     PACHIN_U2G_PLUGIN_CUSTOM_REQ            = 11,           -- PluginCustom
+    PACHIN_U2G_USER_INFO_REQ                = 12,           -- UserInfoReq
 }
 
 local PACHIN_G2U_PROTOCOL =
@@ -25,6 +26,7 @@ local PACHIN_G2U_PROTOCOL =
     PACHIN_G2U_TAKE_MONEY_IN_ACK			= 9,            -- TakeMoney
     PACHIN_G2U_USE_CARD_ACK                 = 10,           -- UseCard
     PACHIN_G2U_PLUGIN_CUSTOM_ACK            = 11,           -- PluginCustom
+    PACHIN_G2U_USER_INFO_ACK                = 12,           -- UserInfoAck
 }
 
 cc.Protocol = {}
