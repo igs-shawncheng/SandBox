@@ -90,8 +90,8 @@ NavigationView.RESOURCE_BINDING = {
 }
 
 local REGISTER_EVENTS = {
-    cc.exports.define.EVENTS.JOINGAME,
-    cc.exports.define.EVENTS.LEAVEGAME,
+    cc.exports.define.EVENTS.LOGIN_SUCCESS,
+    cc.exports.define.EVENTS.LOGOUT,
     cc.exports.define.EVENTS.CHIP_UPDATE,
     cc.exports.define.EVENTS.SET_ARCADE_NO,
     cc.exports.define.EVENTS.MUTE_SETTING_CHANGED,
