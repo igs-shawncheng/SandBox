@@ -27,8 +27,8 @@ function SandBoxSystem:RequestStartGame()
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_START_GAME_REQ)
 end
 
-function SandBoxSystem:RequestSpin(bet)
-    local request = cc.PACHIN_U2G_SPIN_REQ:create(bet)
+function SandBoxSystem:RequestSpin()
+    local request = cc.PACHIN_U2G_SPIN_REQ:create(self.bet)
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_SPIN_REQ, request)
 end
 
@@ -47,6 +47,9 @@ function SandBoxSystem:OnRecvGameInfo(command)
     local response = cc.PACHIN_G2U_GAME_INFO_ACK:create(command.content)
     dump(response)
     --cc.exports.dispatchEvent( cc.exports.define.EVENTS.GAME_INFO_ACK, response.GameInfoAck )
+    self.bet = response.GameInfoAck.bet
+    self.currCount = response.GameInfoAck.currCount
+    self.gameMode = response.GameInfoAck.gameMode
 
     print("OnGameInfoAck",self.roomIndex)
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.SET_ARCADE_NO, self.roomIndex )

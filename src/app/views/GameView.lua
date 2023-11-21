@@ -17,13 +17,48 @@ GameView.RESOURCE_BINDING = {
     },
     ["txt_PlayState"] = {
         ["varname"] = "m_txt_playState",
-    }
+    },
+    ["btn_Spin"] = {
+        ["varname"] = "m_btn_spin",
+        ["events"] = {
+            {
+                event = "touch",
+                method ="OnClickedSpin"
+            }
+        }
+    },
+    ["btn_Stop_1"] = {
+        ["varname"] = "m_btn_stop1",
+        ["events"] = {
+            {
+                event = "touch",
+                method ="OnClickedStop1"
+            }
+        }
+    },
+    ["btn_Stop_2"] = {
+        ["varname"] = "m_btn_stop2",
+        ["events"] = {
+            {
+                event = "touch",
+                method ="OnClickedStop2"
+            }
+        }
+    },
+    ["btn_Stop_3"] = {
+        ["varname"] = "m_btn_stop3",
+        ["events"] = {
+            {
+                event = "touch",
+                method ="OnClickedStop3"
+            }
+        }
+    },
 }
 
 local REGISTER_EVENTS = {
     cc.exports.define.EVENTS.JOINGAME,
     cc.exports.define.EVENTS.LEAVEGAME,
-    cc.exports.define.EVENTS.GAME_INFO_ACK,
     cc.exports.define.EVENTS.CLICKED_BACK_BTN,
     cc.exports.define.EVENTS.CLICKED_GAME_STATUS_BTN,
     cc.exports.define.EVENTS.CLICKED_INFO_BTN,
@@ -57,11 +92,6 @@ function GameView:onCreate()
     self.m_pluginProgram = cc.exports.PluginProgram:create()
 
     self.m_isUseItem = false
-
-    self.bet = nil
-    self.currCount = nil
-    self.gameMode = nil
-
     self:RegisterEvent()
 end
 
@@ -73,10 +103,6 @@ function GameView:RegisterEvent()
             self:OnJoinGame()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LEAVEGAME ) then
             self:OnLeaveGame()
-        elseif event:getEventName() == tostring( cc.exports.define.EVENTS.GAME_INFO_ACK) then
-            self.bet = event._usedata.bet
-            self.currCount = event._usedata.currCount
-            self.gameMode = event._usedata.gameMode
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CLICKED_BACK_BTN ) then
             self:OnClickedBackBtn()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.PLUGIN_ERROR_STATUS ) then
@@ -110,6 +136,34 @@ end
 function GameView:OnLeaveGame()
     self.m_pluginProgram:OnLeaveGame()
     self.m_state:Transit( GAMEVIEW_STATE.WAIT_JOIN_GAME )
+end
+
+function GameView:OnClickedSpin( event )
+    if event.name == "ended" then
+        self.sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
+        self.sandBoxSystem:RequestSpin()
+    end
+end
+
+function GameView:OnClickedStop1( event )
+    if event.name == "ended" then
+        self.sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
+        self.sandBoxSystem:RequestStopReel(1)
+    end
+end
+
+function GameView:OnClickedStop2( event )
+    if event.name == "ended" then
+        self.sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
+        self.sandBoxSystem:RequestStopReel(2)
+    end
+end
+
+function GameView:OnClickedStop3( event )
+    if event.name == "ended" then
+        self.sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
+        self.sandBoxSystem:RequestStopReel(3)
+    end
 end
 
 function GameView:OnClickedBackBtn()
@@ -201,6 +255,9 @@ function GameView:OnClickedItemBtn()
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.FREE_SPIN_CARD_TOTAL_BET, string.formatnumberthousands( self.m_itemTotalBet ) )
 
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.FREE_SPIN_CARD_SHOW )
+
+    self.SandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
+    self.SandBoxSystem:RequestUseCard()
 end
 
 function GameView:OnEnter()
