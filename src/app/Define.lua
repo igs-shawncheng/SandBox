@@ -37,6 +37,12 @@ local EVENTS = {
 	GAME_INFO_ACK = "game_info_ack",
 }
 
+local  GameMode = {
+	GameMode_Normal		= 0,
+	GameMode_MTB		= 1,
+	GameMode_MTA		= 2,
+};
+
 local DEFAULT_FONT = "Microsoft JhengHei"  -- 微軟正黑體
 
 local BLANK_PNG = "Platform/BlankPNG.png"
@@ -44,6 +50,7 @@ local BLANK_PNG = "Platform/BlankPNG.png"
 local TEST_WITH_CONNECT = false
 
 cc.exports.define = {}
+cc.exports.define.GameMode = GameMode
 cc.exports.define.EVENTS = EVENTS
 cc.exports.define.DEFAULT_FONT = DEFAULT_FONT
 cc.exports.define.BLANK_PNG = BLANK_PNG

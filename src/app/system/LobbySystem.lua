@@ -99,4 +99,11 @@ function LobbySystem:OnRecvJoinRoom(command)
     end
 end
 
+function LobbySystem:GetRoom()
+    if self.roomIndex == nil then
+        return 0
+    end
+    return self.roomIndex
+end
+
 return LobbySystem

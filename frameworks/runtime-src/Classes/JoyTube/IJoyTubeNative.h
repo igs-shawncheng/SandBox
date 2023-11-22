@@ -23,6 +23,7 @@ struct IJoyTubeNative
     virtual bool n_isCreditEvent() = 0;
     virtual int n_isGameStatus() = 0;
     virtual int n_isPlayState() = 0;
+    virtual bool n_isGetIsAutoPlay() = 0;
     virtual int n_isErrorDefine() = 0;
     virtual void n_clearErrorDefine() = 0;
     virtual int n_isPostMessage() = 0;

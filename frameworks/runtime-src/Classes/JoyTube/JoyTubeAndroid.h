@@ -28,6 +28,7 @@ public:
     bool n_isCreditEvent();
     int n_isGameStatus();
     int n_isPlayState();
+    bool n_isGetIsAutoPlay();
     int n_isErrorDefine();
     void n_clearErrorDefine();
     int n_isPostMessage();

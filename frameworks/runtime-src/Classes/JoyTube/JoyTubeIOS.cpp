@@ -131,6 +131,7 @@ double JoyTubeIOS::n_isCredit() { return isCredit();}
 bool JoyTubeIOS::n_isCreditEvent() { return isCreditEvent();}
 int JoyTubeIOS::n_isGameStatus(){ return isGameStatus();}
 int JoyTubeIOS::n_isPlayState() { return isPlayState();}
+bool JoyTubeIOS::n_isGetIsAutoPlay() { return isAutoPlay(); }
 int JoyTubeIOS::n_isErrorDefine() { return isErrorDefine();}
 void JoyTubeIOS::n_clearErrorDefine() { return clearErrorDefine();}
 int JoyTubeIOS::n_isPostMessage() { return isPostMessage();}

@@ -98,6 +98,7 @@ void JoyTube::RegisterLua()
 		.addFunction("RegisterCreditEventCB", &JoyTube::RegisterCreditEventCB)
 		.addFunction("RegisterErrorStatusCB", &JoyTube::RegisterErrorStatusCB)
 		.addFunction("ResetErrorStatus", &JoyTube::ResetErrorStatus)
+		.addFunction("GetIsAutoPlay", &JoyTube::GetIsAutoPlay)
 		.addFunction("GetGameStatus", &JoyTube::GetGameStatus)
 		.addFunction("GetPlayState", &JoyTube::GetPlayState)
 		.addFunction("IsEnteringSetting", &JoyTube::IsEnteringSetting)
@@ -232,6 +233,11 @@ void JoyTube::RegisterErrorStatusCB(luabridge::LuaRef cb)
 void JoyTube::ResetErrorStatus()
 {
 	m_joyTubeNative->n_clearErrorDefine();
+}
+
+bool JoyTube::GetIsAutoPlay()
+{
+	return m_joyTubeNative->n_isGetIsAutoPlay();
 }
 
 int JoyTube::GetGameStatus()

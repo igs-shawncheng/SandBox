@@ -81,6 +81,7 @@ double JoyTubeAndroid::n_isCredit() { return 0; }
 bool JoyTubeAndroid::n_isCreditEvent() { return false; }
 int JoyTubeAndroid::n_isGameStatus() { return 0; }
 int JoyTubeAndroid::n_isPlayState() { return 0; }
+bool JoyTubeAndroid::n_isGetIsAutoPlay() { return false; }
 int JoyTubeAndroid::n_isErrorDefine() { return 0; }
 void JoyTubeAndroid::n_clearErrorDefine() {}
 int JoyTubeAndroid::n_isPostMessage() { return 0; }

@@ -93,6 +93,7 @@ double JoyTubeWin32::n_isCredit(){ return 0; }
 bool JoyTubeWin32::n_isCreditEvent(){ return false; }
 int JoyTubeWin32::n_isGameStatus(){ return 0; }
 int JoyTubeWin32::n_isPlayState(){ return 0; }
+bool JoyTubeWin32::n_isGetIsAutoPlay() { return false; }
 int JoyTubeWin32::n_isErrorDefine(){ return 0; }
 void JoyTubeWin32::n_clearErrorDefine(){}
 int JoyTubeWin32::n_isPostMessage(){ return 0; }

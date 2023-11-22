@@ -28,7 +28,15 @@ function SandBoxSystem:RequestStartGame()
 end
 
 function SandBoxSystem:RequestSpin()
-    local request = cc.PACHIN_U2G_SPIN_REQ:create(self.bet)
+    local userSystem = self:GetInstance():GetSystem(cc.exports.SystemName.UserSystem)
+    local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
+    local request = cc.PACHIN_U2G_SPIN_REQ:create(loginSystem:GetAccount(), self.bet)
+
+    --todo make sure when to updateMoney, maybe more GameMode should do.
+    if self.gameMode == cc.exports.define.GameMode.GameMode_Normal then
+        userSystem:UpdateMoney(self.bet)
+    end
+    
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_SPIN_REQ, request)
 end
 
@@ -46,7 +54,6 @@ function SandBoxSystem:OnRecvGameInfo(command)
     print("Recv Command 5")
     local response = cc.PACHIN_G2U_GAME_INFO_ACK:create(command.content)
     dump(response)
-    --cc.exports.dispatchEvent( cc.exports.define.EVENTS.GAME_INFO_ACK, response.GameInfoAck )
     self.bet = response.GameInfoAck.bet
     self.currCount = response.GameInfoAck.currCount
     self.gameMode = response.GameInfoAck.gameMode

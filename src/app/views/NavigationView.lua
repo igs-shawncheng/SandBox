@@ -114,7 +114,7 @@ function NavigationView:Init()
     self.m_txt_arcade:setFontName( cc.exports.define.DEFAULT_FONT )
 
     self:SetChip( 0 )
-    self:SetArcadeNumber( 0 )
+    self:SetArcadeNumber()
 
     self.m_ac_prosperous_money = cc.CSLoader:createTimeline( GOLD_INGOT_CSB_FILE1 )
     self.m_n_prosperous_money:runAction( self.m_ac_prosperous_money )
@@ -135,7 +135,7 @@ function NavigationView:RegisterEvent()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CHIP_UPDATE ) then
             self:SetChip( event._usedata )
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.SET_ARCADE_NO ) then
-            self:SetArcadeNumber( event._usedata )
+            self:SetArcadeNumber()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.MUTE_SETTING_CHANGED ) then
             self:OnMuteSettingChanged( event._usedata )
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.IO_SETTING_CHANGED ) then
@@ -157,7 +157,7 @@ end
 function NavigationView:OnLogout()
     self:setVisible( false )
     self:SetChip( 0 )
-    self:SetArcadeNumber( 0 )
+    self:SetArcadeNumber()
     print("NavigationView:OnLogout")
 end
 
@@ -217,7 +217,8 @@ function NavigationView:OnClickedInputBtn( event )
 end
 
 function NavigationView:SetArcadeNumber( number )
-    self.m_txt_arcade:setString( string.format("NO.%03d", number ) )
+    self.lobbySystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.LobbySystem)
+    self.m_txt_arcade:setString( string.format("NO.%03d", self.lobbySystem:GetRoom() ) )
 end
 
 function NavigationView:SetChip( number )

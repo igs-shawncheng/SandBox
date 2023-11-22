@@ -52,8 +52,8 @@ function PluginProgram:Init()
 	local testInt = Inanna.GetJoyTube().m_testInt
     print("Inanna.GetJoyTube().m_testInt", testInt)
 	
-	print("PluginProgram:Init() sourcePath:", NATIVE_RESOURCE_PATH)
-	Inanna.GetJoyTube():SetSourcePath( NATIVE_RESOURCE_PATH )
+	self:InitSourcePath()
+	
 
 	local left = 0
 	local top = 0
@@ -67,6 +67,11 @@ function PluginProgram:Init()
 	self:RegisterSystemEvent()
 	self:ScheduleUpdate()
 	self.sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
+end
+
+function PluginProgram:InitSourcePath()
+	print("PluginProgram:Init() sourcePath:", NATIVE_RESOURCE_PATH)
+	Inanna.GetJoyTube():SetSourcePath( NATIVE_RESOURCE_PATH )
 end
 
 function PluginProgram:Update()
@@ -148,6 +153,10 @@ end
 function PluginProgram:ScheduleUpdate()
 	local schedule = cc.Director:getInstance():getScheduler()
 	self._schedulerID = schedule:scheduleScriptFunc(handler(self, self.Update), CHECK_PLUGIN_INTERVAL, false)
+end
+
+function PluginProgram:GetIsAutoPlay()
+	return Inanna.GetJoyTube():GetIsAutoPlay()
 end
 
 function PluginProgram:GetGameStatus()

@@ -33,8 +33,19 @@ function UserSystem:OnRecvUserInfo(command)
 end
 
 function UserSystem:OnRecvTakeMoneyIn(command)
-    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
     print("OnRecvTakeMoneyIn" .. command.content)
+    local response = cc.PACHIN_G2U_TAKE_MONEY_IN_ACK:create(command.content)
+    self.money = self.money + response.TakeMoneyAck.money
+    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
+end
+
+function UserSystem:GetMoney()
+    return self.money
+end
+
+function UserSystem:UpdateMoney(value)
+    self.money = self.money - value
+    return self.money
 end
 
 return UserSystem

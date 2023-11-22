@@ -37,6 +37,7 @@ public:
 	void RegisterCreditEventCB(luabridge::LuaRef cb);
 	void RegisterErrorStatusCB(luabridge::LuaRef cb);
 	void ResetErrorStatus();
+	bool GetIsAutoPlay();
 	int GetGameStatus();
 	int GetPlayState();
 	bool IsEnteringSetting();
