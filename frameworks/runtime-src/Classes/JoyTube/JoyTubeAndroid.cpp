@@ -20,7 +20,7 @@ extern "C" {
     void startTimer(bool atfirst);
     void checkTimer();
     bool passStartGame();
-    int sendMessage(std::string system, std::string cmd, std::string jsonstring);
+    int sendMessage(std::string cmd, std::string jsonstring);
     int useItem(std::string jsonstring);
     int isUsedItem();
     void setCredit(double credit);
@@ -73,7 +73,7 @@ int JoyTubeAndroid::n_native(int left, int top, int width, int height, bool loca
 void JoyTubeAndroid::n_startTimer(bool atfirst) {}
 void JoyTubeAndroid::n_checkTimer() {}
 bool JoyTubeAndroid::n_passStartGame() { return false; }
-int JoyTubeAndroid::n_sendMessage(std::string system, std::string cmd, std::string jsonstring) { return 0; }
+int JoyTubeAndroid::n_sendMessage(std::string cmd, std::string jsonstring) { return 0; }
 int JoyTubeAndroid::n_useItem(std::string jsonstring) { return 0; }
 int JoyTubeAndroid::n_isUsedItem() { return 0; }
 void JoyTubeAndroid::n_setCredit(double credit) {}
@@ -126,7 +126,7 @@ int JoyTubeAndroid::n_native(int left, int top, int width, int height, bool loca
 void JoyTubeAndroid::n_startTimer(bool atfirst) { return startTimer(atfirst); }
 void JoyTubeAndroid::n_checkTimer() { return checkTimer(); }
 bool JoyTubeAndroid::n_passStartGame() { return passStartGame();}
-int JoyTubeAndroid::n_sendMessage(std::string system, std::string cmd, std::string jsonstring) { return sendMessage(system, cmd, jsonstring);}
+int JoyTubeAndroid::n_sendMessage(std::string cmd, std::string jsonstring) { return sendMessage(system, cmd, jsonstring);}
 int JoyTubeAndroid::n_useItem(std::string jsonstring) { return useItem(jsonstring);}
 int JoyTubeAndroid::n_isUsedItem() { return isUsedItem();}
 void JoyTubeAndroid::n_setCredit(double credit) { return setCredit(credit);}

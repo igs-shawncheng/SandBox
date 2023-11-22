@@ -8,8 +8,9 @@ local CARD_TYPE = {
 	FREE_SPIN_10CARD				= 12010,
 }
 
-function PACHIN_U2G_USE_CARD_REQ:ctor(cardType)
+function PACHIN_U2G_USE_CARD_REQ:ctor(accountId, cardType)
     self.UseCardReq = {}
+    self.GameInfoReq.accountId = accountId
     self.UseCardReq.cardType = cardType
 end
 

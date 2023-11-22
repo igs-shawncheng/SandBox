@@ -18,7 +18,7 @@ extern "C" {
     void startTimer(bool atfirst);
     void checkTimer();
     bool passStartGame();
-    int sendMessage(std::string system, std::string cmd, std::string jsonstring);
+    int sendMessage(std::string cmd, std::string jsonstring);
     int useItem(std::string jsonstring);
     int isUsedItem();
     void setCredit(double credit);
@@ -71,7 +71,7 @@ int JoyTubeIOS::n_native(int left, int top, int width, int height, bool local) {
 void JoyTubeIOS::n_startTimer(bool atfirst) {}
 void JoyTubeIOS::n_checkTimer() {}
 bool JoyTubeIOS::n_passStartGame() { return false; }
-int JoyTubeIOS::n_sendMessage(std::string system, std::string cmd, std::string jsonstring) { return 0; }
+int JoyTubeIOS::n_sendMessage(std::string cmd, std::string jsonstring) { return 0; }
 int JoyTubeIOS::n_useItem(std::string jsonstring) { return 0; }
 int JoyTubeIOS::n_isUsedItem() { return 0; }
 void JoyTubeIOS::n_setCredit(double credit) {}
@@ -123,7 +123,7 @@ int JoyTubeIOS::n_native(int left, int top, int width, int height, bool local) {
 void JoyTubeIOS::n_startTimer(bool atfirst) { return startTimer(atfirst); }
 void JoyTubeIOS::n_checkTimer() { return checkTimer(); }
 bool JoyTubeIOS::n_passStartGame() { return passStartGame();}
-int JoyTubeIOS::n_sendMessage(std::string system, std::string cmd, std::string jsonstring) { return sendMessage(system, cmd, jsonstring);}
+int JoyTubeIOS::n_sendMessage(std::string cmd, std::string jsonstring) { return sendMessage(system, cmd, jsonstring);}
 int JoyTubeIOS::n_useItem(std::string jsonstring) { return useItem(jsonstring);}
 int JoyTubeIOS::n_isUsedItem() { return isUsedItem();}
 void JoyTubeIOS::n_setCredit(double credit) { return setCredit(credit);}

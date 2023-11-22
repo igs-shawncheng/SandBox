@@ -20,7 +20,7 @@ public:
     void n_startTimer(bool atfirst);
     void n_checkTimer();
     bool n_passStartGame();
-    int n_sendMessage(std::string system, std::string cmd, std::string jsonstring);
+    int n_sendMessage(std::string cmd, std::string jsonstring);
     int n_useItem(std::string jsonstring);
     int n_isUsedItem();
     void n_setCredit(double credit);

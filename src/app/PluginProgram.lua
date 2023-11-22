@@ -78,7 +78,7 @@ function PluginProgram:Update()
 	local messageId = Inanna.GetJoyTube():IsPostMessage()
 	if messageId > 0 then
 		local postMessage = Inanna.GetJoyTube():GetPostMessageString()
-        self.sandBoxSystem:Send(messageId, postMessage)
+        self.sandBoxSystem:RequestCustomMessage(postMessage)
 	end
 end
 
@@ -175,9 +175,9 @@ function PluginProgram:Abort()
 	Inanna.GetJoyTube():Abort()
 end
 
-function PluginProgram:SendMessage(system, cmd, jsonString)
+function PluginProgram:SendMessage(cmd, jsonString)
 	--print("Recv PLUGIN_RESPONSE", cmd, jsonString)
-	return Inanna.GetJoyTube():SendMessage(system, cmd, jsonString)
+	return Inanna.GetJoyTube():SendMessage(cmd, jsonString)
 end
 
 function PluginProgram:IsPostMessage()

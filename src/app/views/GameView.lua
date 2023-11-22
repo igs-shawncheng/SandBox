@@ -308,7 +308,6 @@ function GameView:OnUpdate( dt )
     elseif currentState == GAMEVIEW_STATE.IDLE then
         if self.m_state:IsEntering() then
             print("GAMEVIEW_STATE.IDLE")
-            cc.exports.dispatchEvent(cc.exports.define.EVENTS.PLUGIN_RESPONSE, {10, 20})
         end
     elseif currentState == GAMEVIEW_STATE.START then
         if self.m_state:IsEntering() then

@@ -102,6 +102,7 @@ function NetService:Send(commandType, content)
         value:PreProcessSend(command.commandType, command.content)
     end
 
+    dump(command)
     self.connection:Send(command:Serialize())
 end
 

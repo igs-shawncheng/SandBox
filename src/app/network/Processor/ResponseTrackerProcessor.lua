@@ -16,7 +16,7 @@ local commandSorrespond =
     {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_START_GAME_REQ, nil},
     {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_SPIN_REQ, cc.Protocol.PachinG2UProtocol.SLOT_G2U_SPIN_ACK},
     {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_STOP_REEL_REQ, cc.Protocol.PachinG2UProtocol.PACHIN_G2U_STOP_REEL_ACK},
-    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_TAKE_MONEY_IN_REQ, cc.Protocol.PachinG2UProtocol.PACHIN_G2U_TAKE_MONEY_IN_ACK},
+    {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_ADD_MONEY_IN_REQ, cc.Protocol.PachinG2UProtocol.PACHIN_G2U_ADD_MONEY_IN_ACK},
     {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_USE_CARD_REQ, cc.Protocol.PachinG2UProtocol.PACHIN_G2U_USE_CARD_ACK},
     {cc.Protocol.PachinU2GProtocol.PACHIN_U2G_PLUGIN_CUSTOM_REQ, cc.Protocol.PachinG2UProtocol.PACHIN_G2U_PLUGIN_CUSTOM_ACK},
 }
