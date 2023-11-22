@@ -21,7 +21,7 @@ end
 function UserSystem:RequestMoney()
     local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
     local request = cc.PACHIN_U2G_ADD_MONEY_IN_REQ:create(loginSystem:GetAccount())
-    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_ADD_MONEY_IN_REQ, request)
+    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_ADD_MONEY_IN_REQ, request:Serialize())
 end
 
 function UserSystem:OnRecvUserInfo(command)
@@ -32,9 +32,8 @@ function UserSystem:OnRecvUserInfo(command)
 end
 
 function UserSystem:OnRecvTakeMoneyIn(command)
-    print("OnRecvTakeMoneyIn" .. command.content)
     local response = cc.PACHIN_G2U_ADD_MONEY_IN_ACK:create(command.content)
-    self.money = self.money + response.TakeMoneyAck.money
+    self.money = self.money + response.AddMoneyAck.money
     cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
 end
 
