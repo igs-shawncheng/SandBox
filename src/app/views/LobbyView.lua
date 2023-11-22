@@ -37,14 +37,14 @@ function LobbyView:RegisterEvent()
     local function eventHander( event )
         print("LobbyView:event",event)
         if event:getEventName() == tostring( cc.exports.define.EVENTS.LOGIN_SUCCESS ) then
-            self:setVisible( true )
+            self:OnLogin()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.JOINGAME ) then
             self:setVisible( false )
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.LEAVEGAME ) then
             self:OnLeaveGame()
         elseif event:getEventName() == tostring( cc.exports.define.EVENTS.CLICKED_BACK_BTN ) then
             --todo make sure where to click
-            --self:OnClickedBackBtn()
+            self:OnClickedBackBtn()
         end
     end
 
@@ -55,7 +55,17 @@ function LobbyView:RegisterEvent()
     end
 end
 
+function LobbyView:OnLogin()
+    self:setVisible( true )
+    self.lobbySystem:RequestRoomInfo()
+end
+
 function LobbyView:OnClickedBackBtn()
+    self.lobbySystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.LobbySystem)
+    if self.lobbySystem:GetRoom() ~= 0 then
+        return
+    end
+
     self:setVisible( false )
     self.loginSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
     self.loginSystem:DisConnect()
@@ -98,6 +108,7 @@ function LobbyView:OnLeaveGame()
     self:setVisible( true )
     self.m_room_input:setText( "" )
     self.m_room_input:setPlaceHolder( "input room number" )
+    self.lobbySystem:RequestRoomInfo()
 end
 
 return LobbyView

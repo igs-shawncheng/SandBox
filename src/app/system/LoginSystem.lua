@@ -57,11 +57,6 @@ function LoginSystem:RequestLogin(accountid)
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_LOGIN_REQ, request:Serialize())
 end
 
--- function LoginSystem:RequestRoomInfo(accountid)
---     local request = cc.PACHIN_U2G_ROOM_INFO_REQ:create(accountid)
---     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_ROOM_INFO_REQ, request:Serialize())
--- end
-
 function LoginSystem:OnRecvLogin(command)
     print("Recv Command 1")
     local response = cc.PACHIN_G2U_LOGIN_ACK:create(command.content)

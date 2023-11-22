@@ -56,7 +56,9 @@ end
 function SandBoxSystem:RequestCustomMessage(content)
     local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
     local request = cc.PACHIN_U2G_PLUGIN_CUSTOM_REQ:create(loginSystem:GetAccount(), content)
-    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_PLUGIN_CUSTOM_REQ, request:Serialize())
+    local customContent = request:Serialize()
+    
+    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_PLUGIN_CUSTOM_REQ, customContent)
 end
 
 function SandBoxSystem:OnRecvGameInfo(command)
@@ -66,9 +68,7 @@ function SandBoxSystem:OnRecvGameInfo(command)
     self.bet = response.GameInfoAck.bet
     self.currCount = response.GameInfoAck.currCount
     self.gameMode = response.GameInfoAck.gameMode
-
-    print("OnGameInfoAck",self.roomIndex)
-    cc.exports.dispatchEvent( cc.exports.define.EVENTS.SET_ARCADE_NO, self.roomIndex )
+    
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.JOINGAME )
 end
 

@@ -66,6 +66,9 @@ function LobbySystem:RequestLeaveRoom(reserve)
     local request = cc.PACHIN_U2G_LEAVE_ROOM_REQ:create(loginSystem:GetAccount(), reserve)
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_LEAVE_ROOM_REQ, request:Serialize())
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.LEAVEGAME )
+
+    self.roomIndex = 0
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.SET_ARCADE_NO, self.roomIndex)
 end
 
 function LobbySystem:OnRecvRoomInfo(command)
@@ -97,6 +100,8 @@ function LobbySystem:OnRecvJoinRoom(command)
             btnPosType = 1,
         } )
     end
+
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.SET_ARCADE_NO, self.roomIndex)
 end
 
 function LobbySystem:GetRoom()

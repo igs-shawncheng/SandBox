@@ -60,7 +60,6 @@ end
 
 function LoginView:OnLogin()
     self:setVisible( false )
-    self.lobbySystem:RequestRoomInfo()
 end
 
 function LoginView:OnLogout()
