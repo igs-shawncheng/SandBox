@@ -77,14 +77,20 @@ end
 -- end
 
 function SandBoxSystem:OnRecvSpin(command)
+    local response = cc.PACHIN_G2U_SPIN_ACK:create(command.content)
+    self.slotData = response.SpinAck.slotData
     cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
 end
 
 function SandBoxSystem:OnRecvStopReel(command)
+    local response = cc.PACHIN_G2U_STOP_REEL_ACK:create(command.content)
+    self.slotData = response.StopReelAck.slotData
     cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
 end
 
 function SandBoxSystem:OnRecvUseCard(command)
+    local response = cc.PACHIN_G2U_USE_CARD_ACK:create(command.content)
+    self.slotData = response.UseCardAck.slotData
     cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
 end
 
