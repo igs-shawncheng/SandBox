@@ -51,7 +51,7 @@ function LobbySystem:RequestJoinRoom(roomIndex)
         return
     end
     local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
-    local request = cc.PACHIN_U2G_JOIN_ROOM_REQ:create(loginSystem:GetAccount(), self.roomIndex)
+    local request = cc.PACHIN_U2G_JOIN_ROOM_REQ:create(loginSystem:GetAccount(), tonumber(self.roomIndex))
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_JOIN_ROOM_REQ, request:Serialize())
 end
 
