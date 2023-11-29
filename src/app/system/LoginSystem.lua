@@ -60,7 +60,7 @@ end
 function LoginSystem:OnRecvLogin(command)
     print("Recv Command 1")
     local response = cc.PACHIN_G2U_LOGIN_ACK:create(command.content)
-    if response.LoginAck.success then
+    if response.success then
         cc.exports.dispatchEvent( cc.exports.define.EVENTS.LOGIN_SUCCESS )
     else
         cc.exports.dispatchEvent( cc.exports.define.EVENTS.SHOW_MSG,

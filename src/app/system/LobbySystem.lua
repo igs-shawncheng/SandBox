@@ -75,7 +75,7 @@ function LobbySystem:OnRecvRoomInfo(command)
     print("LobbySystem:OnRecvRoomInfo")
     local response = cc.PACHIN_G2U_ROOM_INFO_ACK:create(command.content)
     dump(response)
-    self.roomInfo = response.RoomInfoAck
+    self.roomInfo = response
 
     local userSystem = self:GetInstance():GetSystem(cc.exports.SystemName.UserSystem)
     userSystem:RequestUserInfo()
@@ -85,9 +85,9 @@ function LobbySystem:OnRecvJoinRoom(command)
     print("LobbySystem:OnRecvJoinRoom")
     local response = cc.PACHIN_G2U_JOIN_ROOM_ACK:create(command.content)
     dump(response)
-    cc.exports.dispatchEvent( cc.exports.define.EVENTS.JOINGAME, response.JoinRoomAck )
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.JOINGAME, response )
 
-    if response.JoinRoomAck.success then
+    if response.success then
         self:RequestGameInfo(self.roomIndex)
     else
         cc.exports.dispatchEvent( cc.exports.define.EVENTS.SHOW_MSG,
