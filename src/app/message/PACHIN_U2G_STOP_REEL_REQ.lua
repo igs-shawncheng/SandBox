@@ -4,9 +4,8 @@ local PACHIN_U2G_STOP_REEL_REQ = class("PACHIN_U2G_STOP_REEL_REQ", cc.JsonSerial
 
 function PACHIN_U2G_STOP_REEL_REQ:ctor(accountId, reelIndex)
     --reelIndex range 1-3
-    self.StopReelReq = {}
-    self.StopReelReq.accountId = accountId
-    self.StopReelReq.reelIndex = reelIndex
+    self.accountId = accountId
+    self.reelIndex = reelIndex
 end
 
 cc.PACHIN_U2G_STOP_REEL_REQ = PACHIN_U2G_STOP_REEL_REQ

@@ -9,9 +9,8 @@ local CARD_TYPE = {
 }
 
 function PACHIN_U2G_USE_CARD_REQ:ctor(accountId, cardType)
-    self.UseCardReq = {}
-    self.GameInfoReq.accountId = accountId
-    self.UseCardReq.cardType = cardType
+    self.accountId = accountId
+    self.cardType = cardType
 end
 
 cc.PACHIN_U2G_USE_CARD_REQ = PACHIN_U2G_USE_CARD_REQ
