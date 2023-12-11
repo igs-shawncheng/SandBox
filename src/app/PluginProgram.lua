@@ -30,6 +30,14 @@ local RUN_KIND = {
 	INFO_SETTING = 2,   -- Infomation or Setting Menu
 }
 
+local ButtonsType = {
+    MAXBET = 0,
+    LEVER = 1,
+    STOP_L = 2,
+    STOP_C = 3,
+    STOP_R = 4,
+}
+
 
 local REGISTER_EVENTS = {
     cc.exports.define.EVENTS.PLUGIN_RESPONSE,
@@ -188,6 +196,16 @@ function PluginProgram:GetPostMessageString()
 	return Inanna.GetJoyTube():GetPostMessageString()
 end
 
+function PluginProgram:OnPullButton(type)
+	Inanna.GetJoyTube():OnPullButton(type)
+end
+
+function PluginProgram:OnPushButton(type)
+	Inanna.GetJoyTube():OnPushButton(type)
+end
+
+
+cc.exports.PluginProgram.BUTTON_TYPE = ButtonsType
 cc.exports.PluginProgram = PluginProgram
 cc.exports.PluginProgram.ERROR_DEFINE = ERROR_DEFINE
 cc.exports.PluginProgram.GAME_STATUS = GAME_STATUS

@@ -71,6 +71,9 @@ public:
     bool n_enteringSetting();
     void n_SetInputActive(bool bActive);
     void n_setAbort();
+
+    int n_onPushButton();
+    int n_onPullButton();
 protected:
 	HandleData* m_hData;
 	unsigned char *m_textureData;

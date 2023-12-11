@@ -44,6 +44,8 @@ public:
 	int SendMessages(char const* system, char const* cmd, char const* jsonstring);
 	int IsPostMessage();
 	std::string GetPostMessageString();
+	void OnPushButton(int type);
+	void OnPullButton(int type);
 	
 	int m_testInt = 640;
 protected:

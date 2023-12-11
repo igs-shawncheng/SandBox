@@ -10,8 +10,7 @@ local UseCardAckType =
 
 function PACHIN_G2U_USE_CARD_ACK:ctor(content)
     self:Deserialize(content)
-    --     self.UseCardReq = {}
-    --     self.UseCardReq.ackType
+    --     self.ackType
 end
 
 cc.PACHIN_G2U_USE_CARD_ACK = PACHIN_G2U_USE_CARD_ACK

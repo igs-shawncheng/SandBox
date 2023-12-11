@@ -89,7 +89,7 @@ function GameView:onCreate()
 
     self.m_state = cc.exports.FiniteState:create( GAMEVIEW_STATE.WAIT_JOIN_GAME )
     self.m_pluginProgram = cc.exports.PluginProgram:create()
-
+    
     self.m_isUseItem = false
     self:RegisterEvent()
 end
@@ -131,29 +131,33 @@ end
 
 function GameView:OnClickedSpin( event )
     if event.name == "ended" then
-        self.sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
-        self.sandBoxSystem:RequestSpin()
+        self.m_pluginProgram:OnPullButton(cc.exports.PluginProgram.BUTTON_TYPE.LEVER)
+    elseif event.name == "began" then
+        self.m_pluginProgram:OnPushButton(cc.exports.PluginProgram.BUTTON_TYPE.LEVER)
     end
 end
 
 function GameView:OnClickedStop1( event )
     if event.name == "ended" then
-        self.sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
-        self.sandBoxSystem:RequestStopReel(1)
+        self.m_pluginProgram:OnPullButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_L)
+    elseif event.name == "began" then
+        self.m_pluginProgram:OnPushButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_L)
     end
 end
 
 function GameView:OnClickedStop2( event )
     if event.name == "ended" then
-        self.sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
-        self.sandBoxSystem:RequestStopReel(2)
+        self.m_pluginProgram:OnPullButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_C)
+    elseif event.name == "began" then
+        self.m_pluginProgram:OnPushButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_C)
     end
 end
 
 function GameView:OnClickedStop3( event )
     if event.name == "ended" then
-        self.sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
-        self.sandBoxSystem:RequestStopReel(3)
+        self.m_pluginProgram:OnPullButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_R)
+    elseif event.name == "began" then
+        self.m_pluginProgram:OnPushButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_R)
     end
 end
 
