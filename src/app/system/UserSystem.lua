@@ -14,13 +14,13 @@ end
 
 function UserSystem:RequestUserInfo()
     local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
-    local request = cc.PACHIN_U2G_USER_INFO_REQ:create(loginSystem:GetAccount())
+    local request = cc.PACHIN_U2G_USER_INFO_REQ:create()
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_USER_INFO_REQ, request:Serialize())
 end
 
 function UserSystem:RequestMoney()
     local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
-    local request = cc.PACHIN_U2G_ADD_MONEY_IN_REQ:create(loginSystem:GetAccount())
+    local request = cc.PACHIN_U2G_ADD_MONEY_IN_REQ:create()
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_ADD_MONEY_IN_REQ, request:Serialize())
 end
 

@@ -16,7 +16,7 @@ end
 
 function LobbySystem:RequestRoomInfo()
     local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
-    local request = cc.PACHIN_U2G_ROOM_INFO_REQ:create(loginSystem:GetAccount())
+    local request = cc.PACHIN_U2G_ROOM_INFO_REQ:create()
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_ROOM_INFO_REQ, request:Serialize())
 end
 
@@ -51,19 +51,19 @@ function LobbySystem:RequestJoinRoom(roomIndex)
         return
     end
     local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
-    local request = cc.PACHIN_U2G_JOIN_ROOM_REQ:create(loginSystem:GetAccount(), tonumber(self.roomIndex))
+    local request = cc.PACHIN_U2G_JOIN_ROOM_REQ:create(tonumber(self.roomIndex))
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_JOIN_ROOM_REQ, request:Serialize())
 end
 
 function LobbySystem:RequestGameInfo(roomIndex)
     local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
-    local request = cc.PACHIN_U2G_GAME_INFO_REQ:create(loginSystem:GetAccount(), roomIndex)
+    local request = cc.PACHIN_U2G_GAME_INFO_REQ:create(roomIndex)
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ, request:Serialize())
 end
 
 function LobbySystem:RequestLeaveRoom(reserve)
     local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
-    local request = cc.PACHIN_U2G_LEAVE_ROOM_REQ:create(loginSystem:GetAccount(), reserve)
+    local request = cc.PACHIN_U2G_LEAVE_ROOM_REQ:create(reserve)
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_LEAVE_ROOM_REQ, request:Serialize())
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.LEAVEGAME )
 

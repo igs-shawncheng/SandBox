@@ -205,8 +205,8 @@ function PluginProgram:OnPushButton(type)
 end
 
 
-cc.exports.PluginProgram.BUTTON_TYPE = ButtonsType
 cc.exports.PluginProgram = PluginProgram
+cc.exports.PluginProgram.BUTTON_TYPE = ButtonsType
 cc.exports.PluginProgram.ERROR_DEFINE = ERROR_DEFINE
 cc.exports.PluginProgram.GAME_STATUS = GAME_STATUS
 cc.exports.PluginProgram.RUN_KIND = RUN_KIND
