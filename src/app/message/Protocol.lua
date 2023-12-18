@@ -12,6 +12,8 @@ local PACHIN_U2G_PROTOCOL =
     PACHIN_U2G_USE_CARD_REQ                 = 10,           -- UseCard
     PACHIN_U2G_PLUGIN_CUSTOM_REQ            = 11,           -- PluginCustom
     PACHIN_U2G_USER_INFO_REQ                = 12,           -- UserInfoReq
+    PACHIN_U2G_TABLE_INFO_REQ               = 13,           -- TableInfoReq
+    PACHIN_U2G_AUTO_PLAY_REQ                = 14,           -- AutoPlayReq
 }
 
 local PACHIN_G2U_PROTOCOL =
@@ -27,6 +29,8 @@ local PACHIN_G2U_PROTOCOL =
     PACHIN_G2U_USE_CARD_ACK                 = 10,           -- UseCard
     PACHIN_G2U_PLUGIN_CUSTOM_ACK            = 11,           -- PluginCustom
     PACHIN_G2U_USER_INFO_ACK                = 12,           -- UserInfoAck
+    PACHIN_G2U_TABLE_INFO_ACK               = 13,           -- TableInfoAck
+    PACHIN_G2U_AUTO_PLAY_ACK                = 14,           -- AutoPlayAck
 }
 
 cc.Protocol = {}

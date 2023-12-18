@@ -1,9 +1,11 @@
 require "app.message.PACHIN_G2U_ROOM_INFO_ACK"
 require "app.message.PACHIN_G2U_JOIN_ROOM_ACK"
+require "app.message.PACHIN_G2U_TABLE_INFO_ACK"
 require "app.message.PACHIN_U2G_ROOM_INFO_REQ"
 require "app.message.PACHIN_U2G_JOIN_ROOM_REQ"
 require "app.message.PACHIN_U2G_LEAVE_ROOM_REQ"
 require "app.message.PACHIN_U2G_GAME_INFO_REQ"
+require "app.message.PACHIN_U2G_TABLE_INFO_REQ"
 
 local LobbySystem = class("LobbySystem", cc.SubSystemBase:GetInstance())
 local RecvCommand = cc.Protocol.PachinG2UProtocol
@@ -11,7 +13,8 @@ local RecvCommand = cc.Protocol.PachinG2UProtocol
 function LobbySystem:ctor()
     print("LobbySystem:ctor")
     self:Registers(RecvCommand.PACHIN_G2U_ROOM_INFO_ACK, handler(self, self.OnRecvRoomInfo))
-    self:Registers(RecvCommand.PACHIN_G2U_JOIN_ROOM_ACK, handler(self, self.OnRecvJoinRoom)) 
+    self:Registers(RecvCommand.PACHIN_G2U_JOIN_ROOM_ACK, handler(self, self.OnRecvJoinRoom))
+    self:Registers(RecvCommand.PACHIN_G2U_TABLE_INFO_ACK, handler(self, self.OnRecvTableInfo))
 end
 
 function LobbySystem:RequestRoomInfo()
@@ -61,6 +64,11 @@ function LobbySystem:RequestGameInfo(roomIndex)
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_GAME_INFO_REQ, request:Serialize())
 end
 
+function LobbySystem:RequestTableInfo()
+    local request = cc.PACHIN_U2G_TABLE_INFO_REQ:create()
+    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_TABLE_INFO_REQ, request:Serialize())
+end
+
 function LobbySystem:RequestLeaveRoom(reserve)
     local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
     local request = cc.PACHIN_U2G_LEAVE_ROOM_REQ:create(reserve)
@@ -89,6 +97,7 @@ function LobbySystem:OnRecvJoinRoom(command)
 
     if response.success then
         self:RequestGameInfo(self.roomIndex)
+        self:RequestTableInfo()
     else
         cc.exports.dispatchEvent( cc.exports.define.EVENTS.SHOW_MSG,
         {
@@ -102,6 +111,10 @@ function LobbySystem:OnRecvJoinRoom(command)
     end
 
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.SET_ARCADE_NO, self.roomIndex)
+end
+
+function LobbySystem:OnRecvTableInfo(command)
+    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
 end
 
 function LobbySystem:GetRoom()

@@ -84,9 +84,12 @@ end
 
 function PluginProgram:Update()
 	local messageId = Inanna.GetJoyTube():IsPostMessage()
-	if messageId > 0 then
+	if messageId == 1 then
 		local postMessage = Inanna.GetJoyTube():GetPostMessageString()
-        self.sandBoxSystem:RequestCustomMessage(postMessage)
+        self.sandBoxSystem:RequestSpin(postMessage)
+	elseif messageId >= 2 and messageId <= 4 then
+		local postMessage = Inanna.GetJoyTube():GetPostMessageString()
+		self.sandBoxSystem:RequestStopReel(postMessage)
 	end
 end
 
