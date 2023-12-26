@@ -1,5 +1,8 @@
-﻿#include <memory>
+#include <memory>
 #include <string>
+#if !defined(__APPLE__)
+#include <jni.h>
+#endif
 
 struct IJoyTubeNative
 {
@@ -11,7 +14,7 @@ struct IJoyTubeNative
 
     typedef void (*DebugLogFunc) (char* str);
     virtual void n_set_debug_log_func(DebugLogFunc func) = 0;
-    virtual int n_native(int left, int top, int width, int height, bool local) = 0;
+    virtual int n_native(int left, int top, int width, int height, bool local, bool master, unsigned int texId) = 0;
     virtual void n_startTimer(bool atfirst) = 0;
      virtual void n_checkTimer() = 0;
     virtual bool n_passStartGame() = 0;
@@ -23,7 +26,7 @@ struct IJoyTubeNative
     virtual bool n_isCreditEvent() = 0;
     virtual int n_isGameStatus() = 0;
     virtual int n_isPlayState() = 0;
-    virtual bool n_isGetIsAutoPlay() = 0;
+    virtual bool n_isAutoPlay() = 0;
     virtual int n_isErrorDefine() = 0;
     virtual void n_clearErrorDefine() = 0;
     virtual int n_isPostMessage() = 0;
@@ -69,12 +72,18 @@ struct IJoyTubeNative
     virtual int n_isArrivedTextureFormat() = 0;
     virtual void n_PushButtons(int type) = 0;
     virtual void n_PullButtons(int type) = 0;
+	virtual void n_setMouseEvent(int phase, int x, int y) = 0;
+    virtual void n_setMouseEventf(int phase, float x, float y) = 0;
+
     virtual void n_toPause(bool pause) = 0;
     virtual void n_GameDestroy() = 0;
     virtual void n_setSoundMute(bool isMute) = 0;
     virtual bool n_enteringSetting() = 0;
     virtual void n_SetInputActive(bool bActive) = 0;
     virtual void n_setAbort() = 0;
+#if !defined(__APPLE__)
+    virtual void n_setJavaVM(jobject* object) = 0;
+#endif
 };
 
 typedef std::shared_ptr<IJoyTubeNative> IJoyTubeNativePtr;

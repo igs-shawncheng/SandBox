@@ -161,7 +161,8 @@ void JoyTube::CallEndOfFrames()
 {
 	//CCLOG("JoyTube::CallEndOfFrames tick %f", cocos2d::Director::getInstance()->getDeltaTime());
 
-	UpdateTextureData();
+	//UpdateTextureData();
+    m_joyTubeNative->n_NativeStepFunc();
 }
 
 void JoyTube::UpdateTextureData()
@@ -181,12 +182,14 @@ void JoyTube::SetSourcePath(std::string sourcePath)
 	std::string nativeResPath = fullPath.substr(0, lastSlash + 1);
 	
 	CCLOG("JoyTube::NativeResPath:%s", nativeResPath.c_str());
-	m_joyTubeNative->n_stringFromUnity(nativeResPath.c_str());
+//    m_joyTubeNative->n_stringFromUnity(nativeResPath.c_str());
+    std::string path = "/storage/emulated/0/Android/data/org.cocos2dx.SandBox/files/";
+	m_joyTubeNative->n_stringFromUnity(path);
 }
 
 void JoyTube::InitPlugin(int left, int top, int width, int height, bool local)
 {
-	m_joyTubeNative->n_native(left, top, width, height, local);
+	m_joyTubeNative->n_native(left, top, width, height, local, false, m_texture2D->getName());
 }
 
 void JoyTube::OnLeaveGame()
@@ -239,7 +242,7 @@ void JoyTube::ResetErrorStatus()
 
 bool JoyTube::GetIsAutoPlay()
 {
-	return m_joyTubeNative->n_isGetIsAutoPlay();
+	return m_joyTubeNative->n_isAutoPlay();
 }
 
 int JoyTube::GetGameStatus()
@@ -265,7 +268,9 @@ int JoyTube::SendMessages(char const* system, char const* cmd, char const* jsons
 
 int JoyTube::IsPostMessage()
 {
-	return m_joyTubeNative->n_isPostMessage();
+    int post =m_joyTubeNative->n_isPostMessage();
+    if(post != 0) CCLOG("JoyTube::postMessage:%d", post);
+	return post;
 }
 std::string JoyTube::GetPostMessageString()
 {
