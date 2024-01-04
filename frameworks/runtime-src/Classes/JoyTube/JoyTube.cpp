@@ -128,10 +128,10 @@ void JoyTube::AddSprite(luabridge::LuaRef node)
 	}
 }
 
-void JoyTube::OnTouch(int x, int y)
+void JoyTube::OnTouch(int phase, int x, int y)
 {
-	CCLOG("joyTube OnTouch x:%d y:%d", x, y);
-	m_joyTubeNative->OnTouch(x, y);
+	CCLOG("joyTube OnTouch x:%d y:%d phase:%d", x, y, phase);
+	m_joyTubeNative->OnTouch(phase, x, y);
 }
 
 void JoyTube::Process(float tick)

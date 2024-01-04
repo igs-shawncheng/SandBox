@@ -89,9 +89,9 @@ function GameView:onCreate()
 
     self.m_state = cc.exports.FiniteState:create( GAMEVIEW_STATE.WAIT_JOIN_GAME )
     self.m_pluginProgram = cc.exports.PluginProgram:create()
-    
     self.m_isUseItem = false
     self:RegisterEvent()
+    self.m_mousePressed = cc.EventListenerTouchOneByOne:create()
 end
 
 function GameView:RegisterEvent()
@@ -130,14 +130,36 @@ function GameView:OnJoinGame()
 end
 
 function GameView:OnClickedSpin( event )
-    if event.name == "ended" then
-        self.m_pluginProgram:OnPullButton(cc.exports.PluginProgram.BUTTON_TYPE.LEVER)
-    elseif event.name == "began" then
+    self.m_btn_spin:setSwallowTouches(false)
+    if event.name == "began" then
         self.m_pluginProgram:OnPushButton(cc.exports.PluginProgram.BUTTON_TYPE.LEVER)
+    elseif event.name == "ended" then
+        self.sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
+        -- 判斷財產是否足夠
+        if self.sandBoxSystem.currCount < self.sandBoxSystem.bet then
+            cc.exports.dispatchEvent( cc.exports.define.EVENTS.SHOW_MSG,
+            {
+                title = "property",
+                content = "Property is not enough!!! Do you want to buy some chips?",
+                cancelBtnText = "not yet",
+                confirmBtnText = "buy chips",
+                showCloseBtn = false,
+                confirmCB = function ()
+                    print("click confirmCB")
+                    -- 可加入前往儲值的方法
+                end,
+                cancelCB = function ()
+                    print("click cancelCB")
+                end,
+            } )
+        else
+            self.m_pluginProgram:OnPullButton(cc.exports.PluginProgram.BUTTON_TYPE.LEVER)
+        end
     end
 end
 
 function GameView:OnClickedStop1( event )
+    self.m_btn_stop1:setSwallowTouches(false)
     if event.name == "ended" then
         self.m_pluginProgram:OnPullButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_L)
     elseif event.name == "began" then
@@ -146,6 +168,7 @@ function GameView:OnClickedStop1( event )
 end
 
 function GameView:OnClickedStop2( event )
+    self.m_btn_stop2:setSwallowTouches(false)
     if event.name == "ended" then
         self.m_pluginProgram:OnPullButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_C)
     elseif event.name == "began" then
@@ -154,6 +177,7 @@ function GameView:OnClickedStop2( event )
 end
 
 function GameView:OnClickedStop3( event )
+    self.m_btn_stop3:setSwallowTouches(false)
     if event.name == "ended" then
         self.m_pluginProgram:OnPullButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_R)
     elseif event.name == "began" then
@@ -259,12 +283,39 @@ function GameView:OnClickedItemBtn()
     self.SandBoxSystem:RequestUseCard()
 end
 
+function GameView:RegieterMouseEventListener()
+    self.m_mousePressed:registerScriptHandler(function(touch, event)
+        local location = touch:getLocation()
+        print("Touch began at: " .. location.x .. ", " .. location.y)
+        Inanna.GetJoyTube():OnTouch(0, location.x, location.y)
+        return true
+     end, cc.Handler.EVENT_TOUCH_BEGAN)
+    self.m_mousePressed:registerScriptHandler(function(touch, event)
+        local location = touch:getLocation()
+        print("Touch moved to: " .. location.x .. ", " .. location.y)
+        Inanna.GetJoyTube():OnTouch(1, location.x, location.y)
+     end, cc.Handler.EVENT_TOUCH_MOVED)
+    self.m_mousePressed:registerScriptHandler(function(touch, event)
+        local location = touch:getLocation()
+        print("Touch ended at: " .. location.x .. ", " .. location.y)
+        Inanna.GetJoyTube():OnTouch(3, location.x, location.y)
+     end, cc.Handler.EVENT_TOUCH_ENDED)
+     
+    cc.Director:getInstance():getEventDispatcher():addEventListenerWithSceneGraphPriority(self.m_mousePressed, self) 
+end
+
+function GameView:UnRegieterMouseEventListener()
+    cc.Director:getInstance():getEventDispatcher():removeEventListener(self.m_mousePressed)
+    print("Touch Event Unregistered")
+end
+
 function GameView:OnEnter()
     print("GameView:OnEnter()")
 
     self.m_n_gameStatus:setVisible( false )
 
     self:InitJoyTube()
+    self:RegieterMouseEventListener()
 end
 
 function GameView:InitJoyTube()
@@ -272,12 +323,6 @@ function GameView:InitJoyTube()
     self.m_touch_layer = cc.LayerColor:create( cc.c4b( 0, 0, 0, 0 ), CC_DESIGN_RESOLUTION.width, CC_DESIGN_RESOLUTION.height )
     self.m_touch_layer:move( display.left_bottom )
     self.m_touch_layer:addTo( self.m_joyTubeInput )
-    self.m_touch_layer:onTouch( function( event )
-        print("layer onTouch x:" .. event.x .. " y:" .. event.y)
-        local sceneY = (display.height - CC_DESIGN_RESOLUTION.height) / 2
-        local sceneX = (display.width - CC_DESIGN_RESOLUTION.width) / 2
-        Inanna.GetJoyTube():OnTouch( event.x - sceneX, event.y - sceneY )
-    end )
 
     -- output
     Inanna.GetJoyTube():AddSprite( self.m_joyTubeOutput )
@@ -285,6 +330,7 @@ end
 
 function GameView:OnExit()
     print("GameView:OnExit()")
+    self:UnRegieterMouseEventListener()
 end
 
 function GameView:OnUpdate( dt )

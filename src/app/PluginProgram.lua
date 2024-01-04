@@ -7,7 +7,18 @@ PluginProgram.m_isMute = false
 PluginProgram.m_isInputActive = true
 
 local ERROR_DEFINE = {
-	NONE = 0,
+	NONE = 0,                   -- Error does not occur
+	SCEAN_CREATE_ERROR = 1,     -- I failed to create a screen
+	RESOURCE_LOAD_ERROR = 2,    -- The resource failed to load
+	SLOT_ERROR = 3,             -- There was an error in the slot
+	SEND_MESSAGE_ERROR = 4,     -- Failed to create the data to be sent
+	RECEVE_MESSAGE_ERROR = 5,   -- I failed to analyze the incoming data
+	INSUFFICIENT_BALANCE = 6,   -- Insufficient amount of money in the player's SPIN
+	INIT_ERROR = 7,             -- No related packets received for more than 5 seconds after initialization
+	NET_DELAY = 8,              -- Packets are not received for more than 5 seconds per process
+	DRIVER_ERROR = 9,           -- Hardware functions are not supported (e.g. simulator does not work)
+	NET_DATA_ERROR = 10,        -- Packet data error (e.g., incorrect bureau number, illegal value)
+	MEMORY_ERROR = 11,          -- Insufficient memory
 }
 
 local GAME_STATUS = {
@@ -37,7 +48,6 @@ local ButtonsType = {
     STOP_C = 3,
     STOP_R = 4,
 }
-
 
 local REGISTER_EVENTS = {
     cc.exports.define.EVENTS.PLUGIN_RESPONSE,

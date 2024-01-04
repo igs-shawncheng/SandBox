@@ -76,7 +76,7 @@ function SandBoxSystem:OnRecvGameInfo(command)
     self.gameMode = response.gameMode
     
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.JOINGAME )
-    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
+    cc.exports.dispatchEvent( cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content} )
 end
 
 function SandBoxSystem:OnRecvStartGame(command)

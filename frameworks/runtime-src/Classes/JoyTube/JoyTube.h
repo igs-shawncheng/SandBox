@@ -25,7 +25,7 @@ public:
 	void RegisterLua();
 
 	void AddSprite(luabridge::LuaRef node);
-	void OnTouch(int x, int y);
+	void OnTouch(int phase, int x, int y);
 
 	void SetSourcePath(std::string sourcePath);
 	void InitPlugin(int left, int top, int width, int height, bool local);
@@ -46,6 +46,8 @@ public:
 	std::string GetPostMessageString();
 	void OnPushButton(int type);
 	void OnPullButton(int type);
+	void n_setMouseEvent(int phase, int x, int y);
+	void n_setMouseEventf(int phase, float x, float y);
 	
 	int m_testInt = 640;
 protected:

@@ -3,7 +3,7 @@
 #include "IJoyTubeNative.h"
 
 typedef unsigned char* (*libInitFun)(int width, int height);
-typedef void(*libInputXYFun)(int x, int y);
+typedef void(*libInputXYFun)(int phase, int x, int y);
 
 struct HandleData;
 
@@ -15,12 +15,12 @@ public:
 
 	unsigned char* GetTextureData();
 
-	void OnTouch(int x, int y);
+	void OnTouch(int phase, int x, int y);
 
 	void UnLoadLibrary();
 
     void n_set_debug_log_func(DebugLogFunc func);
-    int n_native(int left, int top, int width, int height, bool local);
+    int n_native(int left, int top, int width, int height, bool local, bool master, unsigned int texId);
     void n_startTimer(bool atfirst);
     void n_checkTimer();
     bool n_passStartGame();
@@ -32,7 +32,7 @@ public:
     bool n_isCreditEvent();
     int n_isGameStatus();
     int n_isPlayState();
-    bool n_isGetIsAutoPlay();
+    bool n_isAutoPlay();
     int n_isErrorDefine();
     void n_clearErrorDefine();
     int n_isPostMessage();
@@ -65,6 +65,8 @@ public:
     int n_isArrivedTextureFormat();
     void n_PushButtons(int type);
     void n_PullButtons(int type);
+    void n_setMouseEvent(int phase, int x, int y);
+    void n_setMouseEventf(int phase, float x, float y);
     void n_toPause(bool pause);
     void n_GameDestroy();
     void n_setSoundMute(bool isMute);
@@ -83,7 +85,7 @@ protected:
 
 	void InitLibrary();
 	
-	void TestLibInputXY(int x, int y);
+	void TestLibInputXY(int phase, int x, int y);
 
 	
 };

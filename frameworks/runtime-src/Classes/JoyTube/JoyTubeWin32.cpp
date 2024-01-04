@@ -64,24 +64,24 @@ unsigned char* JoyTubeWin32::GetTextureData()
 	return m_textureData;
 }
 
-void JoyTubeWin32::OnTouch(int x, int y)
+void JoyTubeWin32::OnTouch(int phase, int x, int y)
 {
-	CCLOG("joyTube OnTouch x:%d y:%d", x, y);
-	TestLibInputXY(x, y);
+	CCLOG("joyTube OnTouch x:%d y:%d phase:%d", x, y, phase);
+	TestLibInputXY(phase, x, y);
 }
 
-void JoyTubeWin32::TestLibInputXY(int x, int y)
+void JoyTubeWin32::TestLibInputXY(int phase, int x, int y)
 {
 	libInputXYFun pInputXYFun = (libInputXYFun)GetProcAddress(m_hData->m_hDll, "InputXY");
 	if (pInputXYFun)
 	{
-		pInputXYFun(x, y);
+		pInputXYFun(phase, x, y);
 	}
 }
 
 #if defined(JOYTUBE_TEST)
 void JoyTubeWin32::n_set_debug_log_func(DebugLogFunc func) {}
-int JoyTubeWin32::n_native(int left, int top, int width, int height, bool local) { return 0; }
+int JoyTubeWin32::n_native(int left, int top, int width, int height, bool local, bool master, unsigned int texId) { return 0; }
 void JoyTubeWin32::n_startTimer(bool atfirst){}
 void JoyTubeWin32::n_checkTimer(){}
 bool JoyTubeWin32::n_passStartGame() { return false; }
@@ -93,7 +93,7 @@ double JoyTubeWin32::n_isCredit(){ return 0; }
 bool JoyTubeWin32::n_isCreditEvent(){ return false; }
 int JoyTubeWin32::n_isGameStatus(){ return 0; }
 int JoyTubeWin32::n_isPlayState(){ return 0; }
-bool JoyTubeWin32::n_isGetIsAutoPlay() { return false; }
+bool JoyTubeWin32::n_isAutoPlay() { return false; }
 int JoyTubeWin32::n_isErrorDefine(){ return 0; }
 void JoyTubeWin32::n_clearErrorDefine(){}
 int JoyTubeWin32::n_isPostMessage(){ return 0; }
@@ -126,6 +126,8 @@ int JoyTubeWin32::n_isArrivedTextureHeightGl(){ return 0; }
 int JoyTubeWin32::n_isArrivedTextureFormat(){ return 0; }
 void JoyTubeWin32::n_PushButtons(int type){}
 void JoyTubeWin32::n_PullButtons(int type){}
+void JoyTubeWin32::n_setMouseEvent(int phase, int x, int y){}
+void JoyTubeWin32::n_setMouseEventf(int phase, float x, float y){}
 void JoyTubeWin32::n_toPause(bool pause){}
 void JoyTubeWin32::n_GameDestroy(){}
 void JoyTubeWin32::n_setSoundMute(bool isMute){}

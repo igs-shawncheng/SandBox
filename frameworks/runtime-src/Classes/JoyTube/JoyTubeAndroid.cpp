@@ -4,7 +4,7 @@
 #include "LuaBridge.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
-#include "platform/android/jni/JniHelper.h"
+
 
 //#define JOYTUBE_TEST
 
@@ -12,9 +12,10 @@
 #define subNameSpace(base, x)   base##x
 
 #if ( CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID )
+#include "platform/android/jni/JniHelper.h"
 extern std::string helloWorldFun();
 extern unsigned char* Init(int width, int height);
-extern void InputXY(int x, int y);
+extern void setMouseEvent(int phase, int x, int y);
 
 
 //#if (Target_NativeLib == NativeLib_Jap)
@@ -123,7 +124,7 @@ int JoyTubeAndroid::n_isArrivedTextureFormat() { return 0; }
 void JoyTubeAndroid::n_PushButtons(int type) {}
 void JoyTubeAndroid::n_PullButtons(int type) {}
 void JoyTubeAndroid::n_setMouseEvent(int phase, int x, int y) {}
-void JoyTubeAndroid::n_setMouseEventf(int phase, float x, float y)  {}
+void JoyTubeAndroid::n_setMouseEventf(int phase, float x, float y){}
 void JoyTubeAndroid::n_toPause(bool pause) {}
 void JoyTubeAndroid::n_GameDestroy() {}
 void JoyTubeAndroid::n_setSoundMute(bool isMute) {}
@@ -225,17 +226,17 @@ unsigned char* JoyTubeAndroid::GetTextureData()
 	return m_textureData;
 }
 
-void JoyTubeAndroid::OnTouch(int x, int y)
+void JoyTubeAndroid::OnTouch(int phase, int x, int y)
 {
-	CCLOG("joyTube OnTouch x:%d y:%d", x, y);
-	TestLibInputXY(x, y);
-
-    n_setMouseEvent(0, x, y);		// down
-    n_setMouseEvent(3, x, y);		// up
+	CCLOG("joyTube OnTouch x:%d y:%d phase:%d", x, y, phase);
+	//TestLibInputXY(x, y);
+    n_setMouseEvent(phase, x, y);
+    //n_setMouseEvent(0, x, y);		// down
+    //n_setMouseEvent(3, x, y);		// up
 }
 
-void JoyTubeAndroid::TestLibInputXY(int x, int y)
+void JoyTubeAndroid::TestLibInputXY(int phase, int x, int y)
 {
-    //InputXY(x, y);
+    setMouseEvent(phase, x, y);
 }
 #endif

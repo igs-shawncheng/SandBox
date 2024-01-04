@@ -11,7 +11,7 @@ public:
 
 	unsigned char* GetTextureData();
 
-	void OnTouch(int x, int y);
+	void OnTouch(int phase, int x, int y);
 
 	void UnLoadLibrary();
 
@@ -69,7 +69,9 @@ public:
     bool n_enteringSetting();
     void n_SetInputActive(bool bActive);
     void n_setAbort();
+#if defined(ANDROID)
     void n_setJavaVM(jobject* object);
+#endif
 protected:
 	unsigned char* m_textureData;
 
@@ -78,6 +80,6 @@ protected:
 
 	void InitLibrary();
 
-	void TestLibInputXY(int x, int y);
+	void TestLibInputXY(int phase, int x, int y);
 };
 

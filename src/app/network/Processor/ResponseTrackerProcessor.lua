@@ -44,7 +44,7 @@ function ResponseTrackerProcessor:Update()
     end
 end
 
-function ResponseTrackerProcessor:PreProcessSend(commandId, content)
+function ResponseTrackerProcessor:PreProcessSend(commandId, content, connection)
     if commandId == nil then
         return
     end
@@ -58,7 +58,8 @@ function ResponseTrackerProcessor:PreProcessSend(commandId, content)
     end
 end
 
-function ResponseTrackerProcessor:PreProcessRecv(commandId, content)
+function ResponseTrackerProcessor:PreProcessRecv(content, canReceive)
+    local commandId = content.commandType
     if commandId == nil then
         return
     end
@@ -74,6 +75,7 @@ function ResponseTrackerProcessor:PreProcessRecv(commandId, content)
         table.remove(self.trackList, removeIndex)
         --print("PreProcessRecv", commandId)
     end
+    return content, canReceive
 end
 
 

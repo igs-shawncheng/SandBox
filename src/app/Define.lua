@@ -49,9 +49,12 @@ local BLANK_PNG = "Platform/BlankPNG.png"
 
 local TEST_WITH_CONNECT = false
 
+local SPLIT_DATA_PACKET_SIZE = 1000
+
 cc.exports.define = {}
 cc.exports.define.GameMode = GameMode
 cc.exports.define.EVENTS = EVENTS
 cc.exports.define.DEFAULT_FONT = DEFAULT_FONT
 cc.exports.define.BLANK_PNG = BLANK_PNG
 cc.exports.define.TEST_WITH_CONNECT = TEST_WITH_CONNECT
+cc.exports.define.SPLIT_DATA_PACKET_SIZE = SPLIT_DATA_PACKET_SIZE

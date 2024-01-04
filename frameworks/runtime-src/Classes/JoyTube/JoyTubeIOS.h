@@ -77,6 +77,6 @@ protected:
 
 	void InitLibrary();
 
-	void TestLibInputXY(int x, int y);
+	void TestLibInputXY(int phase, int x, int y);
 };
 

@@ -1,6 +1,6 @@
-#include <memory>
+﻿#include <memory>
 #include <string>
-#if !defined(__APPLE__)
+#if defined(ANDROID)
 #include <jni.h>
 #endif
 
@@ -9,14 +9,14 @@ struct IJoyTubeNative
 	virtual ~IJoyTubeNative() {};
 
 	virtual unsigned char* GetTextureData() = 0;
-	virtual void OnTouch(int x, int y) = 0;
+	virtual void OnTouch(int phase, int x, int y) = 0;
 
 
     typedef void (*DebugLogFunc) (char* str);
     virtual void n_set_debug_log_func(DebugLogFunc func) = 0;
     virtual int n_native(int left, int top, int width, int height, bool local, bool master, unsigned int texId) = 0;
     virtual void n_startTimer(bool atfirst) = 0;
-     virtual void n_checkTimer() = 0;
+    virtual void n_checkTimer() = 0;
     virtual bool n_passStartGame() = 0;
     virtual int n_sendMessage(std::string cmd, std::string jsonstring) = 0;
     virtual int n_useItem(std::string jsonstring) = 0;
@@ -81,7 +81,7 @@ struct IJoyTubeNative
     virtual bool n_enteringSetting() = 0;
     virtual void n_SetInputActive(bool bActive) = 0;
     virtual void n_setAbort() = 0;
-#if !defined(__APPLE__)
+#if defined(ANDROID)
     virtual void n_setJavaVM(jobject* object) = 0;
 #endif
 };

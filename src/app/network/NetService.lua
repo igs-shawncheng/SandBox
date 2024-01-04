@@ -1,5 +1,6 @@
 require ("app.network.Connection")
 require ("app.network.Processor.ResponseTrackerProcessor")
+require ("app.network.Processor.DataPacketProcessor")
 require ("app.message.CommandRecv")
 require ("app.message.CommandSend")
 
@@ -30,6 +31,7 @@ function NetService:Init(subSystemBase)
             self:OnRecvSocket(buffer)
         end)
     self._schedulerID = scheduler:scheduleScriptFunc(handler(self, self.Update), CHECK_SELECT_INTERVAL, false)
+    table.insert(CommandProcessor, cc.DataPacketProcessor.create())
     table.insert(CommandProcessor, cc.ResponseTrackerProcessor.create())
 end
 
@@ -81,13 +83,13 @@ end
 
 function NetService:OnRecvSocket(buffer)
     local deCommand = cc.CommandRecv:create(buffer)
-
     for key, value in pairs(CommandProcessor) do
-        value:PreProcessRecv(deCommand.commandType, deCommand.content)
+        deCommand, canReceive = value:PreProcessRecv(deCommand, canReceive)
     end
 
-    if self.subSystemBase then
+    if self.subSystemBase and canReceive == true then
         self.subSystemBase:OnCommand(deCommand)
+        dump(deCommand)
     end
 end
 
@@ -99,11 +101,9 @@ function NetService:Send(commandType, content)
     end
     
     for key, value in pairs(CommandProcessor) do
-        value:PreProcessSend(command.commandType, command.content)
+        value:PreProcessSend(command.commandType, content, self.connection)
     end
-
     dump(command)
-    self.connection:Send(command:Serialize())
 end
 
 function NetService:DisConnect()

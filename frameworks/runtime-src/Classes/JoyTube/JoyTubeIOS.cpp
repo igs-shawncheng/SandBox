@@ -12,7 +12,7 @@
 
 #if ( CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
 extern unsigned char* Init(int width, int height);
-extern void InputXY(int x, int y);
+extern void InputXY(int phase, int x, int y);
 
 
 extern "C" {
@@ -218,17 +218,17 @@ unsigned char* JoyTubeIOS::GetTextureData()
 	return m_textureData;
 }
 
-void JoyTubeIOS::OnTouch(int x, int y)
+void JoyTubeIOS::OnTouch(int phase, int x, int y)
 {
-    CCLOG("joyTube OnTouch x:%d y:%d", x, y);
-    TestLibInputXY(x, y);
-    
-    n_setMouseEvent(0, x, y);        // down
-    n_setMouseEvent(3, x, y);        // up
+    CCLOG("joyTube OnTouch x:%d y:%d phase:%d", x, y, phase);
+    //TestLibInputXY(x, y);
+    n_setMouseEvent(phase, x, y)
+    //n_setMouseEvent(0, x, y);        // down
+    //n_setMouseEvent(3, x, y);        // up
 }
 
-void JoyTubeIOS::TestLibInputXY(int x, int y)
+void JoyTubeIOS::TestLibInputXY(int phase, int x, int y)
 {
-    InputXY(x, y);
+    setMouseEvent(phase, x, y);
 }
 #endif
