@@ -59,8 +59,8 @@ public:
     int n_isArrivedTextureWidthGl();
     int n_isArrivedTextureHeightGl();
     int n_isArrivedTextureFormat();
-    void n_PushButtons(int type);
-    void n_PullButtons(int type);
+    // void n_PushButtons(int type);
+    // void n_PullButtons(int type);
     void n_setMouseEvent(int phase, int x, int y);
     void n_setMouseEventf(int phase, float x, float y);
     void n_toPause(bool pause);

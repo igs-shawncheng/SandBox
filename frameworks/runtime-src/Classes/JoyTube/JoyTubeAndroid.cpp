@@ -121,8 +121,8 @@ int JoyTubeAndroid::n_isArrivedTextureHeight() { return 0; }
 int JoyTubeAndroid::n_isArrivedTextureWidthGl() { return 0; }
 int JoyTubeAndroid::n_isArrivedTextureHeightGl() { return 0; }
 int JoyTubeAndroid::n_isArrivedTextureFormat() { return 0; }
-void JoyTubeAndroid::n_PushButtons(int type) {}
-void JoyTubeAndroid::n_PullButtons(int type) {}
+// void JoyTubeAndroid::n_PushButtons(int type) {}
+// void JoyTubeAndroid::n_PullButtons(int type) {}
 void JoyTubeAndroid::n_setMouseEvent(int phase, int x, int y) {}
 void JoyTubeAndroid::n_setMouseEventf(int phase, float x, float y){}
 void JoyTubeAndroid::n_toPause(bool pause) {}
@@ -177,8 +177,8 @@ int JoyTubeAndroid::n_isArrivedTextureHeight() { return NameSpace(isArrivedTextu
 int JoyTubeAndroid::n_isArrivedTextureWidthGl() { return NameSpace(isArrivedTextureWidthGl)();}
 int JoyTubeAndroid::n_isArrivedTextureHeightGl() { return NameSpace(isArrivedTextureHeightGl)();}
 int JoyTubeAndroid::n_isArrivedTextureFormat() { return NameSpace(isArrivedTextureFormat)();}
-void JoyTubeAndroid::n_PushButtons(int type) { return NameSpace(PushButtons)(type);}
-void JoyTubeAndroid::n_PullButtons(int type) { return NameSpace(PullButtons)(type);}
+// void JoyTubeAndroid::n_PushButtons(int type) { return NameSpace(PushButtons)(type);}
+// void JoyTubeAndroid::n_PullButtons(int type) { return NameSpace(PullButtons)(type);}
 void JoyTubeAndroid::n_setMouseEvent(int phase, int x, int y) { return NameSpace(setMouseEvent)(phase, x, y); }
 void JoyTubeAndroid::n_setMouseEventf(int phase, float x, float y)  { return NameSpace(setMouseEventf)(phase, x, y); }
 void JoyTubeAndroid::n_toPause(bool pause) { return NameSpace(toPause)(pause);}

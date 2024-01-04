@@ -124,8 +124,8 @@ int JoyTubeWin32::n_isArrivedTextureHeight(){ return 0; }
 int JoyTubeWin32::n_isArrivedTextureWidthGl(){ return 0; }
 int JoyTubeWin32::n_isArrivedTextureHeightGl(){ return 0; }
 int JoyTubeWin32::n_isArrivedTextureFormat(){ return 0; }
-void JoyTubeWin32::n_PushButtons(int type){}
-void JoyTubeWin32::n_PullButtons(int type){}
+// void JoyTubeWin32::n_PushButtons(int type){}
+// void JoyTubeWin32::n_PullButtons(int type){}
 void JoyTubeWin32::n_setMouseEvent(int phase, int x, int y){}
 void JoyTubeWin32::n_setMouseEventf(int phase, float x, float y){}
 void JoyTubeWin32::n_toPause(bool pause){}

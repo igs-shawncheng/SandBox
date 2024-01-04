@@ -116,8 +116,8 @@ int JoyTubeIOS::n_isArrivedTextureHeight() { return 0; }
 int JoyTubeIOS::n_isArrivedTextureWidthGl() { return 0; }
 int JoyTubeIOS::n_isArrivedTextureHeightGl() { return 0; }
 int JoyTubeIOS::n_isArrivedTextureFormat() { return 0; }
-void JoyTubeIOS::n_PushButtons(int type) {}
-void JoyTubeIOS::n_PullButtons(int type) {}
+// void JoyTubeIOS::n_PushButtons(int type) {}
+// void JoyTubeIOS::n_PullButtons(int type) {}
 void JoyTubeIOS::n_setMouseEvent(int phase, int x, int y) {}
 void JoyTubeIOS::n_setMouseEventf(int phase, float x, float y)  {}
 void JoyTubeIOS::n_toPause(bool pause) {}
@@ -171,8 +171,8 @@ int JoyTubeIOS::n_isArrivedTextureHeight() { return NameSpace(isArrivedTextureHe
 int JoyTubeIOS::n_isArrivedTextureWidthGl() { return NameSpace(isArrivedTextureWidthGl)();}
 int JoyTubeIOS::n_isArrivedTextureHeightGl() { return NameSpace(isArrivedTextureHeightGl)();}
 int JoyTubeIOS::n_isArrivedTextureFormat() { return NameSpace(isArrivedTextureFormat)();}
-void JoyTubeIOS::n_PushButtons(int type) { return NameSpace(PushButtons)(type);}
-void JoyTubeIOS::n_PullButtons(int type) { return NameSpace(PullButtons)(type);}
+// void JoyTubeIOS::n_PushButtons(int type) { return NameSpace(PushButtons)(type);}
+// void JoyTubeIOS::n_PullButtons(int type) { return NameSpace(PullButtons)(type);}
 void JoyTubeIOS::n_setMouseEvent(int phase, int x, int y) { return NameSpace(setMouseEvent)(phase, x, y); }
 void JoyTubeIOS::n_setMouseEventf(int phase, float x, float y)  { return NameSpace(setMouseEventf)(phase, x, y); }
 void JoyTubeIOS::n_toPause(bool pause) { return NameSpace(toPause)(pause);}

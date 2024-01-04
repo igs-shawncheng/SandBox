@@ -209,13 +209,13 @@ function PluginProgram:GetPostMessageString()
 	return Inanna.GetJoyTube():GetPostMessageString()
 end
 
-function PluginProgram:OnPullButton(type)
-	Inanna.GetJoyTube():OnPullButton(type)
-end
+-- function PluginProgram:OnPullButton(type)
+-- 	Inanna.GetJoyTube():OnPullButton(type)
+-- end
 
-function PluginProgram:OnPushButton(type)
-	Inanna.GetJoyTube():OnPushButton(type)
-end
+-- function PluginProgram:OnPushButton(type)
+-- 	Inanna.GetJoyTube():OnPushButton(type)
+-- end
 
 
 cc.exports.PluginProgram = PluginProgram

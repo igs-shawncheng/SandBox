@@ -105,8 +105,8 @@ void JoyTube::RegisterLua()
 		.addFunction("SendMessage", &JoyTube::SendMessages)
 		.addFunction("IsPostMessage", &JoyTube::IsPostMessage)
 		.addFunction("GetPostMessageString", &JoyTube::GetPostMessageString)
-		.addFunction("OnPullButton", &JoyTube::OnPushButton)
-		.addFunction("OnPushButton", &JoyTube::OnPushButton)
+		// .addFunction("OnPullButton", &JoyTube::OnPushButton)
+		// .addFunction("OnPushButton", &JoyTube::OnPushButton)
 		.endClass()
 		.endNamespace();
 }
@@ -277,11 +277,11 @@ std::string JoyTube::GetPostMessageString()
 	return (const char*)m_joyTubeNative->n_getPostMessageString();
 }
 
-void JoyTube::OnPushButton(int type)
-{
-	m_joyTubeNative->n_PushButtons(type);
-}
-void JoyTube::OnPullButton(int type)
-{
-	m_joyTubeNative->n_PullButtons(type);
-}
+// void JoyTube::OnPushButton(int type)
+// {
+// 	m_joyTubeNative->n_PushButtons(type);
+// }
+// void JoyTube::OnPullButton(int type)
+// {
+// 	m_joyTubeNative->n_PullButtons(type);
+// }

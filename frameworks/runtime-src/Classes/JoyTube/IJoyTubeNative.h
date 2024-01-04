@@ -70,8 +70,8 @@ struct IJoyTubeNative
     virtual int n_isArrivedTextureWidthGl() = 0;
     virtual int n_isArrivedTextureHeightGl() = 0;
     virtual int n_isArrivedTextureFormat() = 0;
-    virtual void n_PushButtons(int type) = 0;
-    virtual void n_PullButtons(int type) = 0;
+    // virtual void n_PushButtons(int type) = 0;
+    // virtual void n_PullButtons(int type) = 0;
 	virtual void n_setMouseEvent(int phase, int x, int y) = 0;
     virtual void n_setMouseEventf(int phase, float x, float y) = 0;
 

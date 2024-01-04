@@ -17,43 +17,43 @@ GameView.RESOURCE_BINDING = {
     },
     ["txt_PlayState"] = {
         ["varname"] = "m_txt_playState",
-    },
-    ["btn_Spin"] = {
-        ["varname"] = "m_btn_spin",
-        ["events"] = {
-            {
-                event = "touch",
-                method ="OnClickedSpin"
-            }
-        }
-    },
-    ["btn_Stop_1"] = {
-        ["varname"] = "m_btn_stop1",
-        ["events"] = {
-            {
-                event = "touch",
-                method ="OnClickedStop1"
-            }
-        }
-    },
-    ["btn_Stop_2"] = {
-        ["varname"] = "m_btn_stop2",
-        ["events"] = {
-            {
-                event = "touch",
-                method ="OnClickedStop2"
-            }
-        }
-    },
-    ["btn_Stop_3"] = {
-        ["varname"] = "m_btn_stop3",
-        ["events"] = {
-            {
-                event = "touch",
-                method ="OnClickedStop3"
-            }
-        }
-    },
+    }--,
+    -- ["btn_Spin"] = {
+    --     ["varname"] = "m_btn_spin",
+    --     ["events"] = {
+    --         {
+    --             event = "touch",
+    --             method ="OnClickedSpin"
+    --         }
+    --     }
+    -- },
+    -- ["btn_Stop_1"] = {
+    --     ["varname"] = "m_btn_stop1",
+    --     ["events"] = {
+    --         {
+    --             event = "touch",
+    --             method ="OnClickedStop1"
+    --         }
+    --     }
+    -- },
+    -- ["btn_Stop_2"] = {
+    --     ["varname"] = "m_btn_stop2",
+    --     ["events"] = {
+    --         {
+    --             event = "touch",
+    --             method ="OnClickedStop2"
+    --         }
+    --     }
+    -- },
+    -- ["btn_Stop_3"] = {
+    --     ["varname"] = "m_btn_stop3",
+    --     ["events"] = {
+    --         {
+    --             event = "touch",
+    --             method ="OnClickedStop3"
+    --         }
+    --     }
+    -- },
 }
 
 local REGISTER_EVENTS = {
@@ -129,61 +129,61 @@ function GameView:OnJoinGame()
     self.m_state:Transit( GAMEVIEW_STATE.INIT )
 end
 
-function GameView:OnClickedSpin( event )
-    self.m_btn_spin:setSwallowTouches(false)
-    if event.name == "began" then
-        self.m_pluginProgram:OnPushButton(cc.exports.PluginProgram.BUTTON_TYPE.LEVER)
-    elseif event.name == "ended" then
-        self.sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
-        -- 判斷財產是否足夠
-        if self.sandBoxSystem.currCount < self.sandBoxSystem.bet then
-            cc.exports.dispatchEvent( cc.exports.define.EVENTS.SHOW_MSG,
-            {
-                title = "property",
-                content = "Property is not enough!!! Do you want to buy some chips?",
-                cancelBtnText = "not yet",
-                confirmBtnText = "buy chips",
-                showCloseBtn = false,
-                confirmCB = function ()
-                    print("click confirmCB")
-                    -- 可加入前往儲值的方法
-                end,
-                cancelCB = function ()
-                    print("click cancelCB")
-                end,
-            } )
-        else
-            self.m_pluginProgram:OnPullButton(cc.exports.PluginProgram.BUTTON_TYPE.LEVER)
-        end
-    end
-end
+-- function GameView:OnClickedSpin( event )
+--     self.m_btn_spin:setSwallowTouches(false)
+--     if event.name == "began" then
+--         self.m_pluginProgram:OnPushButton(cc.exports.PluginProgram.BUTTON_TYPE.LEVER)
+--     elseif event.name == "ended" then
+--         self.sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
+--         -- 判斷財產是否足夠
+--         if self.sandBoxSystem.currCount < self.sandBoxSystem.bet then
+--             cc.exports.dispatchEvent( cc.exports.define.EVENTS.SHOW_MSG,
+--             {
+--                 title = "property",
+--                 content = "Property is not enough!!! Do you want to buy some chips?",
+--                 cancelBtnText = "not yet",
+--                 confirmBtnText = "buy chips",
+--                 showCloseBtn = false,
+--                 confirmCB = function ()
+--                     print("click confirmCB")
+--                     -- 可加入前往儲值的方法
+--                 end,
+--                 cancelCB = function ()
+--                     print("click cancelCB")
+--                 end,
+--             } )
+--         else
+--             self.m_pluginProgram:OnPullButton(cc.exports.PluginProgram.BUTTON_TYPE.LEVER)
+--         end
+--     end
+-- end
 
-function GameView:OnClickedStop1( event )
-    self.m_btn_stop1:setSwallowTouches(false)
-    if event.name == "ended" then
-        self.m_pluginProgram:OnPullButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_L)
-    elseif event.name == "began" then
-        self.m_pluginProgram:OnPushButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_L)
-    end
-end
+-- function GameView:OnClickedStop1( event )
+--     self.m_btn_stop1:setSwallowTouches(false)
+--     if event.name == "ended" then
+--         self.m_pluginProgram:OnPullButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_L)
+--     elseif event.name == "began" then
+--         self.m_pluginProgram:OnPushButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_L)
+--     end
+-- end
 
-function GameView:OnClickedStop2( event )
-    self.m_btn_stop2:setSwallowTouches(false)
-    if event.name == "ended" then
-        self.m_pluginProgram:OnPullButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_C)
-    elseif event.name == "began" then
-        self.m_pluginProgram:OnPushButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_C)
-    end
-end
+-- function GameView:OnClickedStop2( event )
+--     self.m_btn_stop2:setSwallowTouches(false)
+--     if event.name == "ended" then
+--         self.m_pluginProgram:OnPullButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_C)
+--     elseif event.name == "began" then
+--         self.m_pluginProgram:OnPushButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_C)
+--     end
+-- end
 
-function GameView:OnClickedStop3( event )
-    self.m_btn_stop3:setSwallowTouches(false)
-    if event.name == "ended" then
-        self.m_pluginProgram:OnPullButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_R)
-    elseif event.name == "began" then
-        self.m_pluginProgram:OnPushButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_R)
-    end
-end
+-- function GameView:OnClickedStop3( event )
+--     self.m_btn_stop3:setSwallowTouches(false)
+--     if event.name == "ended" then
+--         self.m_pluginProgram:OnPullButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_R)
+--     elseif event.name == "began" then
+--         self.m_pluginProgram:OnPushButton(cc.exports.PluginProgram.BUTTON_TYPE.STOP_R)
+--     end
+-- end
 
 function GameView:OnClickedBackBtn()
     if self.m_state:Current() == GAMEVIEW_STATE.WAIT_JOIN_GAME then
