@@ -237,6 +237,6 @@ void JoyTubeAndroid::OnTouch(int phase, int x, int y)
 
 void JoyTubeAndroid::TestLibInputXY(int phase, int x, int y)
 {
-    setMouseEvent(phase, x, y);
+    //setMouseEvent(phase, x, y);
 }
 #endif
