@@ -229,6 +229,6 @@ void JoyTubeIOS::OnTouch(int phase, int x, int y)
 
 void JoyTubeIOS::TestLibInputXY(int phase, int x, int y)
 {
-    setMouseEvent(phase, x, y);
+    //setMouseEvent(phase, x, y);
 }
 #endif
