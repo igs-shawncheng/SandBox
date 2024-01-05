@@ -15,7 +15,9 @@ public:
 
 	unsigned char* GetTextureData();
 
-	void OnTouch(int phase, int x, int y);
+	// void OnTouch(int phase, int x, int y);
+    void SetMouseEvent(int phase, int x, int y);
+    void SetMouseEventf(int phase, float x, float y);
 
 	void UnLoadLibrary();
 
@@ -85,7 +87,7 @@ protected:
 
 	void InitLibrary();
 	
-	void TestLibInputXY(int phase, int x, int y);
+	// void TestLibInputXY(int phase, int x, int y);
 
 	
 };

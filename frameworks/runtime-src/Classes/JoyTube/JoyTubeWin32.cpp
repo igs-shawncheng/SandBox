@@ -64,20 +64,36 @@ unsigned char* JoyTubeWin32::GetTextureData()
 	return m_textureData;
 }
 
-void JoyTubeWin32::OnTouch(int phase, int x, int y)
+// void JoyTubeWin32::OnTouch(int phase, int x, int y)
+// {
+// 	CCLOG("joyTube OnTouch x:%d y:%d phase:%d", x, y, phase);
+// 	TestLibInputXY(phase, x, y);
+// }
+
+// phase = 0 // down
+// phase = 1 // move
+// phase = 3 // up
+void JoyTubeWin32::SetMouseEvent(int phase, int x, int y)
 {
-	CCLOG("joyTube OnTouch x:%d y:%d phase:%d", x, y, phase);
-	TestLibInputXY(phase, x, y);
+    CCLOG("joyTube OnTouch x:%d y:%d phase:%d", x, y, phase);
+    n_setMouseEvent(phase, x, y);
+    
 }
 
-void JoyTubeWin32::TestLibInputXY(int phase, int x, int y)
+void JoyTubeWin32::SetMouseEventf(int phase, float x, float y)
 {
-	libInputXYFun pInputXYFun = (libInputXYFun)GetProcAddress(m_hData->m_hDll, "InputXY");
-	if (pInputXYFun)
-	{
-		pInputXYFun(phase, x, y);
-	}
+    CCLOG("joyTube OnTouch x:%f y:%f phase:%d", x, y, phase);
+    n_setMouseEventf(phase, x, y);
 }
+
+// void JoyTubeWin32::TestLibInputXY(int phase, int x, int y)
+// {
+// 	libInputXYFun pInputXYFun = (libInputXYFun)GetProcAddress(m_hData->m_hDll, "InputXY");
+// 	if (pInputXYFun)
+// 	{
+// 		pInputXYFun(phase, x, y);
+// 	}
+// }
 
 #if defined(JOYTUBE_TEST)
 void JoyTubeWin32::n_set_debug_log_func(DebugLogFunc func) {}

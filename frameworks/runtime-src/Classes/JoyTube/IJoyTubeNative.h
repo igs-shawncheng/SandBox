@@ -9,7 +9,7 @@ struct IJoyTubeNative
 	virtual ~IJoyTubeNative() {};
 
 	virtual unsigned char* GetTextureData() = 0;
-	virtual void OnTouch(int phase, int x, int y) = 0;
+	// virtual void OnTouch(int phase, int x, int y) = 0;
 
 
     typedef void (*DebugLogFunc) (char* str);

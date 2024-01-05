@@ -86,7 +86,9 @@ void JoyTube::RegisterLua()
 		.beginClass<JoyTube>("JoyTube")
 		.addConstructor<void(*) ()>()
 		.addFunction("AddSprite", &JoyTube::AddSprite)
-		.addFunction("OnTouch", &JoyTube::OnTouch)
+		// .addFunction("OnTouch", &JoyTube::OnTouch)
+		.addFunction("SetMouseEvent", &JoyTube::SetMouseEvent)
+		.addFunction("SetMouseEventf", &JoyTube::SetMouseEventf)
 		.addData("m_testInt", &JoyTube::m_testInt)
 		.addFunction("SetSourcePath", &JoyTube::SetSourcePath)
 		.addFunction("InitPlugin", &JoyTube::InitPlugin)
@@ -128,10 +130,26 @@ void JoyTube::AddSprite(luabridge::LuaRef node)
 	}
 }
 
-void JoyTube::OnTouch(int phase, int x, int y)
+// void JoyTube::OnTouch(int phase, int x, int y)
+// {
+// 	CCLOG("joyTube OnTouch x:%d y:%d phase:%d", x, y, phase);
+// 	m_joyTubeNative->OnTouch(phase, x, y);
+// }
+
+// phase = 0 // down
+// phase = 1 // move
+// phase = 3 // up
+void JoyTube::SetMouseEvent(int phase, int x, int y)
 {
-	CCLOG("joyTube OnTouch x:%d y:%d phase:%d", x, y, phase);
-	m_joyTubeNative->OnTouch(phase, x, y);
+    CCLOG("joyTube OnTouch x:%d y:%d phase:%d", x, y, phase);
+    m_joyTubeNative->n_setMouseEvent(phase, x, y);
+    
+}
+
+void JoyTube::SetMouseEventf(int phase, float x, float y)
+{
+    CCLOG("joyTube OnTouch x:%f y:%f phase:%d", x, y, phase);
+    m_joyTubeNative->n_setMouseEventf(phase, x, y);
 }
 
 void JoyTube::Process(float tick)

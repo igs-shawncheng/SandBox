@@ -226,17 +226,26 @@ unsigned char* JoyTubeAndroid::GetTextureData()
 	return m_textureData;
 }
 
-void JoyTubeAndroid::OnTouch(int phase, int x, int y)
+// void JoyTubeAndroid::OnTouch(int phase, int x, int y)
+// {
+//     CCLOG("joyTube OnTouch x:%d y:%d phase:%d", x, y, phase);
+//     n_setMouseEvent(phase, x, y);
+    
+// }
+
+// phase = 0 // down
+// phase = 1 // move
+// phase = 3 // up
+void JoyTubeAndroid::SetMouseEvent(int phase, int x, int y)
 {
-	CCLOG("joyTube OnTouch x:%d y:%d phase:%d", x, y, phase);
-	//TestLibInputXY(x, y);
+    CCLOG("joyTube OnTouch x:%d y:%d phase:%d", x, y, phase);
     n_setMouseEvent(phase, x, y);
-    //n_setMouseEvent(0, x, y);		// down
-    //n_setMouseEvent(3, x, y);		// up
+    
 }
 
-void JoyTubeAndroid::TestLibInputXY(int phase, int x, int y)
+void JoyTubeAndroid::SetMouseEventf(int phase, float x, float y)
 {
-    //setMouseEvent(phase, x, y);
+    CCLOG("joyTube OnTouch x:%f y:%f phase:%d", x, y, phase);
+    n_setMouseEventf(phase, x, y);
 }
 #endif

@@ -25,7 +25,9 @@ public:
 	void RegisterLua();
 
 	void AddSprite(luabridge::LuaRef node);
-	void OnTouch(int phase, int x, int y);
+	// void OnTouch(int phase, int x, int y);
+	void SetMouseEvent(int phase, int x, int y);
+    void SetMouseEventf(int phase, float x, float y);
 
 	void SetSourcePath(std::string sourcePath);
 	void InitPlugin(int left, int top, int width, int height, bool local);
