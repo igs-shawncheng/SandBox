@@ -7,12 +7,12 @@
 -----------------------------------------------------------------------------
 -- Declare module and import dependencies
 -------------------------------------------------------------------------------
-local socket = require("socket.socket")
-local url = require("socket.url")
-local ltn12 = require("socket.ltn12")
-local mime = require("socket.mime")
+local socket = require("luasocket.socket")
+local url = require("luasocket.socket.url")
+local ltn12 = require("luasocket.ltn12")
+local mime = require("luasocket.mime")
 local string = require("string")
-local headers = require("socket.headers")
+local headers = require("luasocket.socket.headers")
 local base = _G
 local table = require("table")
 socket.http = {}
