@@ -37,7 +37,6 @@ local EVENTS = {
 	GAME_INFO_ACK = "game_info_ack",
 
 	DOWNLOAD = "download",
-	DOWNLOAD_PROGRESS = "download_progress"
 }
 
 local  GameMode = {
@@ -54,18 +53,6 @@ local TEST_WITH_CONNECT = false
 
 local SPLIT_DATA_PACKET_SIZE = 1000
 
-local DOWNLOAD_GAME_DATA = {
-	{ url = "https://cdn.gametower.com.tw/rd5/tmd_mobile/data/win/FishHunter/FishHunterResource/FishHunterResource.zip?cbeddfd77c5ff46010261a3ba39826ff",
-	destination = "./FishHunterResource.zip" },
-}
-
-local DOWNLOAD_VERSION_DATA = {
-	url = "https://cdn-g.gametower.com.tw/rd5/tmd_mobile/data/win/Inanna/InannaLua/Version.json",
-	destination = "./NewVersion.json",
-}
-
-local LOCAL_VERSION_DATA = "./LocalVersion.json"
-
 cc.exports.define = {}
 cc.exports.define.GameMode = GameMode
 cc.exports.define.EVENTS = EVENTS
@@ -73,6 +60,3 @@ cc.exports.define.DEFAULT_FONT = DEFAULT_FONT
 cc.exports.define.BLANK_PNG = BLANK_PNG
 cc.exports.define.TEST_WITH_CONNECT = TEST_WITH_CONNECT
 cc.exports.define.SPLIT_DATA_PACKET_SIZE = SPLIT_DATA_PACKET_SIZE
-cc.exports.define.DOWNLOAD_GAME_DATA = DOWNLOAD_GAME_DATA
-cc.exports.define.DOWNLOAD_VERSION_DATA = DOWNLOAD_VERSION_DATA
-cc.exports.define.LOCAL_VERSION_DATA = LOCAL_VERSION_DATA
