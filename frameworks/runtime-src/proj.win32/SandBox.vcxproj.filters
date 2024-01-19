@@ -19,6 +19,9 @@
     <Filter Include="Classes\LuaBridge\detail">
       <UniqueIdentifier>{387136f1-2f89-4991-9f96-d923f989da49}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Downloader">
+      <UniqueIdentifier>{e041ecd0-ffc3-4e2f-b8e9-75f09f9c6467}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h">
@@ -101,6 +104,9 @@
     <ClInclude Include="..\Classes\JoyTube\JoyTubeIOS.h">
       <Filter>Classes\JoyTube</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Downloader\Downloader.h">
+      <Filter>Classes\Downloader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
@@ -124,6 +130,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\JoyTube\JoyTubeIOS.cpp">
       <Filter>Classes\JoyTube</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Downloader\Downloader.cpp">
+      <Filter>Classes\Downloader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

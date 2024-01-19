@@ -194,6 +194,7 @@ xcopy "$(ProjectDir)..\..\..\src" "$(LocalDebuggerWorkingDirectory)\Resources\sr
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\Downloader\Downloader.h" />
     <ClInclude Include="..\Classes\JoyTube\IJoyTubeNative.h" />
     <ClInclude Include="..\Classes\JoyTube\JoyTube.h" />
     <ClInclude Include="..\Classes\JoyTube\JoyTubeAndroid.h" />
@@ -224,6 +225,7 @@ xcopy "$(ProjectDir)..\..\..\src" "$(LocalDebuggerWorkingDirectory)\Resources\sr
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\Downloader\Downloader.cpp" />
     <ClCompile Include="..\Classes\JoyTube\JoyTube.cpp" />
     <ClCompile Include="..\Classes\JoyTube\JoyTubeAndroid.cpp" />
     <ClCompile Include="..\Classes\JoyTube\JoyTubeIOS.cpp" />

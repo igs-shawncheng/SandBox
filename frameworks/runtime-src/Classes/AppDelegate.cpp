@@ -27,6 +27,7 @@
 #include "cocos2d.h"
 #include "scripting/lua-bindings/manual/lua_module_register.h"
 #include "JoyTube.h"
+#include "Downloader/Downloader.h"
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -107,6 +108,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 	auto joyTube = JoyTube::getInstance();
 	joyTube->RegisterLua();
+    auto downloader = Downloader::getInstance();
+    downloader->RegisterLua();
     
 #if CC_64BITS
     FileUtils::getInstance()->addSearchPath("src/64bit");
