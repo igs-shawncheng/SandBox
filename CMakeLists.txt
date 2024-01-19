@@ -52,13 +52,15 @@ endif()
 set(GAME_HEADER ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.h)
 set(GAME_SOURCE 
 	${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp
-	${RUNTIME_SRC_ROOT}/Classes/JoyTube/JoyTube.cpp)
+	${RUNTIME_SRC_ROOT}/Classes/JoyTube/JoyTube.cpp
+    ${RUNTIME_SRC_ROOT}/Classes/Downloader/Downloader.cpp)
 	
 # sources need to compile info, include dirs and source files
 include_directories(
         ${RUNTIME_SRC_ROOT}/Classes
 		${RUNTIME_SRC_ROOT}/Classes/JoyTube
 		${RUNTIME_SRC_ROOT}/Classes/LuaBridge
+        ${RUNTIME_SRC_ROOT}/Classes/Downloader
         ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/auto
         ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
         ${COCOS2DX_ROOT_PATH}/external/lua/luajit/include

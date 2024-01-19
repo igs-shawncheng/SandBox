@@ -25,6 +25,7 @@ local State = {
     CHECK_VERSION_WAIT = 2,
     DOWNLOAD_GAME_DATA = 3,
     NONE = 4,
+    FAIL = 5,
 }
 
 local LocalVersionState = {
@@ -95,6 +96,11 @@ function DownloadView:OnUpdate(dt)
                 print("Standby mode")
             end
         end,
+        [State.FAIL] = function()
+            if self.m_state:IsEntering() then
+                print("Something wrong!!!")
+            end
+        end,
     })
 end
 
@@ -113,11 +119,17 @@ function DownloadView:GetDownloadVersion()
         local downloadContent = Inanna.GetDownloader():GetDownloadVersionInfo() -- callback json
         local success, content = pcall(json.decode, downloadContent)
         if success then
-            self.newVersion = content.version
-            return true
+            if content.version ~= nil then
+                self.newVersion = content.version
+                return true
+            else
+                print("The Json does not have Download version information!")
+                self.m_state:Transit( State.FAIL )
+                return false
+            end
         else
-            print("Json DeSerialize fail!")
-            self.m_state:Transit( State.NONE )
+            print("Download version Json DeSerialize fail!")
+            self.m_state:Transit( State.FAIL )
             return false
         end
     end
@@ -128,10 +140,15 @@ function DownloadView:GetLocolVersion()
         local localContent = Inanna.GetDownloader():GetLocalVersionInfo() -- callback json
         local success, content = pcall(json.decode, localContent)
         if success then
-            self.localVersion = content.version
-            return LocalVersionState.EXIST
+            if content.version ~= nil then
+                self.localVersion = content.version
+                return LocalVersionState.EXIST
+            else
+                print("Json does not have local version information!")
+                return LocalVersionState.ERROR
+            end
         else
-            print("Json DeSerialize fail!")
+            print("Local version Json DeSerialize fail!")
             return LocalVersionState.ERROR
         end
     else
@@ -159,7 +176,7 @@ function DownloadView:CheckCustomVersionSame()
         end
     end
     if self:GetLocolVersion() == LocalVersionState.ERROR then
-        self.m_state:Transit(State.NONE)
+        self.m_state:Transit(State.FAIL)
     end
 end
 
@@ -172,6 +189,7 @@ function DownloadView:DownLoadGameData()
         self:EndLoading()
         Inanna.GetDownloader():StoreDownloadVersion()
         self.m_state:Transit(State.NONE)
+        print("Download Finish!")
     end
 end
 
@@ -184,6 +202,7 @@ end
 
 function DownloadView:UpdateProgress(progress)
     self.m_LoadingBar:setPercent(progress)
+    progress = math.floor(progress * 100 + 0.5) / 100
     local loadingText = progress .. "%"
     self.m_LoadingText:setText(loadingText)
 end
