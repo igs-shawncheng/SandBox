@@ -22,6 +22,10 @@ public:
 	std::string GetLocalVersionInfo();
 	bool LocalVersionIsExist();
 	void StoreDownloadVersion();
+#if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+	void downloadAndSendToJava(const std::string&);
+	void sendFilePathToJava(const std::string&);
+#endif
 protected:
 	static Downloader *_instance;
 };

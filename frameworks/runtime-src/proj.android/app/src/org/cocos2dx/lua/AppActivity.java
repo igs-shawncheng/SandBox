@@ -87,6 +87,11 @@ public class AppActivity extends Cocos2dxActivity{
         return returnStr;
     }
 
+    // 定義 Java 方法，接受文件路徑參數
+    public static void javaMethodWithFilePath(String filePath) {
+        // 在這裡處理接收到的文件路徑
+        System.out.println("Java Method called from C++ with file path: " + filePath);
+    }
 //    public static boolean SetOrientation(int orientation)
 //    {
 //        Log.i("Debug", "SetOrientation：" +orientation);
