@@ -35,7 +35,7 @@ end
 function SandBoxSystem:RequestSpin(slotData)
     local userSystem = self:GetInstance():GetSystem(cc.exports.SystemName.UserSystem)
     local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
-    local request = cc.PACHIN_U2G_SPIN_REQ:create(slotData)
+    local request = cc.PACHIN_U2G_SPIN_REQ:create(self.bet, slotData)
     --todo make sure when to updateMoney, maybe more GameMode should do.
     if self.gameMode == cc.exports.define.GameMode.GameMode_Normal then
         userSystem:UpdateMoney(self.bet)
@@ -44,9 +44,9 @@ function SandBoxSystem:RequestSpin(slotData)
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_SPIN_REQ, request:Serialize())
 end
 
-function SandBoxSystem:RequestStopReel(slotData)
+function SandBoxSystem:RequestStopReel(stop)
     local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
-    local request = cc.PACHIN_U2G_STOP_REEL_REQ:create(slotData)
+    local request = cc.PACHIN_U2G_STOP_REEL_REQ:create(stop)
     self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_STOP_REEL_REQ, request:Serialize())
 end
 
