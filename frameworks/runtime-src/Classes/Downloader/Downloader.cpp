@@ -1,6 +1,7 @@
 ﻿#include "Downloader.h"
 #include "platform/CCFileUtils.h"
-#include <curl/curl.h>
+#include "network/HttpClient.h"
+
 #if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "platform/android/jni/JniHelper.h"
 #endif
@@ -19,7 +20,7 @@ Downloader *Downloader::getInstance()
 
 Downloader::Downloader()
 {
-
+	versionPath = FileUtils::getInstance()->getWritablePath() + "Version.json";
 }
 
 Downloader::~Downloader()
@@ -52,9 +53,9 @@ void Downloader::StartDownloadGame()
 	
 }
 
-double Downloader::DownloadGameProgress()
+float Downloader::DownloadGameProgress()
 {
-    return 10;//progress;
+    return 10;//downloadPercentage;
 }
 
 bool Downloader::DownloadGameFinish()
@@ -64,9 +65,7 @@ bool Downloader::DownloadGameFinish()
 
 void Downloader::StartDownloadVersion()
 {
-#if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-	downloadAndSendToJava("test_download");
-#endif
+	downloadFile("https://cdn-g.gametower.com.tw/rd5/tmd_mobile/data/win/Inanna/InannaLua/Version.json", versionPath);
 }
 
 std::string Downloader::GetDownloadVersionInfo()
@@ -82,45 +81,100 @@ bool Downloader::DownloadVersionFinish()
 
 std::string Downloader::GetLocalVersionInfo()
 {
-	std::string str = "{}";
-	return str;
+	localVersionInfo = FileUtils::getInstance()->getStringFromFile(versionPath);
+	return localVersionInfo;
 }
 
 bool Downloader::LocalVersionIsExist()
 {
-	return true;
+	CCLOG("%s", versionPath.c_str());
+	if (FileUtils::getInstance()->isFileExist(versionPath))
+		return true;
+	else
+		return false;
 }
 
 void Downloader::StoreDownloadVersion()
 {
-	
-}
+	std::string targetPath = versionPath;
+	bool success = FileUtils::getInstance()->writeStringToFile(downloadVersionInfo, targetPath);
 
+    if (success) {
+        CCLOG("Save success: %s", targetPath.c_str());
+    } else {
+        CCLOG("Save file Fail");
+    }
+}
 #if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-void Downloader::downloadAndSendToJava(const std::string& url) {
-    // 在這裡下載文件並獲取下載的文件路徑
-    std::string downloadedFilePath = "test_download";// downloadFile(url);
+void Downloader::saveGameDataToAndroid(const std::string& filename, const std::string& content)
+{
+    std::string targetPath = "/storage/emulated/0/Android/data/org.cocos2dx.sandbox/files/" + filename;
 
-    // 使用 JniHelper 呼叫 Java 方法，將下載的文件路徑作為參數傳遞
-    sendFilePathToJava(downloadedFilePath);
-}
+    bool success = FileUtils::getInstance()->writeStringToFile(content, targetPath);
 
-void Downloader::sendFilePathToJava(const std::string& filePath) {
-    JniMethodInfo methodInfo;
-
-    if (JniHelper::getStaticMethodInfo(methodInfo,
-										"org/cocos2dx/lua/AppActivity",
-										"javaMethodWithFilePath",
-										"(Ljava/lang/String;)V")) {
-        // 將 C++ 字符串轉換為 Java 字符串
-        jstring filePathArg = methodInfo.env->NewStringUTF(filePath.c_str());
-
-        // 呼叫 Java 方法，傳遞文件路徑參數
-        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, filePathArg);
-
-        // 釋放資源
-        methodInfo.env->DeleteLocalRef(filePathArg);
-        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    if (success) {
+        CCLOG("Save success: %s", targetPath.c_str());
+    } else {
+        CCLOG("Save file Fail");
     }
 }
 #endif
+void Downloader::onProgress(network::HttpClient* client, network::HttpResponse* response, const std::string& savePath)
+{
+	if (!response->isSucceed()) {
+		CCLOG("Download failed: %s", response->getErrorBuffer());
+	} else {
+		// get download data
+		std::vector<char>* buffer = response->getResponseData();
+		
+		// get download bytes
+		int downloadedBytes = buffer->size();
+
+		// get progress
+		int totalBytes = getTotalBytesFromResponse(response);
+		downloadPercentage = (totalBytes > 0) ? (static_cast<float>(downloadedBytes) / totalBytes) * 100.0f : 0.0f;
+
+		CCLOG("Download progress: %.2f%%", downloadPercentage);
+		// save file
+		saveDownloadedFile(savePath, buffer->data(), downloadedBytes);
+
+        CCLOG("File downloaded successfully to: %s", savePath.c_str());
+	}
+}
+
+int Downloader::getTotalBytesFromResponse(network::HttpResponse* response)
+{
+	std::vector<char>* headersData = response->getResponseHeader();
+	std::string headersString(headersData->begin(), headersData->end());
+	
+	// check Content-Length to get totalBytes
+	int totalBytes = 0;
+	size_t pos = headersString.find("Content-Length:");
+	if (pos != std::string::npos)
+	{
+		pos += strlen("Content-Length:");
+		totalBytes = std::stoi(headersString.substr(pos));
+	}
+
+	return totalBytes;
+}
+
+void Downloader::downloadFile(const std::string& url, const std::string& savePath)
+{
+	network::HttpRequest* request = new network::HttpRequest();
+	request->setUrl(url);
+	request->setRequestType(cocos2d::network::HttpRequest::Type::GET);
+
+	request->setResponseCallback([=](network::HttpClient* client, network::HttpResponse* response) {
+			Downloader::onProgress(client, response, savePath);
+		});
+
+	network::HttpClient::getInstance()->send(request);
+	request->release();
+}
+
+void Downloader::saveDownloadedFile(const std::string& filePath, const char* data, ssize_t dataSize)
+{
+	// uses FileUtils to save file
+	FileUtils::getInstance()->writeStringToFile(std::string(data, dataSize), filePath);
+}
