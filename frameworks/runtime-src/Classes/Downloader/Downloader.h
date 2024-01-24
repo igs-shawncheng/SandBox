@@ -31,8 +31,10 @@ public:
 	void downloadFile(const std::string&, const std::string&);
 	void saveDownloadedFile(const std::string&, const char*, ssize_t);
 	int getTotalBytesFromResponse(network::HttpResponse*);
+	void setDownloadPath();
 #if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-	void saveGameDataToAndroid(const std::string&, const std::string&);
+	std::string getExternalStoragePath();
+	void setDownloadPathAndroid();
 #endif
 protected:
 	static Downloader *_instance;

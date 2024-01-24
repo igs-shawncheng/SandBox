@@ -32,6 +32,7 @@ import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.AndroidException;
 import android.util.Log;
+import android.os.Environment;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
@@ -87,10 +88,9 @@ public class AppActivity extends Cocos2dxActivity{
         return returnStr;
     }
 
-    // 定義 Java 方法，接受文件路徑參數
-    public static void javaMethodWithFilePath(String filePath) {
-        // 在這裡處理接收到的文件路徑
-        System.out.println("Java Method called from C++ with file path: " + filePath);
+    public static String getExternalStoragePath()
+    {
+        return Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 //    public static boolean SetOrientation(int orientation)
 //    {

@@ -20,7 +20,7 @@ Downloader *Downloader::getInstance()
 
 Downloader::Downloader()
 {
-	versionPath = FileUtils::getInstance()->getWritablePath() + "Version.json";
+
 }
 
 Downloader::~Downloader()
@@ -55,16 +55,20 @@ void Downloader::StartDownloadGame()
 
 float Downloader::DownloadGameProgress()
 {
-    return 10;//downloadPercentage;
+    return downloadPercentage;
 }
 
 bool Downloader::DownloadGameFinish()
 {
-    return true;
+	if(downloadPercentage != 100)
+    	return false;
+	else
+		return true;
 }
 
 void Downloader::StartDownloadVersion()
 {
+	setDownloadPath();
 	downloadFile("https://cdn-g.gametower.com.tw/rd5/tmd_mobile/data/win/Inanna/InannaLua/Version.json", versionPath);
 }
 
@@ -76,12 +80,16 @@ std::string Downloader::GetDownloadVersionInfo()
 
 bool Downloader::DownloadVersionFinish()
 {
-	return true;
+	if(downloadPercentage != 100)
+    	return false;
+	else
+		return true;
 }
 
 std::string Downloader::GetLocalVersionInfo()
 {
 	localVersionInfo = FileUtils::getInstance()->getStringFromFile(versionPath);
+	CCLOG("localVersionInfo %s", localVersionInfo.c_str());
 	return localVersionInfo;
 }
 
@@ -105,20 +113,7 @@ void Downloader::StoreDownloadVersion()
         CCLOG("Save file Fail");
     }
 }
-#if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-void Downloader::saveGameDataToAndroid(const std::string& filename, const std::string& content)
-{
-    std::string targetPath = "/storage/emulated/0/Android/data/org.cocos2dx.sandbox/files/" + filename;
 
-    bool success = FileUtils::getInstance()->writeStringToFile(content, targetPath);
-
-    if (success) {
-        CCLOG("Save success: %s", targetPath.c_str());
-    } else {
-        CCLOG("Save file Fail");
-    }
-}
-#endif
 void Downloader::onProgress(network::HttpClient* client, network::HttpResponse* response, const std::string& savePath)
 {
 	if (!response->isSucceed()) {
@@ -178,3 +173,38 @@ void Downloader::saveDownloadedFile(const std::string& filePath, const char* dat
 	// uses FileUtils to save file
 	FileUtils::getInstance()->writeStringToFile(std::string(data, dataSize), filePath);
 }
+
+void Downloader::setDownloadPath()
+{
+	versionPath = FileUtils::getInstance()->getWritablePath() + "Version.json";
+#if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+	setDownloadPathAndroid();
+	versionPath = versionPath + "/Android/data/org.cocos2dx.sandbox/files/Version.json";
+#endif
+}
+
+#if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+std::string Downloader::getExternalStoragePath()
+{
+    JniMethodInfo methodInfo;
+    if (cocos2d::JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lua/AppActivity", "getExternalStoragePath", "()Ljava/lang/String;"))
+	{
+        jstring jstr = (jstring)methodInfo.env->CallStaticObjectMethod(methodInfo.classID, methodInfo.methodID);
+        const char* path = methodInfo.env->GetStringUTFChars(jstr, nullptr);
+        std::string externalStoragePath = path;
+        methodInfo.env->ReleaseStringUTFChars(jstr, path);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+        return externalStoragePath;
+    }
+	else
+	{
+        return "";
+    }
+}
+
+void Downloader::setDownloadPathAndroid()
+{
+	versionPath = getExternalStoragePath(); // path: /storage/emulated/0
+	CCLOG("External Storage Path: %s", getExternalStoragePath().c_str());
+}
+#endif
