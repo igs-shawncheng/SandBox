@@ -7,6 +7,10 @@ dependencies {
     //implementation fileTree(dir: 'libs', include:['*.aar'])
     implementation project(':libcocos2dx')
     implementation files('libs/mj4.aar')
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.games:games-activity:2.0.0'
+    implementation project(':unityLibrary')
+    implementation fileTree(dir: project(':unityLibrary').getProjectDir().toString() + ('\\libs'), include: ['*.jar'])
 }
 android {
     compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()

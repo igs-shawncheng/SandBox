@@ -121,11 +121,13 @@ end
 
 function LoginView:OnClickedLoginBtn( event )
     if event.name == "ended" then
-        local ip = self.m_ip_input:getText();
-        local port = self.m_port_input:getText();
-        local accountId = self.m_account_input:getText();
-        self.loginSystem:Connect(ip, port, accountId)
+        -- local ip = self.m_ip_input:getText();
+        -- local port = self.m_port_input:getText();
+        -- local accountId = self.m_account_input:getText();
+        -- self.loginSystem:Connect(ip, port, accountId)
+        Inanna.GetJoyTube():LoadUnity()
     end
+    
 end
 
 return LoginView

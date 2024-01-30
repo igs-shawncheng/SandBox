@@ -3,6 +3,7 @@
 #include "base/CCScheduler.h"
 #include "base/CCEventDispatcher.h"
 #include "platform/CCFileUtils.h"
+#include "platform/android/jni/JniHelper.h"
 
 
 JoyTube *JoyTube::_instance = nullptr;
@@ -107,6 +108,7 @@ void JoyTube::RegisterLua()
 		.addFunction("SendMessage", &JoyTube::SendMessages)
 		.addFunction("IsPostMessage", &JoyTube::IsPostMessage)
 		.addFunction("GetPostMessageString", &JoyTube::GetPostMessageString)
+		.addFunction("LoadUnity", &JoyTube::LoadUnity)
 		// .addFunction("OnPullButton", &JoyTube::OnPushButton)
 		// .addFunction("OnPushButton", &JoyTube::OnPushButton)
 		.endClass()
@@ -293,6 +295,24 @@ int JoyTube::IsPostMessage()
 std::string JoyTube::GetPostMessageString()
 {
 	return (const char*)m_joyTubeNative->n_getPostMessageString();
+}
+
+void JoyTube::LoadUnity()
+{
+#if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+	CCLOG("cocos_android_app_LoadUnity");
+
+	string str = "";
+	JniMethodInfo minfo;
+	if(JniHelper::getStaticMethodInfo(minfo, "org/cocos2dx/lua/AppActivity", "NativeCallJava", "()Ljava/lang/String;"))
+	{
+		jstring js = (jstring)minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
+		const char* str = minfo.env->GetStringUTFChars(js, 0);
+		cocos2d::log("JNITest:%s", str);
+		minfo.env->ReleaseStringUTFChars(js , str);
+		minfo.env->DeleteLocalRef(minfo.classID);
+	}
+#endif
 }
 
 // void JoyTube::OnPushButton(int type)

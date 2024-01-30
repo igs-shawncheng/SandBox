@@ -18,6 +18,8 @@
 class JoyTube : public cocos2d::Ref
 {
 public:
+	void NativeCallJava();
+
 	static JoyTube *getInstance();
 	JoyTube();
 	virtual ~JoyTube();
@@ -46,6 +48,7 @@ public:
 	int SendMessages(char const* system, char const* cmd, char const* jsonstring);
 	int IsPostMessage();
 	std::string GetPostMessageString();
+	void LoadUnity();
 	void OnPushButton(int type);
 	void OnPullButton(int type);
 	void n_setMouseEvent(int phase, int x, int y);

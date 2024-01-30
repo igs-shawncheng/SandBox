@@ -61,12 +61,11 @@ public class AppActivity extends Cocos2dxActivity{
             return;
         }
         appActivety = this;
-        //SetOrientation(2);
 
         CallNative(true, 1, 2, 3, "HelloFromJava");
 
+        //UnityActivityController.loadUnity(appActivety);
     }
-
     //native  public static  ClassLoader isGameStatus();
     //Java
     public static native void JavaCallCNative(String text);
@@ -83,23 +82,8 @@ public class AppActivity extends Cocos2dxActivity{
 
     public static String NativeCallJava() throws AndroidException
     {
+        UnityActivityController.loadUnity(appActivety);
         String returnStr = "JavaValue";
         return returnStr;
     }
-
-//    public static boolean SetOrientation(int orientation)
-//    {
-//        Log.i("Debug", "SetOrientation：" +orientation);
-//        if(orientation == 1 ) {
-//            appActivety.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-//            appActivety.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-//        }else if (orientation == 2 ){
-//            appActivety.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-//            //appActivety.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
-//        }else if (orientation == 3 ) {
-//            appActivety.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
-//            appActivety.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-//        }
-//        return true;
-//    }
 }

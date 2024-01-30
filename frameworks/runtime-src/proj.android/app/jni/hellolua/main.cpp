@@ -44,9 +44,9 @@ void cocos_android_app_init(JNIEnv* env) {
     LOGD("cocos_android_app_init");
     appDelegate.reset(new AppDelegate());
 
-#if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-//    NativeCallJava();
-#endif
+// #if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+//     NativeCallJava();
+// #endif
 }
 
 
