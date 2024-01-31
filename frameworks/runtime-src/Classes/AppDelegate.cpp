@@ -88,7 +88,11 @@ static int register_all_packages()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // set default FPS
+#if ( CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
+    Director::getInstance()->setAnimationInterval(1.0 / 30.0f);
+#else
     Director::getInstance()->setAnimationInterval(1.0 / 60.0f);
+#endif
 
 
     // register lua module

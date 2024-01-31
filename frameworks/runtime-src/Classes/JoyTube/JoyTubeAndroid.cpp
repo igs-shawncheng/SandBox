@@ -105,7 +105,7 @@ int JoyTubeAndroid::n_isTextureWidth() { return 0; }
 int JoyTubeAndroid::n_isTextureHeight() { return 0; }
 int JoyTubeAndroid::n_isTextureWidthGl() { return 0; }
 int JoyTubeAndroid::n_isTextureHeightGl() { return 0; }
-int* JoyTubeAndroid::n_NativeStepFunc() { return nullptr; }
+void JoyTubeAndroid::n_NativeStep() { }
 int JoyTubeAndroid::n_isRenderTextureId(int side) { return 0; }
 int JoyTubeAndroid::n_isRenderTextureWidth(int side) { return 0; }
 int JoyTubeAndroid::n_isRenderTextureHeight(int side) { return 0; }
@@ -161,7 +161,7 @@ int JoyTubeAndroid::n_isTextureWidth() { return NameSpace(isTextureWidth)();}
 int JoyTubeAndroid::n_isTextureHeight() { return NameSpace(isTextureHeight)();}
 int JoyTubeAndroid::n_isTextureWidthGl() { return NameSpace(isTextureWidthGl)();}
 int JoyTubeAndroid::n_isTextureHeightGl() { return NameSpace(isTextureHeightGl)();}
-int* JoyTubeAndroid::n_NativeStepFunc() { return NameSpace(NativeStep)(0);}
+void JoyTubeAndroid::n_NativeStep() { NameSpace(NativeStep)(0);}
 int JoyTubeAndroid::n_isRenderTextureId(int side) { return NameSpace(isRenderTextureId)(side);}
 int JoyTubeAndroid::n_isRenderTextureWidth(int side) { return NameSpace(isRenderTextureWidth)(side);}
 int JoyTubeAndroid::n_isRenderTextureHeight(int side) { return NameSpace(isRenderTextureHeight)(side);}

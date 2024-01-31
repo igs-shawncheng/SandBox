@@ -8,7 +8,7 @@
 #define NameSpace(x)   subNameSpace(mj4_, x)        //
 #define subNameSpace(base, x)   base##x
 
-#define JOYTUBE_TEST
+//#define JOYTUBE_TEST
 
 #if ( CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
 extern unsigned char* Init(int width, int height);
@@ -44,7 +44,7 @@ extern "C" {
     int NameSpace(isTextureHeight)();
     int NameSpace(isTextureWidthGl)();
     int NameSpace(isTextureHeightGl)();
-    int* NameSpace(NativeStepFunc)();
+    void NameSpace(NativeStep)(int eventId);
     int NameSpace(isRenderTextureId)(int side);
     int NameSpace(isRenderTextureWidth)(int side);
     int NameSpace(isRenderTextureHeight)(int side);
@@ -100,7 +100,7 @@ int JoyTubeIOS::n_isTextureWidth() { return 0; }
 int JoyTubeIOS::n_isTextureHeight() { return 0; }
 int JoyTubeIOS::n_isTextureWidthGl() { return 0; }
 int JoyTubeIOS::n_isTextureHeightGl() { return 0; }
-int* JoyTubeIOS::n_NativeStepFunc() { return nullptr; }
+void JoyTubeIOS::n_NativeStep() {  }
 int JoyTubeIOS::n_isRenderTextureId(int side) { return 0; }
 int JoyTubeIOS::n_isRenderTextureWidth(int side) { return 0; }
 int JoyTubeIOS::n_isRenderTextureHeight(int side) { return 0; }
@@ -132,7 +132,7 @@ int JoyTubeIOS::n_native(int left, int top, int width, int height, bool local, b
 void JoyTubeIOS::n_startTimer(bool atfirst) { return NameSpace(startTimer)(atfirst); }
 void JoyTubeIOS::n_checkTimer() { return NameSpace(checkTimer)(); }
 bool JoyTubeIOS::n_passStartGame() { return NameSpace(passStartGame)();}
-int JoyTubeIOS::n_sendMessage(std::string cmd, std::string jsonstring) { return NameSpace(sendMessage)(system, cmd, jsonstring);}
+int JoyTubeIOS::n_sendMessage(std::string cmd, std::string jsonstring) { return NameSpace(sendMessage)((char*)0, cmd, jsonstring);}
 int JoyTubeIOS::n_useItem(std::string jsonstring) { return NameSpace(useItem)(jsonstring);}
 int JoyTubeIOS::n_isUsedItem() { return NameSpace(isUsedItem)();}
 void JoyTubeIOS::n_setCredit(double credit) { return NameSpace(setCredit)(credit);}
@@ -140,14 +140,14 @@ double JoyTubeIOS::n_isCredit() { return NameSpace(isCredit)();}
 bool JoyTubeIOS::n_isCreditEvent() { return NameSpace(isCreditEvent)();}
 int JoyTubeIOS::n_isGameStatus(){ return NameSpace(isGameStatus)();}
 int JoyTubeIOS::n_isPlayState() { return NameSpace(isPlayState)();}
-bool JoyTubeIOS::n_isAutoPlay() { return NameSpace(isAutoPlay)(); }
+bool JoyTubeIOS::n_isAutoPlay() { return NameSpace(GetIsAutoPlay)(); }
 int JoyTubeIOS::n_isErrorDefine() { return NameSpace(isErrorDefine)();}
 void JoyTubeIOS::n_clearErrorDefine() { return NameSpace(clearErrorDefine)();}
 int JoyTubeIOS::n_isPostMessage() { return NameSpace(isPostMessage)();}
 int* JoyTubeIOS::n_getPostMessageString() { return NameSpace(getPostMessageString)();}
 void JoyTubeIOS::n_openGameInfo(bool isActive) { return NameSpace(openGameInfo)(isActive);}
 int* JoyTubeIOS::n_getJsonString() { return NameSpace(getJsonString)();}
-void JoyTubeIOS::n_stringFromUnity(std::string str) { return NameSpace(stringFromUnity)(str);}
+void JoyTubeIOS::n_stringFromUnity(std::string str) { NameSpace(stringFromUnity)(str.c_str());}
 int JoyTubeIOS::n_logout() { return NameSpace(logout)();}
 int* JoyTubeIOS::n_CreateTextureFunc() { return NameSpace(CreateTextureFunc)();}
 int JoyTubeIOS::n_isTextureId() { return NameSpace(isTextureId)();}
@@ -155,7 +155,7 @@ int JoyTubeIOS::n_isTextureWidth() { return NameSpace(isTextureWidth)();}
 int JoyTubeIOS::n_isTextureHeight() { return NameSpace(isTextureHeight)();}
 int JoyTubeIOS::n_isTextureWidthGl() { return NameSpace(isTextureWidthGl)();}
 int JoyTubeIOS::n_isTextureHeightGl() { return NameSpace(isTextureHeightGl)();}
-int* JoyTubeIOS::n_NativeStepFunc() { return NameSpace(NativeStepFunc)();}
+void JoyTubeIOS::n_NativeStep() { NameSpace(NativeStep)(0);}
 int JoyTubeIOS::n_isRenderTextureId(int side) { return NameSpace(isRenderTextureId)(side);}
 int JoyTubeIOS::n_isRenderTextureWidth(int side) { return NameSpace(isRenderTextureWidth)(side);}
 int JoyTubeIOS::n_isRenderTextureHeight(int side) { return NameSpace(isRenderTextureHeight)(side);}

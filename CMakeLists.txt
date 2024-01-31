@@ -151,7 +151,7 @@ else()
 	target_link_libraries(${APP_NAME} -Wl,--whole-archive joyTuber -Wl,--no-whole-archive)
 
     add_library(cmain SHARED IMPORTED)
-    set_target_properties(cmain PROPERTIES IMPORTED_LOCATION ${RUNTIME_SRC_ROOT}/proj.android/app/jni/prebuild/${ANDROID_ABI}/libcmain.so)
+    set_target_properties(cmain PROPERTIES IMPORTED_LOCATION ${RUNTIME_SRC_ROOT}/proj.android/app/jni/prebuild/${ANDROID_ABI}/libcmj4.so)
     target_link_libraries(${APP_NAME} -Wl,--whole-archive cmain -Wl,--no-whole-archive)
 endif()
 

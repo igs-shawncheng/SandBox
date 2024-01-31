@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08CBC3272B51069900EEB367 /* libmj4_cocos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 08CBC3242B51069900EEB367 /* libmj4_cocos.a */; };
+		08CBC3292B51077700EEB367 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08CBC3282B51077700EEB367 /* CoreMedia.framework */; };
+		08CBC32B2B5107B400EEB367 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08CBC32A2B5107B400EEB367 /* GLKit.framework */; };
+		08CBC32D2B5107BB00EEB367 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08CBC32C2B5107BB00EEB367 /* GameController.framework */; };
 		15427CD3198F221400DC375D /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A8A4251834BDA200142BE0 /* libcocos2d iOS.a */; };
 		15427CD5198F222200DC375D /* libluacocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15427CD2198F220600DC375D /* libluacocos2d iOS.a */; };
 		15427CEC198F24A600DC375D /* libluacocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15427CC2198F220600DC375D /* libluacocos2d Mac.a */; };
@@ -168,6 +172,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		08CBC3242B51069900EEB367 /* libmj4_cocos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmj4_cocos.a; sourceTree = "<group>"; };
+		08CBC3282B51077700EEB367 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS17.0.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
+		08CBC32A2B5107B400EEB367 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS17.0.sdk/System/Library/Frameworks/GLKit.framework; sourceTree = DEVELOPER_DIR; };
+		08CBC32C2B5107BB00EEB367 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS17.0.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
 		15A8A4031834BDA200142BE0 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = "../../cocos2d-x/build/cocos2d_libs.xcodeproj"; sourceTree = "<group>"; };
 		15A8A4871834C90E00142BE0 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		15C1568D1683131500D239F2 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = "../../cocos2d-x/cocos2dx/platform/third_party/ios/libraries/libcurl.a"; sourceTree = "<group>"; };
@@ -256,7 +264,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08CBC32D2B5107BB00EEB367 /* GameController.framework in Frameworks */,
+				08CBC32B2B5107B400EEB367 /* GLKit.framework in Frameworks */,
+				08CBC3292B51077700EEB367 /* CoreMedia.framework in Frameworks */,
 				294D0D721D0D572600F7F5D4 /* CoreText.framework in Frameworks */,
+				08CBC3272B51069900EEB367 /* libmj4_cocos.a in Frameworks */,
 				9FA3AE4E1BE9BCC900FC9645 /* CFNetwork.framework in Frameworks */,
 				ED545A891B68A23E00C3958E /* libiconv.dylib in Frameworks */,
 				9FF504871A5E88CE00AFDA55 /* libsimulator iOS.a in Frameworks */,
@@ -340,6 +352,7 @@
 			children = (
 				9E0ED23F2A94B1EE00EA9FB7 /* native.h */,
 				9E0ED2402A94B21D00EA9FB7 /* libnative.a */,
+				08CBC3242B51069900EEB367 /* libmj4_cocos.a */,
 			);
 			path = Native;
 			sourceTree = "<group>";
@@ -391,6 +404,9 @@
 		F293B3CB15EB7BE500256477 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				08CBC32C2B5107BB00EEB367 /* GameController.framework */,
+				08CBC32A2B5107B400EEB367 /* GLKit.framework */,
+				08CBC3282B51077700EEB367 /* CoreMedia.framework */,
 				294D0D711D0D572600F7F5D4 /* CoreText.framework */,
 				9FA3AE4D1BE9BCC900FC9645 /* CFNetwork.framework */,
 				ED545A8A1B68A24500C3958E /* libiconv.dylib */,
@@ -484,7 +500,7 @@
 				LastUpgradeCheck = 0500;
 				TargetAttributes = {
 					F293B3C715EB7BE500256477 = {
-						DevelopmentTeam = 9FGGHAVYDY;
+						DevelopmentTeam = G4P385Z22Z;
 					};
 				};
 			};
@@ -832,7 +848,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
-				DEVELOPMENT_TEAM = 9FGGHAVYDY;
+				DEVELOPMENT_TEAM = G4P385Z22Z;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -851,6 +867,8 @@
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
+					"-ObjC++",
+					"-ObjC",
 				);
 				"OTHER_LDFLAGS[sdk=iphonesimulator*][arch=x86_64]" = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
@@ -875,7 +893,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
-				DEVELOPMENT_TEAM = 9FGGHAVYDY;
+				DEVELOPMENT_TEAM = G4P385Z22Z;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -893,6 +911,8 @@
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
+					"-ObjC++",
+					"-ObjC",
 				);
 				"OTHER_LDFLAGS[sdk=iphonesimulator*][arch=x86_64]" = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
