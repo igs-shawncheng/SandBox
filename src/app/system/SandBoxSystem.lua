@@ -25,6 +25,7 @@ function SandBoxSystem:ctor()
     self:Registers(RecvCommand.PACHIN_G2U_USE_CARD_ACK, handler(self, self.OnRecvUseCard))
     self:Registers(RecvCommand.PACHIN_G2U_PLUGIN_CUSTOM_ACK, handler(self, self.OnRecvPluginCuston))
     self:Registers(RecvCommand.PACHIN_G2U_AUTO_PLAY_ACK, handler(self, self.OnRecvAutoPlay))
+    self.bet = 0
     
 end
 
