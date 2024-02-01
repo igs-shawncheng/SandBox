@@ -124,7 +124,7 @@ int JoyTubeWin32::n_isTextureWidth(){ return 0; }
 int JoyTubeWin32::n_isTextureHeight(){ return 0; }
 int JoyTubeWin32::n_isTextureWidthGl(){ return 0; }
 int JoyTubeWin32::n_isTextureHeightGl(){ return 0; }
-int* JoyTubeWin32::n_NativeStepFunc(){ return nullptr; }
+void JoyTubeWin32::n_NativeStep(){}
 int JoyTubeWin32::n_isRenderTextureId(int side){ return 0; }
 int JoyTubeWin32::n_isRenderTextureWidth(int side){ return 0; }
 int JoyTubeWin32::n_isRenderTextureHeight(int side){ return 0; }
