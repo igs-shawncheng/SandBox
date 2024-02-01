@@ -36,6 +36,7 @@ import android.os.Environment;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
+import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -63,6 +64,7 @@ public class AppActivity extends Cocos2dxActivity{
         }
         appActivety = this;
         //SetOrientation(2);
+        File file = getExternalFilesDir(null);
 
         CallNative(true, 1, 2, 3, "HelloFromJava");
 

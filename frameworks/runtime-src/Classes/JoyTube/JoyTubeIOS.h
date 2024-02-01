@@ -44,7 +44,7 @@ public:
     int n_isTextureHeight();
     int n_isTextureWidthGl();
     int n_isTextureHeightGl();
-    int* n_NativeStepFunc();
+    void n_NativeStep();
     int n_isRenderTextureId(int side);
     int n_isRenderTextureWidth(int side);
     int n_isRenderTextureHeight(int side);

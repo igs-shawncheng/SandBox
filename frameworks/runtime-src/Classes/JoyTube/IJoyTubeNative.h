@@ -1,4 +1,4 @@
-﻿#include <memory>
+#include <memory>
 #include <string>
 #if defined(ANDROID)
 #include <jni.h>
@@ -46,7 +46,7 @@ struct IJoyTubeNative
     virtual int n_isTextureHeight() = 0;
     virtual int n_isTextureWidthGl() = 0;
     virtual int n_isTextureHeightGl() = 0;
-    virtual int* n_NativeStepFunc() = 0;
+    virtual void n_NativeStep() = 0;
 #if UNITY_IOS
     virtual int* n_isRenderTextureId(int side) = 0;
 #else

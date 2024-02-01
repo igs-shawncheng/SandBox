@@ -1,4 +1,4 @@
-﻿#include "JoyTube.h"
+#include "JoyTube.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "base/CCEventDispatcher.h"
@@ -180,7 +180,7 @@ void JoyTube::CallEndOfFrames()
 	//CCLOG("JoyTube::CallEndOfFrames tick %f", cocos2d::Director::getInstance()->getDeltaTime());
 
 	//UpdateTextureData();
-    m_joyTubeNative->n_NativeStepFunc();
+    m_joyTubeNative->n_NativeStep();
 }
 
 void JoyTube::UpdateTextureData()
@@ -200,9 +200,11 @@ void JoyTube::SetSourcePath(std::string sourcePath)
 	std::string nativeResPath = fullPath.substr(0, lastSlash + 1);
 	
 	CCLOG("JoyTube::NativeResPath:%s", nativeResPath.c_str());
-//    m_joyTubeNative->n_stringFromUnity(nativeResPath.c_str());
+    m_joyTubeNative->n_stringFromUnity(nativeResPath.c_str());
+#if    ( CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID )
     std::string path = "/storage/emulated/0/Android/data/org.cocos2dx.SandBox/files/";
 	m_joyTubeNative->n_stringFromUnity(path);
+#endif
 }
 
 void JoyTube::InitPlugin(int left, int top, int width, int height, bool local)
