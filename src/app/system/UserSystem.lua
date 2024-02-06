@@ -34,7 +34,7 @@ end
 function UserSystem:OnRecvTakeMoneyIn(command)
     local response = cc.PACHIN_G2U_ADD_MONEY_IN_ACK:create(command.content)
     self.money = self.money + response.money
-    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
+    cc.exports.dispatchEvent(cc.exports.define.EVENTS.PLUGIN_RESPONSE, {command.commandType, command.content})
 end
 
 function UserSystem:GetMoney()

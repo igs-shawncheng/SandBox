@@ -114,7 +114,7 @@ function LobbySystem:OnRecvJoinRoom(command)
 end
 
 function LobbySystem:OnRecvTableInfo(command)
-    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
+    cc.exports.dispatchEvent(cc.exports.define.EVENTS.PLUGIN_RESPONSE, {command.commandType, command.content})
 end
 
 function LobbySystem:GetRoom()

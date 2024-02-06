@@ -76,32 +76,32 @@ function SandBoxSystem:OnRecvGameInfo(command)
     self.currCount = response.currCount
     self.gameMode = response.gameMode
     
-    cc.exports.dispatchEvent( cc.exports.define.EVENTS.JOINGAME )
-    cc.exports.dispatchEvent( cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content} )
+    --cc.exports.dispatchEvent( cc.exports.define.EVENTS.JOINGAME )
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.PLUGIN_RESPONSE, {command.commandType, command.content} )
 end
 
 function SandBoxSystem:OnRecvStartGame(command)
-    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
+    cc.exports.dispatchEvent(cc.exports.define.EVENTS.PLUGIN_RESPONSE, {command.commandType, command.content})
 end
 
 function SandBoxSystem:OnRecvSpin(command)
-    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
+    cc.exports.dispatchEvent(cc.exports.define.EVENTS.PLUGIN_RESPONSE, {command.commandType, command.content})
 end
 
 function SandBoxSystem:OnRecvStopReel(command)
-    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
+    cc.exports.dispatchEvent(cc.exports.define.EVENTS.PLUGIN_RESPONSE, {command.commandType, command.content})
 end
 
 function SandBoxSystem:OnRecvUseCard(command)
-    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
+    cc.exports.dispatchEvent(cc.exports.define.EVENTS.PLUGIN_RESPONSE, {command.commandType, command.content})
 end
 
 function SandBoxSystem:OnRecvPluginCuston(command)
-    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.slotData})
+    cc.exports.dispatchEvent(cc.exports.define.EVENTS.PLUGIN_RESPONSE, {command.commandType, command.slotData})
 end
 
 function SandBoxSystem:OnRecvAutoPlay(command)
-    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
+    cc.exports.dispatchEvent(cc.exports.define.EVENTS.PLUGIN_RESPONSE, {command.commandType, command.content})
 end
 
 
