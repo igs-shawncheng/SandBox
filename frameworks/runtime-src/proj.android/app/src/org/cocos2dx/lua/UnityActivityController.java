@@ -4,8 +4,24 @@ import android.app.Activity;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.unity3d.player.UnityPlayerForActivityOrService;
+
 public class UnityActivityController{
     static boolean isUnityLoaded = false;
+
+    protected UnityPlayerForActivityOrService mUnityPlayer; // don't change the name of this variable; referenced from native code
+
+    // Override this in your custom UnityPlayerActivity to tweak the command line arguments passed to the Unity Android Player
+    // The command line arguments are passed as a string, separated by spaces
+    // UnityPlayerActivity calls this from 'onCreate'
+    // Supported: -force-gles20, -force-gles30, -force-gles31, -force-gles31aep, -force-gles32, -force-gles, -force-vulkan
+    // See https://docs.unity3d.com/Manual/CommandLineArguments.html
+    // @param cmdLine the current command line arguments, may be null
+    // @return the modified command line string or null
+    protected String updateUnityCommandLineArguments(String cmdLine)
+    {
+        return cmdLine;
+    }
 
     public static void loadUnity(Activity activity){
         isUnityLoaded = true;

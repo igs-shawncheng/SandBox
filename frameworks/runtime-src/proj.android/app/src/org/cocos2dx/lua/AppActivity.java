@@ -26,12 +26,20 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.lua;
 
+import android.app.FragmentManager;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.AndroidException;
 import android.util.Log;
+import android.view.ViewGroup;
+
+import com.unity3d.player.IUnityPlayerLifecycleEvents;
+import com.unity3d.player.UnityPlayer;
+import com.unity3d.player.UnityPlayerForActivityOrService;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
@@ -41,13 +49,12 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.logging.Logger;
 
-public class AppActivity extends Cocos2dxActivity{
+public class AppActivity extends Cocos2dxActivity implements IUnityPlayerLifecycleEvents {
 
     private static AppActivity appActivety = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.setEnableVirtualButton(false);
         super.onCreate(savedInstanceState);
 
@@ -80,10 +87,40 @@ public class AppActivity extends Cocos2dxActivity{
         });
     }
 
-    public static String NativeCallJava() throws AndroidException
+    public static Object  NativeCallJava() throws AndroidException
     {
+        return appActivety;
+    }
+
+    public void InvokeUnity(){
         UnityActivityController.loadUnity(appActivety);
-        String returnStr = "JavaValue";
-        return returnStr;
+//        LoadUnityUseFrameLayout();
+    }
+
+    public void LoadUnityUseFrameLayout()
+    {
+        Log.i("AppActivity", "InvokeUnity.cocosIndex:");
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                UnityPlayerForActivityOrService mUnityPlayer = new UnityPlayerForActivityOrService(appActivety, appActivety);
+                setContentView(mUnityPlayer.getFrameLayout());
+                mUnityPlayer.getFrameLayout().requestFocus();
+                Log.i("AppActivity", "InvokeUnity.123:");
+//                mUnityPlayer.newIntent(getIntent());
+//                mUnityPlayer.disableStaticSplashScreen();
+            }
+        });
+    }
+
+    @Override
+    public void onUnityPlayerUnloaded() {
+
+    }
+
+    @Override
+    public void onUnityPlayerQuitted() {
+
     }
 }

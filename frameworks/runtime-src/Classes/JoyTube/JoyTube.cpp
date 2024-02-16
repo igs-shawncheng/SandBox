@@ -301,19 +301,48 @@ void JoyTube::LoadUnity()
 {
 #if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 	CCLOG("cocos_android_app_LoadUnity");
-
-	string str = "";
 	JniMethodInfo minfo;
-	if(JniHelper::getStaticMethodInfo(minfo, "org/cocos2dx/lua/AppActivity", "NativeCallJava", "()Ljava/lang/String;"))
+	jobject jObj;
+
+
+	if(JniHelper::getStaticMethodInfo(minfo, "org/cocos2dx/lua/AppActivity", "NativeCallJava", "()Ljava/lang/Object;"))
 	{
-		jstring js = (jstring)minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
-		const char* str = minfo.env->GetStringUTFChars(js, 0);
-		cocos2d::log("JNITest:%s", str);
-		minfo.env->ReleaseStringUTFChars(js , str);
-		minfo.env->DeleteLocalRef(minfo.classID);
+		jObj = minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
+//        const char* str = minfo.env->GetStringUTFChars((jstring)jObj, 0);
+//        cocos2d::log("JNITest:%s", str);
+//        minfo.env->ReleaseStringUTFChars((jstring)jObj , str);
+//        minfo.env->DeleteLocalRef(minfo.classID);
+	}
+
+    if(jObj && JniHelper::getMethodInfo(minfo, "org/cocos2dx/lua/AppActivity", "InvokeUnity", "()V"))
+    {
+		minfo.env->CallVoidMethod(jObj, minfo.methodID);
+        CCLOG("cocos_android_app_LoadUnity Call");
+        minfo.env->DeleteLocalRef(minfo.classID);
+    }
+    else
+	{
+		CCLOG("jni:InvokeUnity doesn't exist!");
 	}
 #endif
 }
+
+//void JoyTube::LoadUnity()
+//{
+//#if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+//	CCLOG("cocos_android_app_LoadUnity");
+//	JniMethodInfo minfo;
+//	string str = "";
+//	if(JniHelper::getStaticMethodInfo(minfo, "org/cocos2dx/lua/AppActivity", "NativeCallJava", "()Ljava/lang/String;"))
+//	{
+//		jstring js = (jstring)minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
+//		const char* str = minfo.env->GetStringUTFChars(js, 0);
+//		cocos2d::log("JNITest:%s", str);
+//		minfo.env->ReleaseStringUTFChars(js , str);
+//		minfo.env->DeleteLocalRef(minfo.classID);
+//	}
+//#endif
+//}
 
 // void JoyTube::OnPushButton(int type)
 // {
