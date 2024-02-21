@@ -26,7 +26,7 @@ end
 
 function UserSystem:OnRecvUserInfo(command)
     local response = cc.PACHIN_G2U_USER_INFO_ACK:create(command.content)
-    self.money = response.coin
+    self.money = response.money
     Inanna.GetJoyTube():OnRecvUserInfo( self.money )
     cc.exports.dispatchEvent( cc.exports.define.EVENTS.CHIP_UPDATE, self.money )
 end
