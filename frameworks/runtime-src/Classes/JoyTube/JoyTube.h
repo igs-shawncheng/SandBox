@@ -32,6 +32,7 @@ public:
 	void SetSourcePath(std::string sourcePath);
 	void InitPlugin(int left, int top, int width, int height, bool local);
 	void OnLeaveGame();
+	void OnRecvUserInfo(int coin);
 	void SetMusicMute(bool isMute);
 	void SetGameInfoOpen(bool isOpen);
 	void SetInputActive(bool isActive);

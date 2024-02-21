@@ -93,6 +93,7 @@ void JoyTube::RegisterLua()
 		.addFunction("SetSourcePath", &JoyTube::SetSourcePath)
 		.addFunction("InitPlugin", &JoyTube::InitPlugin)
 		.addFunction("OnLeaveGame", &JoyTube::OnLeaveGame)
+		.addFunction("OnRecvUserInfo", &JoyTube::OnRecvUserInfo)
 		.addFunction("SetMusicMute", &JoyTube::SetMusicMute)
 		.addFunction("SetGameInfoOpen", &JoyTube::SetGameInfoOpen)
 		.addFunction("SetInputActive", &JoyTube::SetInputActive)
@@ -217,6 +218,11 @@ void JoyTube::OnLeaveGame()
 	m_creditEventCallback = nullptr;
 	m_errorStatusCallback = nullptr;
 	m_joyTubeNative->n_GameDestroy();
+}
+
+void JoyTube::OnRecvUserInfo(int coin)
+{
+	m_joyTubeNative->n_setCredit(coin);
 }
 
 void JoyTube::SetMusicMute(bool isMute)
