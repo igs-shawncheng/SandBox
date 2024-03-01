@@ -153,7 +153,7 @@ bool Downloader::DownloadGameFinish()
 void Downloader::StartDownloadVersion()
 {
 	setDownloadPath();
-	downloadFile("https://cdn-g.gametower.com.tw/rd5/tmd_mobile/data/win/Inanna/InannaLua/Version.json", versionPath);
+	downloadFile("http://dl.gametower.com.tw/rd5/tmd_test/pachinslot/Version.json", versionPath);
 }
 
 std::string Downloader::GetDownloadVersionInfo()
