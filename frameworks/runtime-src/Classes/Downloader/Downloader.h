@@ -15,6 +15,8 @@ public:
 
 	void RegisterLua();
 	void StartDownloadGame();
+	void FinishDownloadGameDescription(const std::string& url, network::HttpClient*, network::HttpResponse*);
+	void FinishDownloadGamePart(const std::string& filename, network::HttpClient*, network::HttpResponse*);
 	float DownloadGameProgress();
 	bool DownloadGameFinish();
 	void StartDownloadVersion();
@@ -38,5 +40,16 @@ public:
 #endif
 protected:
 	static Downloader *_instance;
+
+private:
+	struct GameFile
+	{
+		long length;
+		int totalCount;
+		int receivedCount;
+	};
+
+	typedef std::map<std::string, GameFile> GameFiles;
+	GameFiles m_gameFiles;
 };
 

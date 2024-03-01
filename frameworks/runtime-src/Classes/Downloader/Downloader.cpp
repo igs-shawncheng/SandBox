@@ -1,4 +1,8 @@
-﻿#include "Downloader.h"
+﻿#include <fstream>
+#include <cstdio>
+#include <codecvt>
+#include <nlohmann/json.hpp>
+#include "Downloader.h"
 #include "platform/CCFileUtils.h"
 #include "network/HttpClient.h"
 
@@ -50,11 +54,91 @@ void Downloader::RegisterLua()
 
 void Downloader::StartDownloadGame()
 {
-	
+	const std::string url = "http://dl.gametower.com.tw/rd5/tmd_test/pachinslot/";
+	network::HttpRequest* req = new network::HttpRequest();
+	req->setUrl(url + "description.txt");
+	req->setRequestType(cocos2d::network::HttpRequest::Type::GET);
+	req->setResponseCallback([=](network::HttpClient* clt, network::HttpResponse* resp) {
+		Downloader::FinishDownloadGameDescription(url, clt, resp); });
+
+	network::HttpClient::getInstance()->send(req);
+	req->release();
+}
+
+void Downloader::FinishDownloadGameDescription(const std::string& url, network::HttpClient* clt, network::HttpResponse* resp)
+{
+	if (!resp->isSucceed())
+	{
+		CCLOG("Downloading Game Description failed: %s", resp->getErrorBuffer());
+		return;
+	}
+
+	m_gameFiles.clear();
+	std::vector<char>* buf = resp->getResponseData();
+	std::string descFile(buf->begin(), buf->end());
+	nlohmann::json json = nlohmann::json::parse(descFile);
+
+	for (const auto& item : json.items())
+	{
+		const std::string filename = item.key();
+		nlohmann::json subJson = item.value();
+
+		std::string fullPath = FileUtils::getInstance()->getWritablePath() + filename;
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+		fullPath = getExternalStoragePath() + "/Android/data/org.cocos2dx.sandbox/files/" + filename;
+#endif
+		std::remove(fullPath.c_str());
+
+		GameFile& gameFile = m_gameFiles[filename];
+		gameFile.length = subJson["Length"];
+		gameFile.totalCount = subJson["Count"];
+
+		for (int i = 1; i <= m_gameFiles[filename].totalCount; ++i)
+		{
+			network::HttpRequest* req = new network::HttpRequest();
+			req->setUrl(url + filename + "/" + std::to_string(i));
+			req->setRequestType(cocos2d::network::HttpRequest::Type::GET);
+			req->setResponseCallback([=](network::HttpClient* clt, network::HttpResponse* resp) {
+				Downloader::FinishDownloadGamePart(filename, clt, resp); });
+			network::HttpClient::getInstance()->send(req);
+			req->release();
+		}
+	}
+}
+
+void Downloader::FinishDownloadGamePart(const std::string& filename, network::HttpClient* clt, network::HttpResponse* resp)
+{
+	if (!resp->isSucceed())
+	{
+		CCLOG("Downloading Game Part failed: %s", resp->getErrorBuffer());
+		return;
+	}
+
+	std::string fullPath = FileUtils::getInstance()->getWritablePath() + filename;
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+	fullPath = getExternalStoragePath() + "/Android/data/org.cocos2dx.sandbox/files/" + filename;
+#endif
+
+	std::vector<char>* buf = resp->getResponseData();
+	std::ofstream ofs(fullPath, std::ios_base::binary | std::ios_base::app);
+	ofs.write(reinterpret_cast<const char*>(buf->data()), sizeof(char) * buf->size());
+	ofs.close();
+
+	m_gameFiles[filename].receivedCount += 1;
+	CCLOG("Downloading game file %s, part %d", filename.c_str(), m_gameFiles[filename].receivedCount);
 }
 
 float Downloader::DownloadGameProgress()
 {
+	int totalCounts = 0;
+	int receivedCounts = 0;
+	for (const auto& gameFile : m_gameFiles)
+	{
+		totalCounts += gameFile.second.totalCount;
+		receivedCounts += gameFile.second.receivedCount;
+	}
+
+	downloadPercentage = (totalCounts > 0) ? (static_cast<float>(receivedCounts) / totalCounts) * 100.0f : 0.0f;
     return downloadPercentage;
 }
 
