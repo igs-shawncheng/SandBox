@@ -203,7 +203,7 @@ void JoyTube::SetSourcePath(std::string sourcePath)
 	CCLOG("JoyTube::NativeResPath:%s", nativeResPath.c_str());
     m_joyTubeNative->n_stringFromUnity(nativeResPath.c_str());
 #if    ( CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID )
-    std::string path = "/storage/emulated/0/Android/data/org.cocos2dx.SandBox/files/";
+    std::string path = "/storage/emulated/0/Android/data/org.cocos2dx.sandbox/files/";
 	m_joyTubeNative->n_stringFromUnity(path);
 #endif
 }
