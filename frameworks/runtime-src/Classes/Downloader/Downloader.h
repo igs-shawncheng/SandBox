@@ -29,6 +29,7 @@ public:
 	std::string localVersionInfo = "None";
 	std::string downloadVersionInfo = "None";
 	float downloadPercentage = 0.0f;
+	float downloadGamePercentage = 0.0f;
 	void onProgress(network::HttpClient* , network::HttpResponse*, const std::string&);
 	void downloadFile(const std::string&, const std::string&);
 	void saveDownloadedFile(const std::string&, const char*, ssize_t);

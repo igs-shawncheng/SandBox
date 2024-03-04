@@ -88,8 +88,8 @@ function DownloadView:OnUpdate(dt)
         [State.DOWNLOAD_GAME_DATA] = function()
             if self.m_state:IsEntering() then
                 print("Download game data")
-                self:DownLoadGameData()
             end
+            self:DownLoadGameData()
         end,
         [State.NONE] = function()
             if self.m_state:IsEntering() then
@@ -135,7 +135,7 @@ function DownloadView:GetDownloadVersion()
     end
 end
 
-function DownloadView:GetLocolVersion()
+function DownloadView:GetLocalVersion()
     if Inanna.GetDownloader():LocalVersionIsExist() then
         local localContent = Inanna.GetDownloader():GetLocalVersionInfo() -- callback json
         local success, content = pcall(json.decode, localContent)
@@ -159,13 +159,13 @@ end
 ------------------------------------ checker ---------------------------------------- 
 
 function DownloadView:CheckCustomVersionSame()
-    if self:GetLocolVersion() == LocalVersionState.NOT_EXIST then
+    if self:GetLocalVersion() == LocalVersionState.NOT_EXIST then
         Inanna.GetDownloader():StoreDownloadVersion()
         self.m_state:Transit(State.DOWNLOAD_GAME_DATA)
         Inanna.GetDownloader():StartDownloadGame()
         return
     end
-    if self:GetDownloadVersion() and self:GetLocolVersion() == LocalVersionState.EXIST then
+    if self:GetDownloadVersion() and self:GetLocalVersion() == LocalVersionState.EXIST then
         if self.newVersion == self.localVersion then
             print("local version and download version are same")
             self.m_state:Transit(State.NONE)
@@ -175,7 +175,7 @@ function DownloadView:CheckCustomVersionSame()
             self.m_state:Transit(State.DOWNLOAD_GAME_DATA)
         end
     end
-    if self:GetLocolVersion() == LocalVersionState.ERROR then
+    if self:GetLocalVersion() == LocalVersionState.ERROR then
         self.m_state:Transit(State.FAIL)
     end
 end

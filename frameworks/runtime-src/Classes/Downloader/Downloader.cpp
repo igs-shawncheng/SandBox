@@ -138,13 +138,13 @@ float Downloader::DownloadGameProgress()
 		receivedCounts += gameFile.second.receivedCount;
 	}
 
-	downloadPercentage = (totalCounts > 0) ? (static_cast<float>(receivedCounts) / totalCounts) * 100.0f : 0.0f;
-    return downloadPercentage;
+	downloadGamePercentage = (totalCounts > 0) ? (static_cast<float>(receivedCounts) / totalCounts) * 100.0f : 0.0f;
+    return downloadGamePercentage;
 }
 
 bool Downloader::DownloadGameFinish()
 {
-	if(downloadPercentage != 100)
+	if(downloadGamePercentage != 100)
     	return false;
 	else
 		return true;
