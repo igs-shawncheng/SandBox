@@ -14,38 +14,25 @@ public:
 	virtual ~Downloader();
 
 	void RegisterLua();
-	void StartDownloadGame();
-	void FinishDownloadGameDescription(const std::string& url, network::HttpClient*, network::HttpResponse*);
-	void FinishDownloadGamePart(const std::string& filename, network::HttpClient*, network::HttpResponse*);
-	float DownloadGameProgress();
-	bool DownloadGameFinish();
-	void StartDownloadVersion();
-	std::string GetDownloadVersionInfo();
-	bool DownloadVersionFinish();
-	std::string GetLocalVersionInfo();
-	bool LocalVersionIsExist();
-	void StoreDownloadVersion();
-	std::string versionPath;
-	std::string localVersionInfo = "None";
-	std::string downloadVersionInfo = "None";
-	float downloadPercentage = 0.0f;
-	float downloadGamePercentage = 0.0f;
-	void onProgress(network::HttpClient* , network::HttpResponse*, const std::string&);
-	void downloadFile(const std::string&, const std::string&);
-	void saveDownloadedFile(const std::string&, const char*, ssize_t);
-	int getTotalBytesFromResponse(network::HttpResponse*);
-	void setDownloadPath();
+	void Start();
+	void FinishVersion(network::HttpResponse* resp, const std::string& url, const std::string& versionFilename);
+	void FinishDescription(network::HttpResponse* resp, const std::string& url);
+	void FinishResource(network::HttpResponse* resp, const std::string& resourceFilename);
+	float GetProgress();
+
 #if  CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 	std::string getExternalStoragePath();
-	void setDownloadPathAndroid();
 #endif
+
 protected:
 	static Downloader *_instance;
 
 private:
 	struct GameFile
 	{
-		long length;
+		GameFile() : totalCount(0), receivedCount(0) {}
+		GameFile(const int& totalCount, const int& receivedCount) : totalCount(totalCount), receivedCount(receivedCount) {}
+
 		int totalCount;
 		int receivedCount;
 	};

@@ -20,18 +20,11 @@ local REGISTER_EVENTS = {
 }
 
 local State = {
-    INIT = 0,    
-    DOWNLOAD_VERSION_DATA = 1,
-    CHECK_VERSION_WAIT = 2,
-    DOWNLOAD_GAME_DATA = 3,
-    NONE = 4,
-    FAIL = 5,
-}
-
-local LocalVersionState = {
-    ERROR = 0,
-    EXIST = 1,
-    NOT_EXIST = 2,
+    INIT = 0,
+    START = 1,
+    CHECK_PROGRESS = 2,
+    NONE = 3,
+    FAIL = 4,
 }
 
 function DownloadView:onCreate()
@@ -73,23 +66,19 @@ function DownloadView:OnUpdate(dt)
                 print("Init download")
             end
         end,
-        [State.DOWNLOAD_VERSION_DATA] = function()
+        [State.START] = function()
             if self.m_state:IsEntering() then
-                print("Download version data")
-                self:DownLoadVersionData()
+                print("Downloading started")
+                Inanna.GetDownloader():Start()
+                self.m_state:Transit(State.CHECK_PROGRESS)
             end
         end,
-        [State.CHECK_VERSION_WAIT] = function()
+        [State.CHECK_PROGRESS] = function ()
             if self.m_state:IsEntering() then
-                print("Check version")
-                self:CheckCustomVersionSame()
+                print("Checking progress")
+                self:setVisible(true)
             end
-        end,
-        [State.DOWNLOAD_GAME_DATA] = function()
-            if self.m_state:IsEntering() then
-                print("Download game data")
-            end
-            self:DownLoadGameData()
+            self:CheckProgress()
         end,
         [State.NONE] = function()
             if self.m_state:IsEntering() then
@@ -105,98 +94,17 @@ function DownloadView:OnUpdate(dt)
 end
 
 function DownloadView:OnDownload()
-    self.m_state:Transit(State.DOWNLOAD_VERSION_DATA)
+    self.m_state:Transit(State.START)
 end
 
-function DownloadView:DownLoadVersionData()
-    -- download new version file
-    Inanna.GetDownloader():StartDownloadVersion()
-    self.m_state:Transit( State.CHECK_VERSION_WAIT )
-end
-
-function DownloadView:GetDownloadVersion()
-    if Inanna.GetDownloader():DownloadVersionFinish() then
-        local downloadContent = Inanna.GetDownloader():GetDownloadVersionInfo() -- callback json
-        local success, content = pcall(json.decode, downloadContent)
-        if success then
-            if content.version ~= nil then
-                self.newVersion = content.version
-                return true
-            else
-                print("The Json does not have Download version information!")
-                self.m_state:Transit( State.FAIL )
-                return false
-            end
-        else
-            print("Download version Json DeSerialize fail!")
-            self.m_state:Transit( State.FAIL )
-            return false
-        end
-    end
-end
-
-function DownloadView:GetLocalVersion()
-    if Inanna.GetDownloader():LocalVersionIsExist() then
-        local localContent = Inanna.GetDownloader():GetLocalVersionInfo() -- callback json
-        local success, content = pcall(json.decode, localContent)
-        if success then
-            if content.version ~= nil then
-                self.localVersion = content.version
-                return LocalVersionState.EXIST
-            else
-                print("Json does not have local version information!")
-                return LocalVersionState.ERROR
-            end
-        else
-            print("Local version Json DeSerialize fail!")
-            return LocalVersionState.ERROR
-        end
-    else
-        return LocalVersionState.NOT_EXIST
-    end
-end
-
------------------------------------- checker ---------------------------------------- 
-
-function DownloadView:CheckCustomVersionSame()
-    if self:GetLocalVersion() == LocalVersionState.NOT_EXIST then
-        Inanna.GetDownloader():StoreDownloadVersion()
-        self.m_state:Transit(State.DOWNLOAD_GAME_DATA)
-        Inanna.GetDownloader():StartDownloadGame()
-        return
-    end
-    if self:GetDownloadVersion() and self:GetLocalVersion() == LocalVersionState.EXIST then
-        if self.newVersion == self.localVersion then
-            print("local version and download version are same")
-            self.m_state:Transit(State.NONE)
-            self:setVisible(false)
-        else
-            Inanna.GetDownloader():StartDownloadGame()
-            self.m_state:Transit(State.DOWNLOAD_GAME_DATA)
-        end
-    end
-    if self:GetLocalVersion() == LocalVersionState.ERROR then
-        self.m_state:Transit(State.FAIL)
-    end
-end
-
-function DownloadView:DownLoadGameData()
-    self:setVisible(true)
-    if not Inanna.GetDownloader():DownloadGameFinish() then
-        local progress = Inanna.GetDownloader():DownloadGameProgress()
-        self:UpdateProgress(progress)
-    else
-        self:EndLoading()
-        Inanna.GetDownloader():StoreDownloadVersion()
+function DownloadView:CheckProgress()
+    local progress = Inanna.GetDownloader():GetProgress()
+    if progress == 100 then
+        print("Downloading finished")
+        self:setVisible(false)
         self.m_state:Transit(State.NONE)
-        print("Download Finish!")
-    end
-end
-
-function DownloadView:EndLoading()
-    if self.m_LoadingBar:getPercent() == 100 then
-        print("is finish")
-        self:setVisible( false )
+    else
+        self:UpdateProgress(progress)
     end
 end
 
