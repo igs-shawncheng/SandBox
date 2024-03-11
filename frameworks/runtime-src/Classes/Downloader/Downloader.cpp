@@ -77,7 +77,7 @@ void Downloader::FinishVersion(network::HttpResponse* resp, const std::string& u
 
 	std::string fullPath = FileUtils::getInstance()->getWritablePath() + versionFilename;
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-	fullPath = getExternalStoragePath() + "Android/data/org.cocos2dx.sandbox/files/" + versionFilename;
+	fullPath = getExternalStoragePath() + "Android/data/org.cocos2dx.SandBox/files/" + versionFilename;
 #endif
 
 	if (FileUtils::getInstance()->isFileExist(fullPath))
@@ -125,7 +125,7 @@ void Downloader::FinishDescription(network::HttpResponse* resp, const std::strin
 
 		std::string fullPath = FileUtils::getInstance()->getWritablePath() + filename;
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-		fullPath = getExternalStoragePath() + "/Android/data/org.cocos2dx.sandbox/files/" + filename;
+		fullPath = getExternalStoragePath() + "/Android/data/org.cocos2dx.SandBox/files/" + filename;
 #endif
 		std::remove(fullPath.c_str());
 
@@ -155,7 +155,7 @@ void Downloader::FinishResource(network::HttpResponse* resp, const std::string& 
 
 	std::string fullPath = FileUtils::getInstance()->getWritablePath() + resourceFilename;
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-	fullPath = getExternalStoragePath() + "/Android/data/org.cocos2dx.sandbox/files/" + resourceFilename;
+	fullPath = getExternalStoragePath() + "/Android/data/org.cocos2dx.SandBox/files/" + resourceFilename;
 #endif
 
 	std::vector<char>* buf = resp->getResponseData();
