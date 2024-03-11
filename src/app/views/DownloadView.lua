@@ -99,12 +99,12 @@ end
 
 function DownloadView:CheckProgress()
     local progress = Inanna.GetDownloader():GetProgress()
+    self:UpdateProgress(progress)
+
     if progress == 100 then
         print("Downloading finished")
         self:setVisible(false)
         self.m_state:Transit(State.NONE)
-    else
-        self:UpdateProgress(progress)
     end
 end
 
