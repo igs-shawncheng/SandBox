@@ -286,7 +286,7 @@ bool JoyTube::IsEnteringSetting()
 	return m_joyTubeNative->n_enteringSetting();
 }
 
-int JoyTube::SendMessages(char const* system, char const* cmd, char const* jsonstring)
+int JoyTube::SendMessages(const char* system, const char* cmd, const char* jsonstring)
 {
 	//CCLOG("JoyTube::SendMessages %s", system);
 	return m_joyTubeNative->n_sendMessage(cmd, jsonstring);

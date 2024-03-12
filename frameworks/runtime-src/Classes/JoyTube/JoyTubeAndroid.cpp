@@ -25,8 +25,8 @@ extern "C" {
     void NameSpace(startTimer)(bool atfirst);
     void NameSpace(checkTimer)();
     bool NameSpace(passStartGame)();
-    int NameSpace(sendMessage)(std::string system, std::string cmd, std::string jsonstring);
-    int NameSpace(useItem)(std::string jsonstring);
+    int NameSpace(sendMessage)(const char* system, const char* cmd, const char* jsonstring);
+    int NameSpace(useItem)(const char* jsonstring);
     int NameSpace(isUsedItem)();
     void NameSpace(setCredit)(double credit);
     double NameSpace(isCredit)();
@@ -82,8 +82,8 @@ int JoyTubeAndroid::n_native(int left, int top, int width, int height, bool loca
 void JoyTubeAndroid::n_startTimer(bool atfirst) {}
 void JoyTubeAndroid::n_checkTimer() {}
 bool JoyTubeAndroid::n_passStartGame() { return false; }
-int JoyTubeAndroid::n_sendMessage(std::string cmd, std::string jsonstring) { return 0; }
-int JoyTubeAndroid::n_useItem(std::string jsonstring) { return 0; }
+int JoyTubeAndroid::n_sendMessage(const char* cmd, const char* jsonstring) { return 0; }
+int JoyTubeAndroid::n_useItem(const char* jsonstring) { return 0; }
 int JoyTubeAndroid::n_isUsedItem() { return 0; }
 void JoyTubeAndroid::n_setCredit(double credit) {}
 double JoyTubeAndroid::n_isCredit() { return 0; }
@@ -138,8 +138,8 @@ int JoyTubeAndroid::n_native(int left, int top, int width, int height, bool loca
 void JoyTubeAndroid::n_startTimer(bool atfirst) { return NameSpace(startTimer)(atfirst); }
 void JoyTubeAndroid::n_checkTimer() { return NameSpace(checkTimer)(); }
 bool JoyTubeAndroid::n_passStartGame() { return NameSpace(passStartGame)();}
-int JoyTubeAndroid::n_sendMessage(std::string cmd, std::string jsonstring) { return NameSpace(sendMessage)((char*)0, cmd, jsonstring);}
-int JoyTubeAndroid::n_useItem(std::string jsonstring) { return NameSpace(useItem)(jsonstring);}
+int JoyTubeAndroid::n_sendMessage(const char* cmd, const char* jsonstring) { return NameSpace(sendMessage)((char*)0, cmd, jsonstring);}
+int JoyTubeAndroid::n_useItem(const char* jsonstring) { return NameSpace(useItem)(jsonstring);}
 int JoyTubeAndroid::n_isUsedItem() { return NameSpace(isUsedItem)();}
 void JoyTubeAndroid::n_setCredit(double credit) { return NameSpace(setCredit)(credit);}
 double JoyTubeAndroid::n_isCredit() { return NameSpace(isCredit)();}

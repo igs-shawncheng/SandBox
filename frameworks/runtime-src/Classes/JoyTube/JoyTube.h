@@ -44,7 +44,7 @@ public:
 	int GetGameStatus();
 	int GetPlayState();
 	bool IsEnteringSetting();
-	int SendMessages(char const* system, char const* cmd, char const* jsonstring);
+	int SendMessages(const char* system, const char* cmd, const char* jsonstring);
 	int IsPostMessage();
 	std::string GetPostMessageString();
 	void OnPushButton(int type);

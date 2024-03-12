@@ -83,11 +83,8 @@ function DownloadView:OnUpdate(dt)
         [State.NONE] = function()
             if self.m_state:IsEntering() then
                 print("Standby mode")
-            end
-        end,
-        [State.FAIL] = function()
-            if self.m_state:IsEntering() then
-                print("Something wrong!!!")
+                self.SandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
+                self.SandBoxSystem:RequestStartGame()
             end
         end,
     })

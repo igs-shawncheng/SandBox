@@ -18,8 +18,8 @@ struct IJoyTubeNative
     virtual void n_startTimer(bool atfirst) = 0;
     virtual void n_checkTimer() = 0;
     virtual bool n_passStartGame() = 0;
-    virtual int n_sendMessage(std::string cmd, std::string jsonstring) = 0;
-    virtual int n_useItem(std::string jsonstring) = 0;
+    virtual int n_sendMessage(const char* cmd, const char* jsonstring) = 0;
+    virtual int n_useItem(const char* jsonstring) = 0;
     virtual int n_isUsedItem() = 0;
     virtual void n_setCredit(double credit) = 0;
     virtual double n_isCredit() = 0;

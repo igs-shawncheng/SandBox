@@ -30,7 +30,8 @@ function SandBoxSystem:ctor()
 end
 
 function SandBoxSystem:RequestStartGame()
-    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_START_GAME_REQ)
+    local request = cc.PACHIN_U2G_START_GAME_REQ:create()
+    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_START_GAME_REQ, request:Serialize())
 end
 
 function SandBoxSystem:RequestSpin(slotData)

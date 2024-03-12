@@ -77,7 +77,7 @@ function PluginProgram:Init()
 	local top = 0
 	local width = CC_DESIGN_RESOLUTION.width
 	local height = CC_DESIGN_RESOLUTION.height -- 可能要減掉NavigationView
-	local useLocal = true
+	local useLocal = false
 	Inanna.GetJoyTube():InitPlugin( left, top, width, height, useLocal )
 
 	self:RegisterCreditEventCB()
