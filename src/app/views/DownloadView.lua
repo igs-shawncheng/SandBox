@@ -76,7 +76,6 @@ function DownloadView:OnUpdate(dt)
         [State.CHECK_PROGRESS] = function ()
             if self.m_state:IsEntering() then
                 print("Checking progress")
-                self:setVisible(true)
             end
             self:CheckProgress()
         end,
@@ -98,6 +97,10 @@ function DownloadView:CheckProgress()
     local progress = Inanna.GetDownloader():GetProgress()
     self:UpdateProgress(progress)
 
+    if progress > 0 and not self:isVisible() then
+        self:setVisible(true)
+    end
+
     if progress == 100 then
         print("Downloading finished")
         self:setVisible(false)
@@ -109,7 +112,7 @@ function DownloadView:UpdateProgress(progress)
     self.m_LoadingBar:setPercent(progress)
     progress = math.floor(progress * 100 + 0.5) / 100
     local loadingText = progress .. "%"
-    self.m_LoadingText:setText(loadingText)
+    self.m_LoadingText:setString(loadingText)
 end
 
 function DownloadView:OnEnter()
