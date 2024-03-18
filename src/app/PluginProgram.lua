@@ -61,6 +61,7 @@ function PluginProgram:extend( target )
 end
 
 function PluginProgram:create()
+	self:Init()
 	return PluginProgram:extend( {} )
 end
 
