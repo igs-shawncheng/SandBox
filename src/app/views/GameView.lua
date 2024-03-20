@@ -355,7 +355,7 @@ function GameView:OnUpdate( dt )
             self.m_joyTubeOutput:setVisible( true )
 
             self.m_pluginProgram:SetMusicMute( true )
-            --self.m_pluginProgram:Init()
+            self.m_pluginProgram:Init()
             self.m_state:Transit( GAMEVIEW_STATE.IDLE )
         end
     elseif currentState == GAMEVIEW_STATE.IDLE then

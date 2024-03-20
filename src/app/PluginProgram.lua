@@ -61,7 +61,7 @@ function PluginProgram:extend( target )
 end
 
 function PluginProgram:create()
-	self:Init()
+	self:RegisterSystemEvent()
 	return PluginProgram:extend( {} )
 end
 
@@ -83,7 +83,7 @@ function PluginProgram:Init()
 
 	self:RegisterCreditEventCB()
 	self:RegisterErrorStatusCB()
-	self:RegisterSystemEvent()
+	--self:RegisterSystemEvent()
 	self:ScheduleUpdate()
 	self.sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
 end
