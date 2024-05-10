@@ -61,6 +61,7 @@ function PluginProgram:extend( target )
 end
 
 function PluginProgram:create()
+	self:RegisterSystemEvent()
 	return PluginProgram:extend( {} )
 end
 
@@ -77,12 +78,12 @@ function PluginProgram:Init()
 	local top = 0
 	local width = CC_DESIGN_RESOLUTION.width
 	local height = CC_DESIGN_RESOLUTION.height -- 可能要減掉NavigationView
-	local useLocal = true
+	local useLocal = false
 	Inanna.GetJoyTube():InitPlugin( left, top, width, height, useLocal )
 
 	self:RegisterCreditEventCB()
 	self:RegisterErrorStatusCB()
-	self:RegisterSystemEvent()
+	--self:RegisterSystemEvent()
 	self:ScheduleUpdate()
 	self.sandBoxSystem = cc.SubSystemBase:GetInstance():GetSystem(cc.exports.SystemName.SandBoxSystem)
 end
@@ -160,12 +161,12 @@ function PluginProgram:RegisterSystemEvent()
 	local function eventHander( event )
 		print("Recv PLUGIN_RESPONSE", event._usedata[1], event._usedata[2])
 		if event:getEventName() == cc.exports.define.EVENTS.PLUGIN_RESPONSE then
-			self:SendMessage(0, event._usedata[1], event._usedata[2])
+			self:SendMessage(event._usedata[1], event._usedata[2])
 		end
 	end
 
 	for _, eventName in pairs( REGISTER_EVENTS ) do
-		local listener = cc.EventListenerCustom:create( eventName, eventHander )
+		local listener = cc.EventListenerCustom:create( tostring(eventName), eventHander )
 		local dispatcher = cc.Director:getInstance():getEventDispatcher()
 		dispatcher:addEventListenerWithFixedPriority( listener, 10 )
 	end

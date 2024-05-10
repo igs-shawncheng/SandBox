@@ -9,5 +9,14 @@ local function getTickSecond()
 	return os.time(os.date("!*t"))
 end
 
+function Switch( case, cases, default )
+	local c = cases[case]
+	if c then
+		return c()
+	elseif type( default ) == "function" then
+		return default()
+	end
+end
+
 cc.exports.getTickSecond = getTickSecond
 cc.exports.dispatchEvent = dispatchEvent

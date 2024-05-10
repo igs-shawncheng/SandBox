@@ -99,7 +99,8 @@ end
 
 function LobbyView:OnClickedEnter( event )
     if event.name == "ended" then
-        local roomIndex = self.m_room_input:getText();
+        local roomIndex = self.m_room_input:getText()
+        cc.exports.dispatchEvent(cc.exports.define.EVENTS.DOWNLOAD)
         self.lobbySystem:RequestJoinRoom(roomIndex)
     end
 end

@@ -23,6 +23,12 @@
 		1AF87BAA1F6F8733007BE51C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AF87BA91F6F8730007BE51C /* LaunchScreen.storyboard */; };
 		1AF87BAB1F6F8733007BE51C /* LaunchScreenBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AF87BA81F6F872F007BE51C /* LaunchScreenBackground.png */; };
 		294D0D721D0D572600F7F5D4 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 294D0D711D0D572600F7F5D4 /* CoreText.framework */; };
+		2AEAFD202B6B3C3300566584 /* Downloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AEAFD1F2B6B3C3300566584 /* Downloader.cpp */; };
+		2AEAFD222B6B3C7700566584 /* Downloader.h in Sources */ = {isa = PBXBuildFile; fileRef = 2AEAFD212B6B3C7700566584 /* Downloader.h */; };
+		2AEAFD2D2B6B48ED00566584 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AEAFD2C2B6B48ED00566584 /* GameController.framework */; };
+		2AEAFD2F2B6B490000566584 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AEAFD2E2B6B490000566584 /* GLKit.framework */; };
+		2AEAFD312B6B491000566584 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AEAFD302B6B491000566584 /* CoreMedia.framework */; };
+		2AEAFD3A2B6B4C0800566584 /* libmj4_cocos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AEAFD392B6B4C0800566584 /* libmj4_cocos.a */; };
 		3EEEDB61197107C0006A9FF8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EEEDB60197107C0006A9FF8 /* MediaPlayer.framework */; };
 		5023811817EBBCAC00990C9B /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5023810817EBBCAC00990C9B /* AppController.mm */; };
 		5023812417EBBCAC00990C9B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5023811417EBBCAC00990C9B /* main.m */; };
@@ -179,6 +185,12 @@
 		1AF87BA81F6F872F007BE51C /* LaunchScreenBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreenBackground.png; sourceTree = "<group>"; };
 		1AF87BA91F6F8730007BE51C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		294D0D711D0D572600F7F5D4 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
+		2AEAFD1F2B6B3C3300566584 /* Downloader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Downloader.cpp; path = ../Classes/Downloader/Downloader.cpp; sourceTree = "<group>"; };
+		2AEAFD212B6B3C7700566584 /* Downloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Downloader.h; path = ../Classes/Downloader/Downloader.h; sourceTree = "<group>"; };
+		2AEAFD2C2B6B48ED00566584 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS17.0.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
+		2AEAFD2E2B6B490000566584 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS17.0.sdk/System/Library/Frameworks/GLKit.framework; sourceTree = DEVELOPER_DIR; };
+		2AEAFD302B6B491000566584 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS17.0.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
+		2AEAFD392B6B4C0800566584 /* libmj4_cocos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmj4_cocos.a; sourceTree = "<group>"; };
 		3EEEDB60197107C0006A9FF8 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		5023810717EBBCAC00990C9B /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		5023810817EBBCAC00990C9B /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
@@ -256,6 +268,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AEAFD312B6B491000566584 /* CoreMedia.framework in Frameworks */,
+				2AEAFD2F2B6B490000566584 /* GLKit.framework in Frameworks */,
+				2AEAFD2D2B6B48ED00566584 /* GameController.framework in Frameworks */,
 				294D0D721D0D572600F7F5D4 /* CoreText.framework in Frameworks */,
 				9FA3AE4E1BE9BCC900FC9645 /* CFNetwork.framework in Frameworks */,
 				ED545A891B68A23E00C3958E /* libiconv.dylib in Frameworks */,
@@ -268,6 +283,7 @@
 				D6B061351803AC000077942B /* CoreMotion.framework in Frameworks */,
 				1AF4C403178663F200122817 /* libz.dylib in Frameworks */,
 				50805AAF17EBBEAA004CFAD3 /* UIKit.framework in Frameworks */,
+				2AEAFD3A2B6B4C0800566584 /* libmj4_cocos.a in Frameworks */,
 				5023817A17EBBE8300990C9B /* OpenGLES.framework in Frameworks */,
 				F293B3CD15EB7BE500256477 /* QuartzCore.framework in Frameworks */,
 				F293B3D115EB7BE500256477 /* OpenAL.framework in Frameworks */,
@@ -338,6 +354,7 @@
 		9E0ED23E2A94B1A800EA9FB7 /* Native */ = {
 			isa = PBXGroup;
 			children = (
+				2AEAFD392B6B4C0800566584 /* libmj4_cocos.a */,
 				9E0ED23F2A94B1EE00EA9FB7 /* native.h */,
 				9E0ED2402A94B21D00EA9FB7 /* libnative.a */,
 			);
@@ -391,6 +408,9 @@
 		F293B3CB15EB7BE500256477 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2AEAFD302B6B491000566584 /* CoreMedia.framework */,
+				2AEAFD2E2B6B490000566584 /* GLKit.framework */,
+				2AEAFD2C2B6B48ED00566584 /* GameController.framework */,
 				294D0D711D0D572600F7F5D4 /* CoreText.framework */,
 				9FA3AE4D1BE9BCC900FC9645 /* CFNetwork.framework */,
 				ED545A8A1B68A24500C3958E /* libiconv.dylib */,
@@ -422,6 +442,8 @@
 		F293BB7C15EB830F00256477 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2AEAFD1F2B6B3C3300566584 /* Downloader.cpp */,
+				2AEAFD212B6B3C7700566584 /* Downloader.h */,
 				9E0ED2072A933F7D00EA9FB7 /* JoyTubeIOS.cpp */,
 				9E0ED2042A933F4E00EA9FB7 /* JoyTube.cpp */,
 				F293BB7E15EB831F00256477 /* AppDelegate.cpp */,
@@ -484,7 +506,7 @@
 				LastUpgradeCheck = 0500;
 				TargetAttributes = {
 					F293B3C715EB7BE500256477 = {
-						DevelopmentTeam = 9FGGHAVYDY;
+						DevelopmentTeam = VZ4Y8A489U;
 					};
 				};
 			};
@@ -623,7 +645,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "find ${SRCROOT}/../../../src/ -name \"*\" -exec touch -cm {} \\;\nfind ${SRCROOT}/../../../res/ -name \"*\" -exec touch -cm {} \\;";
+			shellScript = "find ${SRCROOT}/../../../src/ -name \"*\" -exec touch -cm {} \\;\nfind ${SRCROOT}/../../../res/ -name \"*\" -exec touch -cm {} \\;\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -644,6 +666,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AEAFD222B6B3C7700566584 /* Downloader.h in Sources */,
+				2AEAFD202B6B3C3300566584 /* Downloader.cpp in Sources */,
 				9E0ED2082A933F7D00EA9FB7 /* JoyTubeIOS.cpp in Sources */,
 				9E0ED2052A933F4F00EA9FB7 /* JoyTube.cpp in Sources */,
 				5023812517EBBCAC00990C9B /* RootViewController.mm in Sources */,
@@ -832,7 +856,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
-				DEVELOPMENT_TEAM = 9FGGHAVYDY;
+				DEVELOPMENT_TEAM = VZ4Y8A489U;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -851,6 +875,8 @@
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
+					"-ObjC++",
+					"-ObjC",
 				);
 				"OTHER_LDFLAGS[sdk=iphonesimulator*][arch=x86_64]" = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
@@ -875,7 +901,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
-				DEVELOPMENT_TEAM = 9FGGHAVYDY;
+				DEVELOPMENT_TEAM = VZ4Y8A489U;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -893,6 +919,8 @@
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
+					"-ObjC++",
+					"-ObjC",
 				);
 				"OTHER_LDFLAGS[sdk=iphonesimulator*][arch=x86_64]" = (
 					"$(_COCOS_LIB_IOS_BEGIN)",

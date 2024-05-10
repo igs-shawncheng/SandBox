@@ -31,6 +31,10 @@ local VIEWS = {
         ZOrder =  GetZorder(),
         NAME = "LoginView",
     },
+    Download = {
+        ZOrder =  GetZorder(),
+        NAME = "DownloadView",
+    },
     MessageBox  = { 
         ZOrder =  GetZorder(),
         NAME = "MessageBoxView",

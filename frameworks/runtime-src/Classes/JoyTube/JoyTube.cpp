@@ -1,4 +1,4 @@
-﻿#include "JoyTube.h"
+#include "JoyTube.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "base/CCEventDispatcher.h"
@@ -31,7 +31,7 @@ JoyTube::JoyTube()
     m_joyTubeNative = IJoyTubeNativePtr(new JoyTubeIOS(m_width, m_height));
 #endif
 
-	m_textureData = m_joyTubeNative->GetTextureData();
+	//m_textureData = m_joyTubeNative->GetTextureData();
 
 	float fps = cocos2d::Director::getInstance()->getFrameRate();
 	cocos2d::Director::getInstance()->getScheduler()->schedule(
@@ -58,7 +58,7 @@ void JoyTube::InitTube()
 	auto dataLen = m_width * m_height * 4;
 	m_textureData = new unsigned char[dataLen];
 
-	auto allcolor = Color4B::WHITE;
+	auto allcolor = Color4B::BLACK;
 	int w = 4 * m_width;
 	for (int i = 0; i < m_height; i++)
 	{
@@ -94,6 +94,7 @@ void JoyTube::RegisterLua()
 		.addFunction("SetSourcePath", &JoyTube::SetSourcePath)
 		.addFunction("InitPlugin", &JoyTube::InitPlugin)
 		.addFunction("OnLeaveGame", &JoyTube::OnLeaveGame)
+		.addFunction("OnRecvUserInfo", &JoyTube::OnRecvUserInfo)
 		.addFunction("SetMusicMute", &JoyTube::SetMusicMute)
 		.addFunction("SetGameInfoOpen", &JoyTube::SetGameInfoOpen)
 		.addFunction("SetInputActive", &JoyTube::SetInputActive)
@@ -182,7 +183,7 @@ void JoyTube::CallEndOfFrames()
 	//CCLOG("JoyTube::CallEndOfFrames tick %f", cocos2d::Director::getInstance()->getDeltaTime());
 
 	//UpdateTextureData();
-    m_joyTubeNative->n_NativeStepFunc();
+    m_joyTubeNative->n_NativeStep();
 }
 
 void JoyTube::UpdateTextureData()
@@ -202,9 +203,16 @@ void JoyTube::SetSourcePath(std::string sourcePath)
 	std::string nativeResPath = fullPath.substr(0, lastSlash + 1);
 	
 	CCLOG("JoyTube::NativeResPath:%s", nativeResPath.c_str());
-//    m_joyTubeNative->n_stringFromUnity(nativeResPath.c_str());
-    std::string path = "/storage/emulated/0/Android/data/org.cocos2dx.SandBox/files/";
+    m_joyTubeNative->n_stringFromUnity(nativeResPath.c_str());
+#if    ( CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID )
+    std::string path = "/storage/emulated/0/Android/data/org.cocos2dx.sandbox/files/";
 	m_joyTubeNative->n_stringFromUnity(path);
+#endif
+
+#if ( CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
+	std::string path = FileUtils::getInstance()->getWritablePath();
+	m_joyTubeNative->n_stringFromUnity(path);
+#endif
 }
 
 void JoyTube::InitPlugin(int left, int top, int width, int height, bool local)
@@ -217,6 +225,13 @@ void JoyTube::OnLeaveGame()
 	m_creditEventCallback = nullptr;
 	m_errorStatusCallback = nullptr;
 	m_joyTubeNative->n_GameDestroy();
+
+	UpdateTextureData();		// Texture Clear
+}
+
+void JoyTube::OnRecvUserInfo(int coin)
+{
+	m_joyTubeNative->n_setCredit(coin);
 }
 
 void JoyTube::SetMusicMute(bool isMute)
@@ -280,7 +295,7 @@ bool JoyTube::IsEnteringSetting()
 	return m_joyTubeNative->n_enteringSetting();
 }
 
-int JoyTube::SendMessages(char const* system, char const* cmd, char const* jsonstring)
+int JoyTube::SendMessages(char const* cmd, char const* jsonstring)
 {
 	//CCLOG("JoyTube::SendMessages %s", system);
 	return m_joyTubeNative->n_sendMessage(cmd, jsonstring);

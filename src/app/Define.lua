@@ -35,6 +35,8 @@ local EVENTS = {
 
 	ROOM_INFO_ACK = "room_info_ack",
 	GAME_INFO_ACK = "game_info_ack",
+
+	DOWNLOAD = "download",
 }
 
 local  GameMode = {

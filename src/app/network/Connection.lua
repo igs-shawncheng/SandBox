@@ -77,7 +77,7 @@ function Connection:HandleReceivePacket()
         if data then
             table.insert(buffer, data)
         else
-            --recvt, sendt, status = socket.select({self.socket}, nil, 1)
+            recvt, sendt, status = socket.select({self.socket}, nil, 1)
             --讀取完畢脫離
             if receiveStatus == "closed" or receiveStatus == "timeout" then
                 break

@@ -34,6 +34,7 @@ public:
 	void SetSourcePath(std::string sourcePath);
 	void InitPlugin(int left, int top, int width, int height, bool local);
 	void OnLeaveGame();
+	void OnRecvUserInfo(int coin);
 	void SetMusicMute(bool isMute);
 	void SetGameInfoOpen(bool isOpen);
 	void SetInputActive(bool isActive);
@@ -45,7 +46,7 @@ public:
 	int GetGameStatus();
 	int GetPlayState();
 	bool IsEnteringSetting();
-	int SendMessages(char const* system, char const* cmd, char const* jsonstring);
+	int SendMessages(char const* cmd, char const* jsonstring);
 	int IsPostMessage();
 	std::string GetPostMessageString();
 	void LoadUnity();

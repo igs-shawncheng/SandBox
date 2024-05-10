@@ -101,8 +101,8 @@ int JoyTubeWin32::n_native(int left, int top, int width, int height, bool local,
 void JoyTubeWin32::n_startTimer(bool atfirst){}
 void JoyTubeWin32::n_checkTimer(){}
 bool JoyTubeWin32::n_passStartGame() { return false; }
-int JoyTubeWin32::n_sendMessage(std::string cmd, std::string jsonstring) { return 0; }
-int JoyTubeWin32::n_useItem(std::string jsonstring) { return 0; }
+int JoyTubeWin32::n_sendMessage(const char* cmd, const char* jsonstring) { return 0; }
+int JoyTubeWin32::n_useItem(const char* jsonstring) { return 0; }
 int JoyTubeWin32::n_isUsedItem(){ return 0; }
 void JoyTubeWin32::n_setCredit(double credit){}
 double JoyTubeWin32::n_isCredit(){ return 0; }
@@ -124,7 +124,7 @@ int JoyTubeWin32::n_isTextureWidth(){ return 0; }
 int JoyTubeWin32::n_isTextureHeight(){ return 0; }
 int JoyTubeWin32::n_isTextureWidthGl(){ return 0; }
 int JoyTubeWin32::n_isTextureHeightGl(){ return 0; }
-int* JoyTubeWin32::n_NativeStepFunc(){ return nullptr; }
+void JoyTubeWin32::n_NativeStep(){}
 int JoyTubeWin32::n_isRenderTextureId(int side){ return 0; }
 int JoyTubeWin32::n_isRenderTextureWidth(int side){ return 0; }
 int JoyTubeWin32::n_isRenderTextureHeight(int side){ return 0; }

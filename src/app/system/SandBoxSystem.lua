@@ -25,17 +25,19 @@ function SandBoxSystem:ctor()
     self:Registers(RecvCommand.PACHIN_G2U_USE_CARD_ACK, handler(self, self.OnRecvUseCard))
     self:Registers(RecvCommand.PACHIN_G2U_PLUGIN_CUSTOM_ACK, handler(self, self.OnRecvPluginCuston))
     self:Registers(RecvCommand.PACHIN_G2U_AUTO_PLAY_ACK, handler(self, self.OnRecvAutoPlay))
+    self.bet = 0
     
 end
 
 function SandBoxSystem:RequestStartGame()
-    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_START_GAME_REQ)
+    local request = cc.PACHIN_U2G_START_GAME_REQ:create()
+    self:GetInstance():Send(cc.Protocol.PachinU2GProtocol.PACHIN_U2G_START_GAME_REQ, request:Serialize())
 end
 
 function SandBoxSystem:RequestSpin(slotData)
     local userSystem = self:GetInstance():GetSystem(cc.exports.SystemName.UserSystem)
     local loginSystem = self:GetInstance():GetSystem(cc.exports.SystemName.LoginSystem)
-    local request = cc.PACHIN_U2G_SPIN_REQ:create(slotData)
+    local request = cc.PACHIN_U2G_SPIN_REQ:create(self.bet, slotData)
     --todo make sure when to updateMoney, maybe more GameMode should do.
     if self.gameMode == cc.exports.define.GameMode.GameMode_Normal then
         userSystem:UpdateMoney(self.bet)
@@ -75,32 +77,32 @@ function SandBoxSystem:OnRecvGameInfo(command)
     self.currCount = response.currCount
     self.gameMode = response.gameMode
     
-    cc.exports.dispatchEvent( cc.exports.define.EVENTS.JOINGAME )
-    cc.exports.dispatchEvent( cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content} )
+    --cc.exports.dispatchEvent( cc.exports.define.EVENTS.JOINGAME )
+    cc.exports.dispatchEvent( cc.exports.define.EVENTS.PLUGIN_RESPONSE, {command.commandType, command.content} )
 end
 
 function SandBoxSystem:OnRecvStartGame(command)
-    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
+    cc.exports.dispatchEvent(cc.exports.define.EVENTS.PLUGIN_RESPONSE, {command.commandType, command.content})
 end
 
 function SandBoxSystem:OnRecvSpin(command)
-    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
+    cc.exports.dispatchEvent(cc.exports.define.EVENTS.PLUGIN_RESPONSE, {command.commandType, command.content})
 end
 
 function SandBoxSystem:OnRecvStopReel(command)
-    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
+    cc.exports.dispatchEvent(cc.exports.define.EVENTS.PLUGIN_RESPONSE, {command.commandType, command.content})
 end
 
 function SandBoxSystem:OnRecvUseCard(command)
-    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
+    cc.exports.dispatchEvent(cc.exports.define.EVENTS.PLUGIN_RESPONSE, {command.commandType, command.content})
 end
 
 function SandBoxSystem:OnRecvPluginCuston(command)
-    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.slotData})
+    cc.exports.dispatchEvent(cc.exports.define.EVENTS.PLUGIN_RESPONSE, {command.commandType, command.slotData})
 end
 
 function SandBoxSystem:OnRecvAutoPlay(command)
-    cc.exports.dispatchEvent(cc.exports.define.PLUGIN_RESPONSE, {command.commandType, command.content})
+    cc.exports.dispatchEvent(cc.exports.define.EVENTS.PLUGIN_RESPONSE, {command.commandType, command.content})
 end
 
 

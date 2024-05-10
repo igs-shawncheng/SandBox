@@ -35,14 +35,19 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.AndroidException;
 import android.util.Log;
+<<<<<<< HEAD
 import android.view.ViewGroup;
 
 import com.unity3d.player.IUnityPlayerLifecycleEvents;
 import com.unity3d.player.UnityPlayer;
 import com.unity3d.player.UnityPlayerForActivityOrService;
+=======
+import android.os.Environment;
+>>>>>>> 55aefdd6fda47af83e71b6b6438bc1e624f74b86
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
+import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -68,6 +73,11 @@ public class AppActivity extends Cocos2dxActivity implements IUnityPlayerLifecyc
             return;
         }
         appActivety = this;
+<<<<<<< HEAD
+=======
+        //SetOrientation(2);
+        File file = getExternalFilesDir(null);
+>>>>>>> 55aefdd6fda47af83e71b6b6438bc1e624f74b86
 
         CallNative(true, 1, 2, 3, "HelloFromJava");
 
@@ -92,6 +102,7 @@ public class AppActivity extends Cocos2dxActivity implements IUnityPlayerLifecyc
         return appActivety;
     }
 
+<<<<<<< HEAD
     public void InvokeUnity(){
         UnityActivityController.loadUnity(appActivety);
 //        LoadUnityUseFrameLayout();
@@ -123,4 +134,25 @@ public class AppActivity extends Cocos2dxActivity implements IUnityPlayerLifecyc
     public void onUnityPlayerQuitted() {
 
     }
+=======
+    public static String getExternalStoragePath()
+    {
+        return Environment.getExternalStorageDirectory().getAbsolutePath();
+    }
+//    public static boolean SetOrientation(int orientation)
+//    {
+//        Log.i("Debug", "SetOrientation：" +orientation);
+//        if(orientation == 1 ) {
+//            appActivety.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//            appActivety.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+//        }else if (orientation == 2 ){
+//            appActivety.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//            //appActivety.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+//        }else if (orientation == 3 ) {
+//            appActivety.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+//            appActivety.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+//        }
+//        return true;
+//    }
+>>>>>>> 55aefdd6fda47af83e71b6b6438bc1e624f74b86
 }
