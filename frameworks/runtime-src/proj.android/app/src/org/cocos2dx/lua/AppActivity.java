@@ -31,6 +31,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.AndroidException;
@@ -76,6 +77,7 @@ public class AppActivity extends Cocos2dxActivity implements IUnityPlayerLifecyc
     //native  public static  ClassLoader isGameStatus();
     //Java
     public static native void JavaCallCNative(String text);
+
     public static void CallNative(boolean b,int i,float f,double d, String s)
     {
         final String str = "bool:"+ b + " int:" + i + " float:" + f + " double:" + d + " String:" + s;
@@ -92,26 +94,10 @@ public class AppActivity extends Cocos2dxActivity implements IUnityPlayerLifecyc
         return appActivety;
     }
 
-    public void InvokeUnity(){
-        UnityActivityController.loadUnity(appActivety);
-//        LoadUnityUseFrameLayout();
-    }
-
-    public void LoadUnityUseFrameLayout()
+    public void InvokeUnity(String str)
     {
-        Log.i("AppActivity", "InvokeUnity.cocosIndex:");
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                UnityPlayerForActivityOrService mUnityPlayer = new UnityPlayerForActivityOrService(appActivety, appActivety);
-                setContentView(mUnityPlayer.getFrameLayout());
-                mUnityPlayer.getFrameLayout().requestFocus();
-                Log.i("AppActivity", "InvokeUnity.123:");
-//                mUnityPlayer.newIntent(getIntent());
-//                mUnityPlayer.disableStaticSplashScreen();
-            }
-        });
+        Log.i("", str);
+        UnityActivityController.loadUnity(appActivety);
     }
 
     @Override

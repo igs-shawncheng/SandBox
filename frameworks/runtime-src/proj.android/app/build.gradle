@@ -4,11 +4,11 @@ apply plugin: 'com.android.application'
 
 dependencies {
     implementation fileTree(dir: 'libs', include:['*.jar'])
-    //implementation fileTree(dir: 'libs', include:['*.aar'])
     implementation project(':libcocos2dx')
-    implementation files('libs/mj4.aar')
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation 'androidx.games:games-activity:2.0.0'
+
+//    implementation 'androidx.appcompat:appcompat:1.0.0'
+//    implementation 'androidx.games:games-activity:2.0.0'
+
     implementation project(':unityLibrary')
     implementation fileTree(dir: project(':unityLibrary').getProjectDir().toString() + ('\\libs'), include: ['*.jar'])
 }
@@ -249,23 +249,3 @@ android.applicationVariants.all { variant ->
     tasks.getByName("pre${targetName}Build").dependsOn copyTaskName
 }
 
-task extractSo(type: Copy) {
-    println 'Extracting *.so file(s)....'
-
-    println "${project.rootDir}/app/libs/mj4.aar"
-    println "${project.rootDir}/jni/prebuild/"
-
-    from zipTree("${project.rootDir}/app/libs/mj4.aar")
-    into "${project.rootDir}/app/jni/prebuild/"
-    include "jni/**/*.so"
-
-    eachFile {
-        def segments = it.getRelativePath().getSegments() as List
-        println segments
-        it.setPath(segments.tail().join("/"))
-        return it
-    }
-    includeEmptyDirs = false
-}
-
-preBuild.dependsOn extractSo
