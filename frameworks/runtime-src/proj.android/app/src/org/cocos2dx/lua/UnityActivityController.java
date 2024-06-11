@@ -2,6 +2,7 @@ package org.cocos2dx.lua;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.unity3d.player.UnityPlayerForActivityOrService;
@@ -23,24 +24,27 @@ public class UnityActivityController{
         return cmdLine;
     }
 
-    public static void loadUnity(Activity activity){
+    public static void loadUnity(Activity activity, String params){
         isUnityLoaded = true;
         Intent intent = new Intent(activity, getMainUnityGameActivityClass());
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.putExtra("setParams", params);
         activity.startActivityForResult(intent, 1);
+        Log.d("UnityActivityController", "loadUnity" + isUnityLoaded);
     }
 
-    public static void unloadUnity(Activity activity, Boolean doShowToast) {
-        if (isUnityLoaded) {
-            Intent intent = new Intent(activity, getMainUnityGameActivityClass());
+    public static void unloadUnity(boolean doShowToast) {
+        Log.d("UnityActivityController", "unloadUnity" + doShowToast);
+//        if (isUnityLoaded) {
+            Intent intent = new Intent(UnityPlayerForActivityOrService.currentActivity, getMainUnityGameActivityClass());
 
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             intent.putExtra("doQuit", true);
-            activity.startActivity(intent);
+            UnityPlayerForActivityOrService.currentActivity.startActivity(intent);
             isUnityLoaded = false;
-        } else if (doShowToast) {
-            showToast(activity, "Show Unity First");
-        }
+//        } else if (doShowToast) {
+//            showToast(UnityPlayerForActivityOrService.currentActivity, "Show Unity First");
+//        }
     }
 
     private static void showToast(Activity activity, String message) {

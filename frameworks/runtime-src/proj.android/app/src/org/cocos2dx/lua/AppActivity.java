@@ -94,10 +94,10 @@ public class AppActivity extends Cocos2dxActivity implements IUnityPlayerLifecyc
         return appActivety;
     }
 
-    public void InvokeUnity(String str)
+    public void InvokeUnity(String params)
     {
-        Log.i("", str);
-        UnityActivityController.loadUnity(appActivety);
+        Log.i("", params);
+        UnityActivityController.loadUnity(appActivety, params);
     }
 
     @Override
