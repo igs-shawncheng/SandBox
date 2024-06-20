@@ -11,9 +11,6 @@ public class MainUnityActivity extends UnityPlayerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Setup activity layout
-//        SharedClass.addControlsToUnityFrame(this);
         Intent intent = getIntent();
         handleIntent(intent);
     }
@@ -31,7 +28,6 @@ public class MainUnityActivity extends UnityPlayerActivity {
 
         if(intent.getExtras().containsKey("setParams")) {
             String params = intent.getStringExtra("setParams");
-//            SharedClass.showMainActivity(params);
             Log.i(null, "UnityPlayerActivity: " + params);
             mUnityPlayer.UnitySendMessage("Awaken_BoundCalculater", "Init", params);
         }
@@ -42,10 +38,4 @@ public class MainUnityActivity extends UnityPlayerActivity {
             }
         }
     }
-
-//    @Override
-//    public void onUnityPlayerUnloaded() {
-//        SharedClass.showMainActivity("");
-//    }
-
 }
