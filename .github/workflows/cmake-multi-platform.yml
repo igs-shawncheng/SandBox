@@ -10,13 +10,13 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
+    #runs-on: ${{ matrix.os }}
+    runs-on: self-hosted
+    #strategy:
       # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
-      fail-fast: false
-      matrix:
-        os: [macos-latest, macos-14.1, macos-14.5]
+      #fail-fast: false
+      #matrix:
+        #os: [macos-latest, macos-14.1, macos-14.5]
 
     steps:
       - name: Trigger Jenkins Jobs
