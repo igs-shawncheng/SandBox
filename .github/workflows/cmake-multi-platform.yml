@@ -19,6 +19,11 @@ jobs:
         os: [macos-latest, macos-14.1, macos-14.5]
 
     steps:
-      - name: Send Webhook to Jenkins
-        run: |
-          curl -X POST ${{ secrets.JENKINS_WEBHOOK_URL }} --user ${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_API_TOKEN }}
+      - name: Trigger Jenkins Jobs
+        uses: appleboy/jenkins-action@master
+        with:
+          url: ${{ secrets.JENKINS_WEBHOOK_URL }}
+          user: ${{ secrets.JENKINS_USER }}
+          token: ${{ secrets.JENKINS_API_TOKEN }}
+          job: 'GitHub Action Hook'
+          #parameters: '{"param1":"value1","param2":"value2"}'
