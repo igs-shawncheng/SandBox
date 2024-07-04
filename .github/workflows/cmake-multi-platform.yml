@@ -21,14 +21,9 @@ jobs:
     steps:
       - name: Trigger Jenkins Jobs
         run: |
-          curl -X POST ${{ secrets.JENKINS_WEBHOOK_URL }} 
-          --user ${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_API_TOKEN }} 
-          --data-urlencode "job=GitHub Action Hook"
-          -H "X-GitHub-Event: push"
-        #uses: appleboy/jenkins-action@master
-        #with:
-          #url: ${{ secrets.JENKINS_WEBHOOK_URL }}
-          #user: ${{ secrets.JENKINS_USER }}
-          #token: ${{ secrets.JENKINS_API_TOKEN }}
-          #job: 'GitHub Action Hook'
-          #parameters: '{"param1":"value1","param2":"value2"}'
+          curl -X POST "${{ secrets.JENKINS_URL }}/job/${{ secrets.JENKINS_JOB_NAME }}/buildWithParameters" \
+             --user "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_API_TOKEN }}"
+
+          ＃curl -X POST ${{ secrets.JENKINS_WEBHOOK_URL }} 
+          ＃--user ${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_API_TOKEN }} 
+          ＃--data-urlencode "job=GitHub Action Hook"
