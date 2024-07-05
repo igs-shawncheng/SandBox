@@ -22,4 +22,4 @@ jobs:
       - name: Trigger Jenkins Jobs
         run: |
           curl -X POST ${{ vars.JENKINS_URL }}/job/${{ vars.JENKINS_JOB_NAME }}/buildWithParameters
-             --user "${{ vars.JENKINS_USER}}:${{ vars.JENKINS_API_TOKEN }}"
+             --user ${{ vars.JENKINS_USER}}:${{ vars.JENKINS_API_TOKEN }}
