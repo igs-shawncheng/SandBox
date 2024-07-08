@@ -17,8 +17,6 @@ jobs:
       #fail-fast: false
       #matrix:
         #os: [macos-latest, macos-14.1, macos-14.5]
-    env:
-      CRUMB: 1
 
     steps:
       - name: Install jq
@@ -34,6 +32,7 @@ jobs:
           
       - name: Trigger Jenkins Jobs
         run: |
+          CRUMB=${{ steps.get-crumb.outputs.crumb }}
           echo Crumb: $CRUMB
           curl -X POST ${{ vars.JENKINS_URL }}/job/${{ vars.JENKINS_JOB_NAME }}/buildWithParameters \
             --user ${{ vars.JENKINS_USER}}:${{ vars.JENKINS_API_TOKEN }} \
