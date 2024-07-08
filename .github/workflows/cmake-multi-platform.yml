@@ -32,4 +32,6 @@ jobs:
           
       - name: Trigger Jenkins Jobs
         run: |
-          curl -X POST ${{ vars.JENKINS_URL }}/job/${{ vars.JENKINS_JOB_NAME }}/build?token=${{ vars.JENKINS_API_TOKEN }}
+          curl -X POST ${{ vars.JENKINS_URL }}/job/${{ vars.JENKINS_JOB_NAME }}/buildWithParameters \
+            --user $JENKINS_USER:${{ vars.JENKINS_API_TOKEN }} \
+            -H Jenkins-Crumb:$CRUMB
