@@ -19,17 +19,6 @@ jobs:
         #os: [macos-latest, macos-14.1, macos-14.5]
 
     steps:
-      - name: Install jq
-        run: brew install jq
-        
-      - name: Get Jenkins Crumb
-        id: get-crumb
-        run: |
-          echo "Fetching Jenkins Crumb..."
-          CRUMB=$(curl -u ${{ vars.JENKINS_USER}}:${{ vars.JENKINS_API_TOKEN }} "${{ vars.JENKINS_URL }}/crumbIssuer/api/json" | jq -r .crumb)
-          echo "Crumb: $CRUMB"
-          echo "::set-output name=crumb::$CRUMB"
-          
       - name: Trigger Jenkins Jobs
         run: |
           curl -v -X POST ${{ vars.JENKINS_URL }}/job/${{ vars.JENKINS_JOB_NAME }}/build?token=testToken --user ${{ vars.JENKINS_USER}}:${{ vars.JENKINS_API_TOKEN }}
