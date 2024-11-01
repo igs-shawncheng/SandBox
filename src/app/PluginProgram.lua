@@ -121,6 +121,10 @@ function PluginProgram:GetMusicMute()
 	return self.m_isMute
 end
 
+function PluginProgram:SetPause()	
+	Inanna.GetJoyTube():SetPause()
+end
+
 function PluginProgram:SetGameInfoOpen( isOpen )
 	Inanna.GetJoyTube():SetGameInfoOpen( isOpen )
 end

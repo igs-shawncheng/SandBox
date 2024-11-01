@@ -14,7 +14,7 @@ CC_DISABLE_GLOBAL = false
 -- for module display
 CC_DESIGN_RESOLUTION = {
     width = 640,
-    height = 1136,
+    height = 1400,
     autoscale = "FIXED_HEIGHT",
     callback = function(framesize)
         local ratio = framesize.width / framesize.height
@@ -28,7 +28,7 @@ CC_DESIGN_RESOLUTION = {
 DEFAULT_LOGIN_INFO = {
     accoundId = 1234,
     port = "8888",
-    IP = "192.168.44.102",--教和主機ip
+    IP = "192.168.44.102",
     roomIndex = 1,
 }
 
